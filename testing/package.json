@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@jitl/recipe-data-scraper": "^2.0.0"
+  }
+}
