@@ -1,0 +1,113 @@
+$header: rgb(208, 245, 213);
+
+@mixin flex() {
+    display: flex;
+    justify-content: space-between;
+}
+  
+:root{
+    font-size: 1.5vw;
+}
+
+body{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.2em;
+    margin:0;
+    margin-bottom: 3.3rem;
+    padding:0;
+
+    #top-nav{
+        @include flex();
+        padding: .5em 5%;
+        background-color: $header;
+    }
+
+    #everything{
+        @include flex();
+    }
+
+    #main {
+        @include flex();
+    }
+
+}
+
+h1,h2,h3,h4,h5,p,ol,ul,a{
+    margin: 0;
+}
+
+h1,h2{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+    font-style: normal;
+}
+
+h3{
+    font-size: 1.3em;
+    font-weight: normal;
+}
+
+h2{
+    font-size: 1.3em;
+    line-height: 1.25em;
+    margin-block-end: .3em;
+}
+
+h1{
+    font-size: 2.5em;
+    margin-block-end: .5em;
+    line-height: 1.25em;
+}
+
+ul{
+    padding-inline-start: .6em;
+    li::marker{
+        font-size: .6em;
+    }
+}
+
+ol{
+    margin-block-end: .6em;
+    padding-inline-start: 1em;
+    li{
+        margin-top: .25em;
+    }
+}
+
+#recipe{
+    /* margin: 0 4rem; */
+    width: 70%;
+    #ingredients {
+        position: sticky;
+        top: 2em;
+        width: fit-content;
+        height: fit-content;
+        padding: 1em;
+    }
+    #instructions {
+        width: 21.6em;
+        padding-top: 1em;
+    }
+}
+
+
+#navigation{
+    width: 2em;
+    display: flex;
+    gap: 1em;
+    flex-direction: column;
+    img{
+        width: 100%;
+    }
+}
+
+#menu{
+    width: 12em;
+}
+
+iframe{
+    width: 100%;
+    height: 14em;
+}

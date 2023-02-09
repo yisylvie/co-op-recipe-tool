@@ -1,27 +1,62 @@
-"use strict";
+// Require the functionality we need to use:
+var http = require('http'),
+	url = require('url'),
+	path = require('path'),
+	mime = require('mime'),
+	path = require('path'),
+	fs = require('fs'),
+    slicer = require('recipe-slicer'),
+    recipe_parse = require('recipe-data-scraper');
 
-var _recipeDataScraper = _interopRequireDefault(require("@jitl/recipe-data-scraper"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-const urlForm = document.getElementById("submit");
-const urlInput = document.getElementById("url");
-urlForm.addEventListener('click', function (event) {
-  event.preventDefault();
-  console.log("click")
-
-  fetchRecipe(urlInput.value);
+// Make a simple fileserver for all of our static content.
+// Everything underneath <STATIC DIRECTORY NAME> will be served.
+var app = http.createServer(function(req, resp){
+	var filename = path.join(__dirname, "src", url.parse(req.url).pathname);
+	(fs.exists || path.exists)(filename, function(exists){
+		if (exists) {
+			fs.readFile(filename, function(err, data){
+				if (err) {
+					// File exists but is not readable (permissions issue?)
+					resp.writeHead(500, {
+						"Content-Type": "text/plain"
+					});
+					resp.write("Internal server error: could not read file");
+					resp.end();
+					return;
+				}
+				
+				// File exists and is readable
+				var mimetype = mime.getType(filename);
+				resp.writeHead(200, {
+					"Content-Type": mimetype
+				});
+				resp.write(data);
+				resp.end();
+				return;
+			});
+		}else{
+			// File does not exist
+			resp.writeHead(404, {
+				"Content-Type": "text/plain"
+			});
+			resp.write("Requested file not found: "+filename);
+			resp.end();
+			return;
+		}
+	});
 });
-async function fetchRecipe(url) {
-  try {
-    // pass a full url to a page that contains a recipe
-    const recipe = await (0, _recipeDataScraper.default)(url);
-    // res.json({
-    //   recipe
-    // });
-    console.log("async")
-    console.log(recipe);
-  } catch (error) {
-    // res.status(500).json({
-    //   message: err.message
-    // });
-  }
-}
+app.listen(3456);
+
+// let recipe = new slicer.Recipe;
+// recipe.set("3 cups of sugar");
+// console.log(recipe);
+
+// import { parseURL, parseHTML } from 'html-recipe-parser'
+// let parse = new recipe_parse2.default;
+
+const myUrl = "https://sugarspunrun.com/creamy-potato-soup-recipe/#recipe";
+
+recipe_parse.default(myUrl)
+  .then(recipeResult => console.log(recipeResult))
+  .catch(e => console.log(e));
+
