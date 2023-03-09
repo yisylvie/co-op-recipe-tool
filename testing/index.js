@@ -31,6 +31,7 @@ var app = http.createServer(function(req, resp){
 					"Content-Type": mimetype
 				});
 				resp.write(data);
+				console.log(data);
 				resp.end();
 				return;
 			});
@@ -47,6 +48,22 @@ var app = http.createServer(function(req, resp){
 });
 app.listen(3456);
 
+app.on('request', function (req, res) {
+    if (req.method == 'POST') {
+        var body = '';
+    }
+
+    req.on('data', function (data) {
+        body += data;
+    });
+
+    req.on('end', function () {
+        console.log(body);
+    });
+});
+
+
+
 // let recipe = new slicer.Recipe;
 // recipe.set("3 cups of sugar");
 // console.log(recipe);
@@ -54,9 +71,9 @@ app.listen(3456);
 // import { parseURL, parseHTML } from 'html-recipe-parser'
 // let parse = new recipe_parse2.default;
 
-const myUrl = "https://sugarspunrun.com/creamy-potato-soup-recipe/#recipe";
+// const myUrl = "https://www.food.com/recipe/moist-chocolate-cupcakes-super-easy-budget-287618?scaleto=20&mode=null&st=true";
 
-recipe_parse.default(myUrl)
-  .then(recipeResult => console.log(recipeResult))
-  .catch(e => console.log(e));
+// recipe_parse.default(myUrl)
+//   .then(recipeResult => console.log(recipeResult))
+//   .catch(e => console.log(e));
 
