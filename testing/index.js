@@ -1,4 +1,5 @@
 // Require the functionality we need to use:
+// const { json } = require('express');
 var http = require('http'),
 	url = require('url'),
 	path = require('path'),
@@ -48,7 +49,8 @@ var app = http.createServer(function(req, resp){
 });
 app.listen(3456);
 
-app.on('request', function (req, res) {
+// when data is sent from client
+app.on('request', function (req, resp) {
     if (req.method == 'POST') {
         var body = '';
     }
@@ -58,22 +60,38 @@ app.on('request', function (req, res) {
     });
 
     req.on('end', function () {
-        console.log(body);
+		if(body) {
+			console.log("62" + body);
+			writeFile(body);
+		}
+        
+		// resp.write("whoreasdf");
     });
 });
 
+function writeFile(data) {
+	
+	let recipeJson = {};
+	let jsonData = JSON.parse(data);
+	let url = jsonData.url;
+	console.log(url);
+	recipe_parse.default(url)
+		// .then(recipeResult => console.log(recipeResult))
+		.then(recipeResult => {console.log("80" + recipeResult); recipeJson = recipeResult; sent(recipeJson);})
+  		.catch(e => console.log(e));
+	function sent(recipeJson){
+		const content = JSON.stringify(recipeJson);
 
+		fs.writeFile('src/bro.json', content, err => {
+		if (err) {
+			console.error(err);
+		}
+		// file written successfully
+		});
+	}
+	
+}
 
 // let recipe = new slicer.Recipe;
-// recipe.set("3 cups of sugar");
-// console.log(recipe);
-
-// import { parseURL, parseHTML } from 'html-recipe-parser'
-// let parse = new recipe_parse2.default;
-
-// const myUrl = "https://www.food.com/recipe/moist-chocolate-cupcakes-super-easy-budget-287618?scaleto=20&mode=null&st=true";
-
-// recipe_parse.default(myUrl)
-//   .then(recipeResult => console.log(recipeResult))
-//   .catch(e => console.log(e));
-
+// 	recipe.set("3 cups of sugar");
+// 	console.log(recipe);
