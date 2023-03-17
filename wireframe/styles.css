@@ -11,6 +11,7 @@ body {
   margin-bottom: 3.3rem;
   padding: 0;
 }
+
 body #top-nav {
   display: flex;
   justify-content: space-between;
