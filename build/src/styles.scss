@@ -4,7 +4,8 @@ $helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $openSans: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 $screenWidth: 1440;
-$borderRadius: .2em;
+$borderRadius: .2rem;
+
 $green1: #397d2f;
 $green2: #78a671;
 $green3: #b6d1b2;
@@ -17,6 +18,13 @@ $grey3:#bbbcbb;
 $grey4:#e5e5e5;
 $grey5:#f9f9f9;
 
+$leftright: 0em 1em 0em 1em;
+
+@mixin leftRight($leftMargin: 0){
+  padding-right: 1em;
+  padding-left: $leftMargin + 1em;
+}
+
 @mixin centerFillWidth() {
   width: -webkit-fill-available;
   text-align: center;
@@ -26,7 +34,7 @@ $grey5:#f9f9f9;
   display: flex;
   align-items: center;
   gap: 1em;
-  a, h2, h3, h4, h5, h6{
+  a, h2, h3, h4, h5, h6, input[type="text"]{
     @include centerFillWidth();
     @if not $centered{
       text-align: left;
@@ -92,6 +100,7 @@ button:hover, input[type="submit"]:hover{
   color: white;
   line-height: 3em;
   border-radius: $borderRadius;
+  transition: ease-in-out 15ms;
   
   h2{
     font-size: 1.5em;
@@ -102,38 +111,67 @@ button:hover, input[type="submit"]:hover{
   }
 }
 
-.side-panels{
-  padding: 0em 1em 0em 1em;
-  height: 100vh;
-
-  h3{
-    font-size: 1rem;
-    margin-block-end: .5em;
-  }
-
-  ul{
-    list-style-type: none;
-  }
-
-  .expand{
-    @include flex();
-    h3{
-      text-align: left;
-    }
-  }
+.primary-button:hover{
+  background-color: $green2;
 }
 
-header{
-  line-height: 2.5em;
-  @include flex($centered: false);
+.primary-button:active{
+  background-color: $green2;
+}
 
-  svg{
-    height: 1.2em;
+.side-panels{
+  height: 100vh;
+  padding: .1em;
+
+  header{
+    line-height: 2.5em;
+    @include flex($centered: false);
+    padding: $leftright;
+
+    svg{
+      height: 1em;
+      display: block;
+    }
+  
+    h4{
+      font-size: 1.5rem;
+      font-weight: 300;
+    }
   }
 
-  h4{
-    font-size: 1.5rem;
-    font-weight: 300;
+  > div{
+    // margin-top: 2em;
+
+    > ul{
+      ul li{
+        padding: .5em 0 .5em 0;
+        @include leftRight($leftMargin: 1.5em);
+        border-radius: $borderRadius;
+      }
+      ul li:hover{
+        background-color: $grey4;
+        cursor: pointer;
+      }
+    }
+  
+    ul{
+      list-style-type: none;
+    }
+  
+    .expand{
+      border-radius: $borderRadius;
+      @include flex();
+      h3{
+        text-align: left;
+      }
+      padding: .5em 0 .5em 0;
+      @include leftRight();
+    }
+  
+    .expand:hover{
+      cursor: pointer;
+      background-color: $grey4;
+    }
   }
 }
 
@@ -141,22 +179,15 @@ header{
   width: 15em;
   min-width: 12em;
   border-right: .1em solid $grey4;
-  
-  > h2{
+  #menu-title{
     text-align: center;
-    margin-block-start: .5em;
-    margin-block-end: .5em;
-  }
-
-  li{
-    margin-left: 1.5em;
+    margin-block-start: 1em;
   }
   
   .primary-button{
     margin: auto;
-    // width: -webkit-fill-available;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 2em;
+    margin-bottom: 2em;
   }
 }
 
@@ -165,9 +196,51 @@ header{
   width: math.div(375, $screenWidth) * 100%;
   border-left: .1em solid $grey4;
 
-  form{
+  #list-recipes-list{
+    li ul li{
+      @include leftRight($leftMargin: 1.5em);
+    }
+  }
+
+  .expand{
+    svg{
+      height: .5em;
+    }
+  }
+
+  .list-items-list{
+    h3{
+      font-size: 1.1rem;
+    }
+  
+    h4{
+      font-size: 1.1rem;
+    }
+
+    .list-items-inner-list{
+      li{
+        @include leftRight();
+      }
+    }
     
-    @include flex();
+    form{
+      @include flex($centered: false);
+      // gap:0;
+      input[type="text"]{
+        padding:0;
+        border: none;
+        // font-size: inherit;
+        font-size: 1.1rem;
+        background: none;
+      }
+    }
+  }
+
+
+  div > form{
+    @include leftRight();
+
+    @include flex($centered: false);
     gap:0;
 
     margin: 1em 0 1em 0;
@@ -195,5 +268,14 @@ header{
       border: .1rem solid $grey3;
     }
 
+  }
+}
+
+#collapsed-menu{
+  display: none;
+  padding-top: 0;
+  position: fixed;
+  header{
+    line-height: 2.5rem;
   }
 }

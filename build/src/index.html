@@ -7,9 +7,19 @@
     </head>
     <body id="body">
         <div id="everything">
+            <nav class="side-panels" id="collapsed-menu">
+                <header>
+                    <button id = "uncollapse-menu-button">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 36 24" style="enable-background:new 0 0 36 24;" xml:space="preserve">
+                        <path d="M0,24v-3h36v3H0z M0,13.5v-3h36v3H0z M0,3V0h36v3H0z"/>
+                        </svg>
+                    </button>
+                </header>
+            </nav>
             <nav class="side-panels" id="menu">
                 <header>
-                    <button id = "collapse-menu">
+                    <button id = "collapse-menu-button">
                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 36 24" style="enable-background:new 0 0 36 24;" xml:space="preserve">
                         <path d="M0,24v-3h36v3H0z M0,13.5v-3h36v3H0z M0,3V0h36v3H0z"/>
@@ -21,35 +31,57 @@
                         </h4>
                     </a>
                 </header>
-                
-                <h2>
-                    Menu Week of da kine
-                </h2>
-                <button class="primary-button">
-                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                        viewBox="0 0 28 28" style="enable-background:new 0 0 28 28;" xml:space="preserve">
-                    <path fill="currentColor" d="M12.5,28V15.5H0v-3h12.5V0h3v12.5H28v3H15.5V28H12.5z"/>
-                    </svg>
-                    <h2 class="center-fill-width">
-                        Add Recipe
+                <div>
+                    <h2 id="menu-title">
+                        Menu Week of da kine
                     </h2>
-                </button>
-                <div class = "day-of-week-div">
-                    <div class="menu-date expand">
-                        <h3>
-                            Mon, January 3
-                        </h3>
-                        <button>
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 14.1" style="enable-background:new 0 0 24 14.1;" xml:space="preserve">
-                            <path fill="currentColor" d="M12,14.1L0,2.1L2.1,0L12,9.9L21.8,0L24,2.2L12,14.1z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <ul class = "menu-recipes-list">
-                        <li>
-                            <h4>
-                                Apple Crisp
-                            </h4>
+                    <button class="primary-button">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 28 28" style="enable-background:new 0 0 28 28;" xml:space="preserve">
+                        <path fill="currentColor" d="M12.5,28V15.5H0v-3h12.5V0h3v12.5H28v3H15.5V28H12.5z"/>
+                        </svg>
+                        <h2 class="center-fill-width">
+                            Add Recipe
+                        </h2>
+                    </button>
+                    <ul>
+                        <li class = "day-of-week-li">
+                            <div class="menu-date expand">
+                                <h3>
+                                    Mon, January 3
+                                </h3>
+                                <button>
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 14.1" style="enable-background:new 0 0 24 14.1;" xml:space="preserve">
+                                    <path fill="currentColor" d="M12,14.1L0,2.1L2.1,0L12,9.9L21.8,0L24,2.2L12,14.1z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <ul class = "menu-recipes-list">
+                                <li>
+                                    <h4>
+                                        Apple Crisp
+                                    </h4>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class = "day-of-week-li">
+                            <div class="menu-date expand">
+                                <h3>
+                                    Mon, January 3
+                                </h3>
+                                <button>
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 14.1" style="enable-background:new 0 0 24 14.1;" xml:space="preserve">
+                                    <path fill="currentColor" d="M12,14.1L0,2.1L2.1,0L12,9.9L21.8,0L24,2.2L12,14.1z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <ul class = "menu-recipes-list">
+                                <li>
+                                    <h4>
+                                        Apple Crisp
+                                    </h4>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -59,14 +91,14 @@
             </main>
             <div id = "shopping-list" class="side-panels">
                 <header>
-                    <button id = "collapse-menu">
+                    <button class = "expand">
                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 24 14.1" style="enable-background:new 0 0 24 14.1;" xml:space="preserve">
                         <path fill="currentColor" d="M12,14.1L0,2.1L2.1,0L12,9.9L21.8,0L24,2.2L12,14.1z"/>
                         </svg>
                     </button>
                     <h2 class="header-text">
-                        Shopping Lists
+                        Primary List
                     </h2>
                     <button id = "collapse-shopping-list">
                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -75,48 +107,85 @@
                         </svg>
                     </button>
                 </header>
-                <div class = "list-recipes-div">
-                    <div class="expand">
-                        <h3>
-                            Recipes
-                        </h3>
-                        <button>
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                viewBox="0 0 24 14.1" style="enable-background:new 0 0 24 14.1;" xml:space="preserve">
-                            <path fill="currentColor" d="M12,14.1L0,2.1L2.1,0L12,9.9L21.8,0L24,2.2L12,14.1z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class = "list-recipes-inner-div">
-                        <h4>
-                            Apple Crisp
-                        </h4>
-                    </div>
-                </div>
-                <form action="GET">
-                    <input type="text" placeholder="new item...">
-                    <input type="submit" value="add">
-                </form>
-                <div class = "list-items-div">
-                    <div class="list-category expand">
-                        <h3>
-                            Fresh Vegetables
-                        </h3>
-                        <button>
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 14.1" style="enable-background:new 0 0 24 14.1;" xml:space="preserve">
-                            <path fill="currentColor" d="M12,14.1L0,2.1L2.1,0L12,9.9L21.8,0L24,2.2L12,14.1z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class = "list-items-inner-div">
-                        <h4>
-                            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                            carrots
-                        </h4>
-                    </div>
+                <div>
+                    <ul class = "list-recipes-list">
+                        <li>
+                            <div class="expand">
+                                <h3>
+                                    Recipes
+                                </h3>
+                                <button>
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                        viewBox="0 0 24 14.1" style="enable-background:new 0 0 24 14.1;" xml:space="preserve">
+                                    <path fill="currentColor" d="M12,14.1L0,2.1L2.1,0L12,9.9L21.8,0L24,2.2L12,14.1z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <ul class = "list-recipes-list">
+                                <li>
+                                    <h4>
+                                        Apple Crisp
+                                    </h4>
+                                </li>
+                                <li>
+                                    <h4>
+                                        Apple Crisp
+                                    </h4>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form action="GET">
+                        <input type="text" placeholder="new item...">
+                        <input type="submit" value="add">
+                    </form>
+                    <ul class = "list-items-list">
+                        <li>
+                            <div class="list-category expand">
+                                <h3>
+                                    Fresh Vegetables
+                                </h3>
+                                <button>
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 14.1" style="enable-background:new 0 0 24 14.1;" xml:space="preserve">
+                                    <path fill="currentColor" d="M12,14.1L0,2.1L2.1,0L12,9.9L21.8,0L24,2.2L12,14.1z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <ul class = "list-items-inner-list">
+                                <li>
+                                    <h4>
+                                        <input type="checkbox" id="carrots" name="carrots" value="carrots">
+                                        carrots
+                                    </h4>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="list-category expand">
+                                <h3>
+                                    Fresh Vegetables
+                                </h3>
+                                <button>
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 14.1" style="enable-background:new 0 0 24 14.1;" xml:space="preserve">
+                                    <path fill="currentColor" d="M12,14.1L0,2.1L2.1,0L12,9.9L21.8,0L24,2.2L12,14.1z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <ul class = "list-items-inner-list">
+                                <li>
+                                    <form>
+                                        <input type="checkbox" id="carrots" name="carrots" value="carrots">
+                                        <!-- carrots -->
+                                        <input type="text" value="carrots">
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
+        <script src="styles.js"></script>
         <script src="script.js"></script>
     </body>
 </html>
