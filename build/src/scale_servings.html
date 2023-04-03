@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Coopify</title>
+        <link href="styles/global.css" type="text/css" rel="stylesheet">
+        <link href="styles/create_recipe.css" type="text/css" rel="stylesheet">
+    </head>
+    <body id="body">
+        <nav>
+            <a href="home.html">
+                <h1>
+                    coopify
+                </h1>
+            </a>
+            <form action="create_recipe.html">
+                <div class="url-input-div">
+                    <input type="text" placeholder="recipe url...">
+                    <button class="tertiary-button">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 23.4 23.3" style="enable-background:new 0 0 23.4 23.3;" xml:space="preserve">
+                        <path fill="currentColor" d="M11.7,23.3c-0.4,0-0.7-0.1-1-0.4s-0.4-0.6-0.4-1V13H1.4c-0.4,0-0.7-0.1-1-0.4C0.1,12.3,0,12,0,11.6s0.1-0.7,0.4-1
+                            s0.6-0.4,1-0.4h8.9V1.4c0-0.4,0.1-0.7,0.4-1C11,0.1,11.3,0,11.7,0s0.7,0.1,1,0.4s0.4,0.6,0.4,1v8.9H22c0.4,0,0.7,0.1,1,0.4
+                            c0.3,0.3,0.4,0.6,0.4,1s-0.1,0.7-0.4,1s-0.6,0.4-1,0.4h-8.9V22c0,0.4-0.1,0.7-0.4,1C12.4,23.2,12.1,23.3,11.7,23.3z"/>
+                        </svg>
+                        <h4 class="center-fill-width">new</h4>
+                    </button>
+                </div>
+            </form>
+        </nav>
+        <div id="everything">
+            <form action="scale_servings.html">
+                <div id="stuck-top"></div>
+                <header class="unstuck">
+                    <div>
+                        <div>
+                            <button class="primary-button scale-arrow">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    width="31.806px" height="17.917px" viewBox="0 0 31.806 17.917" enable-background="new 0 0 31.806 17.917" xml:space="preserve">
+                                <path fill="currentColor" d="M31.806,16.083c0,0.491-0.181,0.917-0.542,1.278c-0.343,0.343-0.762,0.519-1.257,0.528
+                                    c-0.496,0.009-0.919-0.162-1.271-0.514L15.903,4.542L3.07,17.375c-0.361,0.361-0.787,0.542-1.278,0.542s-0.917-0.181-1.278-0.542
+                                    C0.171,17.032,0,16.606,0,16.097c0-0.509,0.167-0.93,0.5-1.264L14.931,0.402c0.148-0.148,0.301-0.252,0.458-0.312
+                                    C15.547,0.03,15.718,0,15.903,0c0.185,0,0.356,0.03,0.514,0.091c0.157,0.06,0.31,0.164,0.458,0.312l14.417,14.43
+                                    C31.634,15.176,31.806,15.593,31.806,16.083z"/>
+                                </svg>
+                            </button>
+                            <button class="primary-button scale-arrow">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    width="31.806px" height="17.917px" viewBox="0 0 31.806 17.917" enable-background="new 0 0 31.806 17.917" xml:space="preserve">
+                                <path fill="currentColor" d="M31.292,3.084l-14.417,14.43c-0.148,0.148-0.301,0.252-0.458,0.312c-0.158,0.061-0.329,0.091-0.514,0.091
+                                    s-0.356-0.03-0.514-0.09c-0.157-0.06-0.31-0.164-0.458-0.312L0.5,3.084C0.167,2.75,0,2.329,0,1.82s0.171-0.935,0.514-1.278
+                                    C0.875,0.181,1.301,0,1.792,0C2.283,0,2.709,0.181,3.07,0.542l12.833,12.833L28.736,0.542c0.352-0.352,0.775-0.523,1.271-0.514
+                                    c0.495,0.009,0.914,0.185,1.257,0.528c0.361,0.361,0.542,0.787,0.542,1.278C31.806,2.324,31.634,2.741,31.292,3.084z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <h2 class="center-fill-width" id="servings">
+                            
+                        </h2>
+                        
+                        <button id="reset">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                width="26.7px" height="26.7px" viewBox="0 0 26.7 26.7" style="enable-background:new 0 0 26.7 26.7;" xml:space="preserve">
+                            <path fill="currentColor" d="M5.9,24.5C3.7,23,2.1,21,1,18.6c-0.2-0.5-0.2-0.9,0.1-1.2c0.2-0.4,0.6-0.5,1.2-0.5c0.3,0,0.6,0.1,0.8,0.3s0.5,0.4,0.6,0.6
+                                c0.9,1.9,2.2,3.3,3.9,4.5c1.7,1.1,3.7,1.7,5.7,1.7c2.9,0,5.4-1,7.5-3.1s3.1-4.5,3.1-7.5s-1-5.4-3.1-7.5s-4.5-3.1-7.5-3.1
+                                c-2,0-3.9,0.5-5.5,1.5c-1.6,1-2.9,2.3-3.9,3.9h5.6c0.4,0,0.7,0.1,1,0.4s0.4,0.6,0.4,1s-0.1,0.7-0.4,1s-0.6,0.4-1,0.4H1.4
+                                c-0.4,0-0.7-0.1-1-0.4S0,10,0,9.6l0-8.2c0-0.4,0.1-0.7,0.4-1S1,0,1.4,0c0.4,0,0.7,0.1,1,0.4s0.4,0.6,0.4,1v3.7
+                                c1.3-1.6,2.8-2.9,4.6-3.8c1.8-0.9,3.8-1.4,6-1.4c3.7,0,6.9,1.3,9.4,3.9c2.6,2.6,3.9,5.7,3.9,9.4s-1.3,6.9-3.9,9.4
+                                c-2.6,2.6-5.7,3.9-9.4,3.9C10.6,26.7,8.1,25.9,5.9,24.5z"/>
+                            </svg>
+                        </button>
+
+                        <button class="secondary-button scale-factor">
+                            <h4>
+                                2x
+                            </h4>
+                        </button>
+                        <button class="secondary-button scale-factor">
+                            <h4>
+                                3x
+                            </h4>
+                        </button>
+                        <button class="secondary-button scale-factor">
+                            <h4>
+                                4x
+                            </h4>
+                        </button>
+                        <button class="secondary-button scale-factor">
+                            <h4>
+                                5x
+                            </h4>
+                        </button>
+                    </div>
+                    <div>
+                        <button id="back-button" class="secondary-button">
+                            <svg class="arrow-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                width="17.917px" height="31.806px" viewBox="0 0 17.917 31.806" enable-background="new 0 0 17.917 31.806" xml:space="preserve">
+                            <path fill="currentColor" d="M14.833,31.292L0.403,16.875c-0.148-0.148-0.252-0.301-0.312-0.458C0.03,16.259,0,16.088,0,15.903s0.03-0.356,0.09-0.514
+                                c0.06-0.157,0.164-0.31,0.312-0.458L14.833,0.5C15.167,0.167,15.588,0,16.097,0c0.509,0,0.935,0.171,1.278,0.514
+                                c0.361,0.361,0.542,0.787,0.542,1.278s-0.181,0.917-0.542,1.278L4.542,15.903l12.833,12.833c0.352,0.352,0.523,0.775,0.514,1.271
+                                c-0.009,0.495-0.185,0.914-0.528,1.257c-0.361,0.361-0.787,0.542-1.278,0.542C15.593,31.806,15.176,31.634,14.833,31.292z"/>
+                            </svg>
+                            <h4 class="center-fill-width">
+                                back
+                            </h4>
+                        </button>
+                        <button class="primary-button">
+                            <h4 class="center-fill-width">
+                                view recipe
+                            </h4>
+                            <svg class="arrow-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                width="17.917px" height="31.806px" viewBox="0 0 17.917 31.806" enable-background="new 0 0 17.917 31.806" xml:space="preserve">
+                            <path fill="currentColor" d="M1.834,31.806c-0.491,0-0.917-0.181-1.278-0.542c-0.343-0.343-0.519-0.762-0.528-1.257
+                                c-0.009-0.496,0.162-0.919,0.514-1.271l12.833-12.833L0.542,3.07C0.181,2.709,0,2.283,0,1.792s0.181-0.917,0.542-1.278
+                                C0.885,0.171,1.311,0,1.82,0c0.509,0,0.93,0.167,1.264,0.5l14.431,14.431c0.148,0.148,0.252,0.301,0.312,0.458
+                                c0.06,0.158,0.09,0.329,0.09,0.514s-0.03,0.356-0.091,0.514c-0.06,0.157-0.164,0.31-0.312,0.458L3.084,31.292
+                                C2.741,31.634,2.324,31.806,1.834,31.806z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </header>
+                <div>
+                    <div>
+                        <div class="reminder">
+                            <p>
+                                Check that ingredients scale as expected and cook times, equipment sizes, and other instructions are accurate.
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <label for="prep time">Prep Time</label>
+                            <input name="prep time" type="text">
+                        </div>
+                        <div>
+                            <label for="cook time">Cook Time</label>
+                            <input name="cook time" type="text">
+                        </div>
+                        <div>
+                            <label for="total time">Total Time</label>
+                            <input name="total time" type="text">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div id="original-ingredients">
+                            <label for="ingredients">Original Ingredients</label>
+                            <div>
+                                <ul>
+                                    <li>
+                                        
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="scaled-input">
+                            <label for="ingredients">Ingredients</label>
+                            <div name="ingredients" contenteditable="true" role="textbox">
+                                <ul id="ingredients">
+                                    <li>
+                                        
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div id="notes-input">
+                            <label for="notes">Notes</label>
+                            <div name="notes" contenteditable="true" role="textbox">
+                                <ul>
+                                    <li>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script src="javascript/styles.js"></script>
+        <script src="javascript/scale_servings.js"></script>
+    </body>
+</html>

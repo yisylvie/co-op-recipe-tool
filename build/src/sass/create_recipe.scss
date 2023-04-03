@@ -1,0 +1,228 @@
+@use "global";
+@use "sass:math";
+
+#everything{
+    form{
+        width: 75%;
+        background-color: white;
+        border: global.$thinGreyBorder;
+        margin: auto;
+        margin-top: 7vh;
+        margin-bottom: 20vh;
+        position: relative;
+
+        #stuck-top{
+            height: 3em + .07em * 2;
+            width: 100%;
+            padding: 0;
+            position: absolute;
+            background-color: none;
+            top: 0em;
+            z-index: -1;
+        }
+
+        .unstuck{
+            transition: global.$transition;
+            *{
+                transition: global.$transition;
+            }
+        }
+
+        .stuck{
+            transition: global.$transition;
+            height: 3em;
+            *{
+                transition: global.$transition;
+            }
+            h2{
+                font-size: 1.2rem;
+            }
+            > div{ 
+                .scale-factor{
+                    height: 2em;
+                    width: 2em;
+                    h4{
+                        font-size: .9em;
+                    }
+                }
+                > div{
+                    flex-direction: row;
+                    gap: .5em;
+                    .scale-arrow{
+                        padding: .3em;
+                        svg{
+                            height: .8em;
+                        }
+                    }
+                }
+            }
+        }
+
+        header{
+            @include global.flex(false, 0em, false);
+            justify-content: space-between;
+            padding-left: 3em;
+            padding-right: 3em;
+            height: 6em;
+            border-bottom: global.$thinGreyBorder;
+            position: sticky;
+            top:0;
+            background-color: white;
+
+            > div {
+                @include global.flex(true, 1em, false);
+                > * {
+                    width: max-content;
+                }
+                > #reset{
+                    height: 1.2em;
+                    color: global.$grey1;
+                    svg{
+                        height: 100%;
+                    }
+                }
+                > div{
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5em;
+                    .scale-arrow{
+                        padding-top: .2em;
+                        padding-bottom: .2em;
+                    }
+                }
+                .scale-factor{
+                    border-radius: 1000000px;
+                    padding: 0;
+                    height: 2.4em;
+                    width: 2.4em;
+                    h4{
+                        text-align: center;
+                        font-size: 1.1em;
+                    }
+                }
+
+                .scale-factor:hover{
+                    color: white;
+                    background-color: global.$green2;
+                    outline: unset;
+                }
+            }
+        }
+
+        // all the form elements
+        > div{
+            overflow: hidden;
+            padding: 7% 15%;
+            color: global.$grey1;
+            :last-child{
+                margin-bottom: 0;
+            }
+
+            // one line of the form
+            > div{
+                @include global.flex(false, 5%, false);
+                width: 100%;
+                margin-bottom: 3em;
+                align-items: flex-start;
+                
+                // one form item
+                > div {
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5em;
+                    width: calc((40% - 2.5%) / 2 - 2.5%);
+                }
+
+                #title-input{
+                    width: 100%;
+                    input[type="text"]{
+                        width: -webkit-fill-available;
+                    }
+                }
+
+                .reminder{
+                    width: 100%;
+                }
+
+                #original-ingredients{
+                    width: 40% - 2.5%;
+                }
+
+                #original-ingredients > div{
+                    font-size: inherit;
+                    font-family: inherit;
+                    line-height: 1.2em;
+                    padding: .5em;
+                    background: global.$grey5;
+                    border-radius: global.$borderRadius1;
+                    border: global.$thinGreyBorder;
+                }
+
+                #instructions-input{
+                    width: 60% - 2.5%;
+                }
+
+                #ingredients-input{
+                    width: 40% - 2.5%;
+                }
+
+                #scaled-input{
+                    width: 60% - 2.5%;
+                    ul{
+                        width: math.div(40, 60) * 100% - 2.5% ;
+                        margin: auto;
+                        line-height: 1.2em;
+                    }
+                }
+                
+                #notes-input{
+                    // width: 60% - 2.5%;
+                    width: 100%;
+                    height: 10em;
+                }
+                
+                
+                input[type="text"]{
+                    width: -webkit-fill-available;
+                    font-size: inherit;
+                    padding-left: .5em;
+                    background: none;
+                    border-radius: global.$borderRadius1;
+                    border: global.$thinGreyBorder;
+                    border-color: global.$grey3;
+                    line-height: 2em;
+                    color: global.$grey0;
+                }
+
+                input[type="text"]:focus, div[contenteditable]:focus{
+                    outline: .07rem solid global.$green2;
+                    border-color: global.$green2;
+                }
+
+                ul, ol{
+                    padding-left: 1.6em;
+                    li{
+                        margin-block-end: 1em;
+                    }
+                }
+
+                div[contenteditable]{
+                    color: global.$grey0;
+                    font-size: inherit;
+                    font-family: inherit;
+                    line-height: 1.5em;
+                    padding: .5em;
+                    background: none;
+                    border-radius: global.$borderRadius1;
+                    border: global.$thinGreyBorder;
+                    border-color: global.$grey3;
+
+                    height: 25em;
+                    width: -webkit-fill-available;
+                    resize: none;
+                    overflow: scroll;
+                }
+            } 
+        }
+    }
+}

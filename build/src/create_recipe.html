@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Coopify</title>
+        <link href="styles/global.css" type="text/css" rel="stylesheet">
+        <link href="styles/create_recipe.css" type="text/css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <body id="body">
+        <nav>
+            <a href="home.html">
+                <h1>
+                    coopify
+                </h1>
+            </a>
+            <form action="create_recipe.html">
+                <div class="url-input-div">
+                    <input type="text" placeholder="recipe url...">
+                    <button class="tertiary-button">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 23.4 23.3" style="enable-background:new 0 0 23.4 23.3;" xml:space="preserve">
+                        <path fill="currentColor" d="M11.7,23.3c-0.4,0-0.7-0.1-1-0.4s-0.4-0.6-0.4-1V13H1.4c-0.4,0-0.7-0.1-1-0.4C0.1,12.3,0,12,0,11.6s0.1-0.7,0.4-1
+                            s0.6-0.4,1-0.4h8.9V1.4c0-0.4,0.1-0.7,0.4-1C11,0.1,11.3,0,11.7,0s0.7,0.1,1,0.4s0.4,0.6,0.4,1v8.9H22c0.4,0,0.7,0.1,1,0.4
+                            c0.3,0.3,0.4,0.6,0.4,1s-0.1,0.7-0.4,1s-0.6,0.4-1,0.4h-8.9V22c0,0.4-0.1,0.7-0.4,1C12.4,23.2,12.1,23.3,11.7,23.3z"/>
+                        </svg>
+                        <h4 class="center-fill-width">new</h4>
+                    </button>
+                </div>
+            </form>
+        </nav>
+        <div id="everything">
+            <form id="recipe-input-form" action="scale_servings.html">
+                <div id="stuck-top"></div>
+                <header class="unstuck">
+                    <h2>
+                        Create Recipe
+                    </h2>
+                    <button class="primary-button">
+                        <h4 class="center-fill-width">
+                            scale servings
+                        </h4>
+                        <svg version="1.1" class="arrow-icon" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            width="17.917px" height="31.806px" viewBox="0 0 17.917 31.806" enable-background="new 0 0 17.917 31.806" xml:space="preserve">
+                        <path fill="currentColor" d="M1.834,31.806c-0.491,0-0.917-0.181-1.278-0.542c-0.343-0.343-0.519-0.762-0.528-1.257
+                            c-0.009-0.496,0.162-0.919,0.514-1.271l12.833-12.833L0.542,3.07C0.181,2.709,0,2.283,0,1.792s0.181-0.917,0.542-1.278
+                            C0.885,0.171,1.311,0,1.82,0c0.509,0,0.93,0.167,1.264,0.5l14.431,14.431c0.148,0.148,0.252,0.301,0.312,0.458
+                            c0.06,0.158,0.09,0.329,0.09,0.514s-0.03,0.356-0.091,0.514c-0.06,0.157-0.164,0.31-0.312,0.458L3.084,31.292
+                            C2.741,31.634,2.324,31.806,1.834,31.806z"/>
+                        </svg>
+                    </button>
+                </header>
+                <div>
+                    <div>
+                        <div id="title-input">
+                            <label for="title">Title</label>
+                            <input name="title" type="text">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <label for="servings">Servings</label>
+                            <input name="servings" type="text">
+                        </div>
+                        <div>
+                            <label for="prep time">Prep Time</label>
+                            <input name="prep time" type="text">
+                        </div>
+                        <div>
+                            <label for="cook time">Cook Time</label>
+                            <input name="cook time" type="text">
+                        </div>
+                        <div>
+                            <label for="total time">Total Time</label>
+                            <input name="total time" type="text">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div id="notes-input">
+                            <label for="notes">Notes</label>
+                            <div name="notes" contenteditable="true" role="textbox">
+                                <ul>
+                                    <li>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- <div>
+                            <label for="photo">Photo</label>
+                            <input name="photo" type="file">
+                        </div> -->
+                    </div>
+
+                    <div>
+                        <div id="ingredients-input">
+                            <label for="ingredients">Ingredients</label>
+                            <div name="ingredients" contenteditable="true" role="textbox">
+                                <ul>
+                                    <li>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="instructions-input">
+                            <label for="instructions">Instructions</label>
+                            <div name="instructions" contenteditable="true" role="textbox">
+                                <ol id="instuctions">
+                                    <li>
+                                        
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script src="javascript/styles.js"></script>
+        <script src="javascript/create_recipe.js"></script>
+    </body>
+</html>

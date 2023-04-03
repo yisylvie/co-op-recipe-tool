@@ -1,0 +1,68 @@
+@use "global";
+
+body{
+    text-align: center;
+    height: 100vh;
+    position: relative;
+}
+
+#everything{
+    @include global.absoluteCenter();
+}
+
+h1{
+    font-size: 4rem;
+    font-weight: 300;
+    line-height: 1.2em;
+    margin-bottom: 2.5em;
+}
+
+h2{
+    margin-bottom: 3em;
+}
+
+form{
+    p{
+        text-align: left;
+    }
+    .url-input-div{
+        gap:0;
+    }
+    div {
+        @include global.flex($centered: false, $gap: .5em);
+        width: 60vw;
+        font-size: 1rem;
+        margin-bottom: 1em;
+    
+        input[type="text"]{
+            width: -webkit-fill-available;
+            font-size: inherit;
+            padding-left: .5em;
+            background: none;
+            z-index: 1;
+            border-radius: global.$borderRadius 0 0 global.$borderRadius;
+            border: .1rem solid global.$grey3;
+            line-height: 2rem;
+        }
+    
+        input[type="submit"]{
+            border-radius: 0 global.$borderRadius global.$borderRadius 0;
+            padding: 0 2em;
+            font-size: inherit;
+            // line-height: 2rem;
+            // margin-left: .2rem;
+            border-radius: 0 global.$borderRadius global.$borderRadius 0;
+            border: .1rem solid global.$green1;
+        }
+    
+        input[type="submit"]:hover{
+            border: .1rem solid global.$green2;
+        }
+    
+        input[type="text"]:focus{
+            outline: .15rem solid global.$green2;
+            border: none;
+        }
+    }
+
+}

@@ -1,0 +1,215 @@
+@use "sass:math";
+$helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$openSans: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$green1: #397d2f;
+$green2: #78a671;
+$green3: #b6d1b2;
+$green4: #f3faf2;
+
+$grey0:#262626;
+$grey1:#4e4e4e;
+$grey2:#828282;
+$grey3:#bbbcbb;
+$grey4:#e5e5e5;
+$grey5:#f9f9f9;
+
+$borderRadius: .3rem;
+$borderRadius1: .2rem;
+$thinGreyBorder: .07rem solid $grey4;
+$transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
+
+@mixin centerFillWidth() {
+    width: -webkit-fill-available;
+    text-align: center;
+}
+  
+@mixin flex($centered: true, $gap: 1em, $centerFillWidth: true){
+    display: flex;
+    align-items: center;
+    gap: $gap;
+    a, h2, h3, h4, h5, h6, input[type="text"]{
+        @if $centerFillWidth{
+            @include centerFillWidth();
+        }
+        @if not $centered{
+        text-align: left;
+        }
+    }
+}
+
+@mixin absoluteCenter(){
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+:root{
+    font-size: 16px;
+    color: $grey0;
+}
+
+body {
+    font-family: $helvetica;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1.2em;
+    margin: 0;
+    padding: 0;
+    background-color: $grey5;
+}
+
+h1, h2, h3, h4, h5, p, ol, ul, li, a, button {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+h2{
+    font-family: $openSans;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2em;
+}
+
+button, input{
+    margin: 0;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    
+    svg{
+      color:inherit;
+      height: .5em;
+    }
+}
+
+button:hover, input[type="submit"]:hover{
+    cursor: pointer;
+}
+
+.primary-button, .secondary-button, .tertiary-button{
+    @include flex($gap: .3em);
+    padding: 0 1em;
+    line-height: 2em;
+    border-radius: $borderRadius;
+    font-size: .9rem;
+    font-family: $openSans;
+    transition: $transition;
+
+    h4{
+      font-size: inherit;
+    }
+
+    .arrow-icon{
+        height:  1em;
+        margin-left: .4em;
+    }
+  
+    svg{
+      height: 1.5em;
+    }
+}
+  
+.primary-button{
+    background-color: $green1;
+    color: white;
+    border: .1rem solid $green1;
+}
+  
+.primary-button:hover{
+    background-color: $green2;
+    border: .1rem solid $green2;
+    transition: $transition;
+}
+  
+.primary-button:active{
+    background-color: $green2;
+}
+
+.secondary-button{
+    background-color: white;
+    color: $green1;
+    border: .1rem solid $green1;
+}
+  
+.secondary-button:hover{
+    outline: .1rem solid $green1;
+    transition: $transition;
+}
+  
+.secondary-button:active{
+    // background-color: $green2;
+}
+
+.tertiary-button{
+    color: $green2;
+    border: .1rem solid $green3;
+}
+  
+.tertiary-button:hover{
+    outline: .1rem solid $green3;
+    transition: $transition;
+}
+  
+.tertiary-button:active{
+    // background-color: $green2;
+}
+
+.reminder{
+    width: 100%;
+    border: $thinGreyBorder;
+    border-color: $green2;
+    border-radius: $borderRadius1;
+    color: $green1;
+    font-family: $openSans;
+    // padding: 0 .5em;
+    p{
+        font-size: .9rem;
+        text-align: center;
+        line-height: 2.2rem;
+    }
+}
+
+nav{
+    @include flex(false, 20em, false);
+    padding: .6em 3em;
+    border-bottom: $thinGreyBorder;
+    background-color: white;
+    
+    h1{
+        font-size: 1.3rem;
+        font-weight: 300;
+    }
+    
+    form{
+        p{
+            text-align: left;
+        }
+    
+        .tertiary-button{
+            line-height: 1.7rem;
+        }
+    
+        div {
+            @include flex($centered: false, $gap: .5em);
+            width: 40vw;
+            font-size: 1rem;
+        
+            input[type="text"]{
+                width: -webkit-fill-available;
+                font-size: inherit;
+                padding-left: .5em;
+                background: none;
+                border-radius: $borderRadius;
+                border: .1rem solid $grey4;
+                line-height: 1.7rem;
+            }
+        }
+    }
+}
