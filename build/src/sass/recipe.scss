@@ -1,0 +1,50 @@
+@use "global";
+@use "sass:math";
+
+.main > div{
+    padding: 7% 15%;
+
+    h2, p{
+        text-align: center;
+    }
+
+    h2{
+        margin-bottom: 1em;
+    }
+
+    h3{
+        font-family: global.$openSans;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: .5em;
+    }
+
+    ol, ul{
+        // font-size: 1.1rem;
+    }
+
+    #times-div{
+        padding: 1.5em 0;
+        margin: 3em 0;
+        border-top: global.$thinGreyBorder;
+        border-bottom: global.$thinGreyBorder;
+        @include global.flex($gap: 7em);
+        justify-content: center;
+    }
+
+    #recipe-body-div{
+        @include global.flex($centered: false, $gap: 5%);
+        align-items: baseline;
+    }
+
+    #notes-instructions-div{
+        width: 40% - 2.5%;
+        position: sticky;
+        top:1em;
+    }
+
+
+    #instructions-div{
+        width: 60% - 2.5%;
+    }
+}

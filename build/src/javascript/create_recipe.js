@@ -59,8 +59,10 @@ recipeInputForm.addEventListener("submit", function(e) {
     sendRecipe();
 });
 
+// send edited recipe to server when user clicks "scale servings"
 function sendRecipe() {
     let jsonData = {
+        writeModifiedRecipe: true,
         name:undefined,
         recipeYield:undefined,
         prepTime:undefined,
@@ -71,6 +73,7 @@ function sendRecipe() {
         notes:[],
         url:undefined
     };
+    
     jsonData.name = document.getElementsByName("title")[0].value;
     jsonData.recipeYield = document.getElementsByName("servings")[0].value;
     jsonData.prepTime = document.getElementsByName("prep time")[0].value;
@@ -80,7 +83,7 @@ function sendRecipe() {
     grabIngredients(jsonData);
     grabInstructions(jsonData);
     grabNotes(jsonData);
-    console.log(jsonData);
+
     fetch('../json/recipe.json', {
         method: "POST",
         body: JSON.stringify(jsonData),

@@ -28,12 +28,12 @@
             </form>
         </nav>
         <div id="everything">
-            <form action="scale_servings.html">
+            <form id="scale-servings-form" class="main" action="scale_servings.html">
                 <div id="stuck-top"></div>
                 <header class="unstuck">
                     <div>
                         <div>
-                            <button class="primary-button scale-arrow">
+                            <button class="primary-button scale-arrow" id="scale-up-button">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     width="31.806px" height="17.917px" viewBox="0 0 31.806 17.917" enable-background="new 0 0 31.806 17.917" xml:space="preserve">
                                 <path fill="currentColor" d="M31.806,16.083c0,0.491-0.181,0.917-0.542,1.278c-0.343,0.343-0.762,0.519-1.257,0.528
@@ -43,7 +43,7 @@
                                     C31.634,15.176,31.806,15.593,31.806,16.083z"/>
                                 </svg>
                             </button>
-                            <button class="primary-button scale-arrow">
+                            <button class="primary-button scale-arrow" id="scale-down-button">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     width="31.806px" height="17.917px" viewBox="0 0 31.806 17.917" enable-background="new 0 0 31.806 17.917" xml:space="preserve">
                                 <path fill="currentColor" d="M31.292,3.084l-14.417,14.43c-0.148,0.148-0.301,0.252-0.458,0.312c-0.158,0.061-0.329,0.091-0.514,0.091
@@ -53,6 +53,7 @@
                                 </svg>
                             </button>
                         </div>
+                        <!-- <input class="center-fill-width" id="servings" name="servings" type="text" value=""> -->
                         <h2 class="center-fill-width" id="servings">
                             
                         </h2>
@@ -103,7 +104,7 @@
                                 back
                             </h4>
                         </button>
-                        <button class="primary-button">
+                        <button id="view-recipe-button" class="primary-button">
                             <h4 class="center-fill-width">
                                 view recipe
                             </h4>
@@ -119,14 +120,14 @@
                     </div>
                 </header>
                 <div>
-                    <div>
+                    <!-- <div>
                         <div class="reminder">
                             <p>
                                 Check that ingredients scale as expected and cook times, equipment sizes, and other instructions are accurate.
                             </p>
                         </div>
-                    </div>
-                    <div>
+                    </div> -->
+                    <div style="display: none;">
                         <div>
                             <label for="prep time">Prep Time</label>
                             <input name="prep time" type="text">
@@ -165,7 +166,7 @@
                     </div>
 
                     <div>
-                        <div id="notes-input">
+                        <!-- <div id="notes-input">
                             <label for="notes">Notes</label>
                             <div name="notes" contenteditable="true" role="textbox">
                                 <ul>
@@ -174,11 +175,14 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </form>
         </div>
+        <script src="https://unpkg.com/numeric-quantity"></script>
+        <script src="https://unpkg.com/parse-ingredient"></script>
+        <script src="https://unpkg.com/format-quantity"></script>
         <script src="javascript/styles.js"></script>
         <script src="javascript/scale_servings.js"></script>
     </body>

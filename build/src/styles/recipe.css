@@ -186,195 +186,53 @@ nav form div input[type=text] {
   position: relative;
 }
 
-#everything form #stuck-top {
-  height: 3.14em;
-  width: 100%;
-  padding: 0;
-  position: absolute;
-  background-color: none;
-  top: 0em;
-  z-index: -1;
-}
-#everything form .unstuck {
-  transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
-}
-#everything form .unstuck * {
-  transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
-}
-#everything form .stuck {
-  transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
-  height: 3em;
-}
-#everything form .stuck * {
-  transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
-}
-#everything form .stuck h2 {
-  font-size: 1.2rem;
-}
-#everything form .stuck > div .scale-factor {
-  height: 2em;
-  width: 2em;
-}
-#everything form .stuck > div .scale-factor h4 {
-  font-size: 0.9em;
-}
-#everything form .stuck > div > div {
-  flex-direction: row;
-  gap: 0.5em;
-}
-#everything form .stuck > div > div .scale-arrow {
-  padding: 0.3em;
-}
-#everything form .stuck > div > div .scale-arrow svg {
-  height: 0.8em;
-}
-#everything form header {
-  display: flex;
-  align-items: center;
-  gap: 0em;
-  justify-content: space-between;
-  padding-left: 3em;
-  padding-right: 3em;
-  height: 6em;
-  border-bottom: 0.07rem solid #e5e5e5;
-  position: sticky;
-  top: 0;
-  background-color: white;
-}
-#everything form header a, #everything form header h2, #everything form header h3, #everything form header h4, #everything form header h5, #everything form header h6, #everything form header input[type=text] {
-  text-align: left;
-}
-#everything form header > div {
-  display: flex;
-  align-items: center;
-  gap: 1em;
-}
-#everything form header > div > * {
-  width: max-content;
-}
-#everything form header > div > #reset {
-  height: 1.2em;
-  color: #4e4e4e;
-}
-#everything form header > div > #reset svg {
-  height: 100%;
-}
-#everything form header > div > div {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-}
-#everything form header > div > div .scale-arrow {
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-}
-#everything form header > div .scale-factor {
-  border-radius: 1000000px;
-  padding: 0;
-  height: 2.4em;
-  width: 2.4em;
-}
-#everything form header > div .scale-factor h4 {
-  text-align: center;
-  font-size: 1.1em;
-}
-#everything form header > div .scale-factor:hover {
-  color: white;
-  background-color: #78a671;
-  outline: unset;
-}
-#everything form > div {
-  overflow: hidden;
+.main > div {
   padding: 7% 15%;
-  color: #4e4e4e;
 }
-#everything form > div :last-child {
-  margin-bottom: 0;
+.main > div h2, .main > div p {
+  text-align: center;
 }
-#everything form > div > div {
+.main > div h2 {
+  margin-bottom: 1em;
+}
+.main > div h3 {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5em;
+}
+.main > div #times-div {
+  padding: 1.5em 0;
+  margin: 3em 0;
+  border-top: 0.07rem solid #e5e5e5;
+  border-bottom: 0.07rem solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  gap: 7em;
+  justify-content: center;
+}
+.main > div #times-div a, .main > div #times-div h2, .main > div #times-div h3, .main > div #times-div h4, .main > div #times-div h5, .main > div #times-div h6, .main > div #times-div input[type=text] {
+  width: -webkit-fill-available;
+  text-align: center;
+}
+.main > div #recipe-body-div {
   display: flex;
   align-items: center;
   gap: 5%;
-  width: 100%;
-  margin-bottom: 3em;
-  align-items: flex-start;
+  align-items: baseline;
 }
-#everything form > div > div a, #everything form > div > div h2, #everything form > div > div h3, #everything form > div > div h4, #everything form > div > div h5, #everything form > div > div h6, #everything form > div > div input[type=text] {
+.main > div #recipe-body-div a, .main > div #recipe-body-div h2, .main > div #recipe-body-div h3, .main > div #recipe-body-div h4, .main > div #recipe-body-div h5, .main > div #recipe-body-div h6, .main > div #recipe-body-div input[type=text] {
+  width: -webkit-fill-available;
+  text-align: center;
   text-align: left;
 }
-#everything form > div > div > div {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  width: 16.25%;
-}
-#everything form > div > div #title-input {
-  width: 100%;
-}
-#everything form > div > div #title-input input[type=text] {
-  width: -webkit-fill-available;
-}
-#everything form > div > div .reminder {
-  width: 100%;
-}
-#everything form > div > div #original-ingredients {
+.main > div #notes-instructions-div {
   width: 37.5%;
+  position: sticky;
+  top: 1em;
 }
-#everything form > div > div #original-ingredients > div {
-  font-family: inherit;
-  padding: 0.5em;
-  background: #f9f9f9;
-  border-radius: 0.2rem;
-  border: 0.07rem solid #e5e5e5;
-  min-height: 25em;
-  max-height: 50em;
-}
-#everything form > div > div #instructions-input {
+.main > div #instructions-div {
   width: 57.5%;
-}
-#everything form > div > div #ingredients-input {
-  width: 37.5%;
-}
-#everything form > div > div #scaled-input {
-  width: 57.5%;
-}
-#everything form > div > div #scaled-input ul {
-  width: 64.1666666667%;
-  margin: auto;
-}
-#everything form > div > div #notes-input {
-  width: 100%;
-  height: 10em;
-}
-#everything form > div > div input[type=text] {
-  width: -webkit-fill-available;
-  font-size: inherit;
-  padding-left: 0.5em;
-  background: none;
-  border-radius: 0.2rem;
-  border: 0.07rem solid #e5e5e5;
-  border-color: #bbbcbb;
-  line-height: 2em;
-  color: #262626;
-}
-#everything form > div > div input[type=text]:focus, #everything form > div > div div[contenteditable]:focus {
-  outline: 0.07rem solid #78a671;
-  border-color: #78a671;
-}
-#everything form > div > div div[contenteditable] {
-  color: #262626;
-  font-size: inherit;
-  font-family: inherit;
-  padding: 0.5em;
-  background: none;
-  border-radius: 0.2rem;
-  border: 0.07rem solid #e5e5e5;
-  border-color: #bbbcbb;
-  min-height: 25em;
-  max-height: 50em;
-  width: -webkit-fill-available;
-  resize: none;
-  overflow: scroll;
 }
 
-/*# sourceMappingURL=create_recipe.css.map */
+/*# sourceMappingURL=recipe.css.map */

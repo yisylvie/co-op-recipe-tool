@@ -1,4 +1,5 @@
 // Require the functionality we need to use:
+const { json } = require('express');
 var http = require('http'),
 	url = require('url'),
 	path = require('path'),
@@ -6,6 +7,7 @@ var http = require('http'),
 	path = require('path'),
 	fs = require('fs'),
     slicer = require('recipe-slicer'),
+	fetch = require('node-fetch');
     recipe_parse = require('recipe-data-scraper');
 
 // Make a simple fileserver for all of our static content.
@@ -72,15 +74,18 @@ app.on('request', function (req, resp) {
 		if(body) {
 			console.log("62" + body);
 			let jsonData = JSON.parse(body);
-			if(!("recipeYield" in jsonData)) {
+			if("fetchRecipeFromUrl" in jsonData) {
 				fetchRecipeFromUrl(jsonData);
-			} else{
+			} else if("writeModifiedRecipe" in jsonData) {
 				writeModifiedRecipe(jsonData);
+			} else if("writeScaledRecipe" in jsonData) {
+				writeScaledRecipe(jsonData);
 			}
 		}        
     });
 });
 
+// grab a recipe from the url in data then send recipe json back to client
 function fetchRecipeFromUrl(data) {
 	
 	let recipeJson = {};
@@ -93,15 +98,34 @@ function fetchRecipeFromUrl(data) {
 	function sent(recipeJson){
 		const content = JSON.stringify(recipeJson);
 
-		fs.writeFile('src/json/recipe.json', content, err => {
-		if (err) {
-			console.error(err);
+		fetch('http://[::1]:8000/php/testing.php', {
+			method: "POST",
+			body: content,
+			headers: { 'content-type': 'application/json', 
+			"Access-Control-Allow-Origin": "*",
+			"Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
+			"Access-Control-Allow-Headers": "*"
+			}
+		})
+		.then(response => response.json())
+		.then(data => {console.log(data); jsonData = data; sent();})
+		.catch(err => console.error(err));
+	
+		function sent() {
+			// window.location.href = 'recipe.html';
+			console.log(data);
 		}
-		// file written successfully
-		});
+
+		// fs.writeFile('src/json/recipe.json', content, err => {
+		// if (err) {
+		// 	console.error(err);
+		// }
+		// // file written successfully
+		// });
 	}
 }
 
+// write modified recipe from client into modified_recipe.json after user clicks scale recipe
 function writeModifiedRecipe(data) {
 	const content = JSON.stringify(data);
 	fs.writeFile('src/json/modified_recipe.json', content, err => {
@@ -110,3 +134,50 @@ function writeModifiedRecipe(data) {
 		}
 	});
 }
+
+// edit modified_recipe.json based on ingredients data sent from client after user clicks view recipe
+function writeScaledRecipe(data) {
+	try {
+		const old = fs.readFileSync('src/json/modified_recipe.json', 'utf8');
+		// console.log(121 + old);
+		let content = JSON.parse(old);
+		content.recipeIngredients = data.recipeIngredients;
+		content.recipeYield = data.recipeYield;
+		console.log(content);
+		content = JSON.stringify(content);
+		fs.writeFile('src/json/modified_recipe.json', content, err => {
+			if (err) {
+				console.error(err);
+			}
+		});
+	} catch (err) {
+		console.error(err);
+	}
+
+	// fs.readFileSync('src/json/modified_recipe.json', 'utf8', (err, whore) => {
+	// 	if (err) {
+	// 		console.error(err);
+	// 		return;
+	// 	}
+	// 	console.log(124 + whore);
+	// });d
+}
+
+// let recipe = new slicer.Recipe;
+// 	recipe.set("3 tablespoons of sugar");
+// 	console.log(recipe);
+// 	recipe.scale(2);
+// 	// console.log(recipe);
+
+// 	// console.log(recipe.ingredients);
+	
+// 	let ingredient = new slicer.Ingredient;
+// 	console.log(Object.getOwnPropertyNames(slicer.Recipe));
+
+// 	for (const index in recipe.ingredients) {
+// 		console.log(recipe.ingredients[index].unit);
+// 		console.log("display")
+// 		let bro = slicer.getAmountInUnit(recipe.ingredients[index].amount, recipe.ingredients[index].unit);
+// 		bro = slicer.formatFraction(recipe.ingredients[index]);
+// 		console.log(JSON.stringify(bro));
+// 	}

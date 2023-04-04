@@ -29,6 +29,17 @@ h2 {
   line-height: 1.2em;
 }
 
+ul, ol {
+  font-size: 1rem;
+  line-height: 1.6em;
+  padding-left: 1.6em;
+}
+ul li, ol li {
+  font-size: inherit;
+  line-height: inherit;
+  margin-block-end: 1em;
+}
+
 button, input {
   margin: 0;
   background: none;
@@ -163,6 +174,16 @@ nav form div input[type=text] {
   border-radius: 0.3rem;
   border: 0.1rem solid #e5e5e5;
   line-height: 1.7rem;
+}
+
+.main {
+  width: 75%;
+  background-color: white;
+  border: 0.07rem solid #e5e5e5;
+  margin: auto;
+  margin-top: 7vh;
+  margin-bottom: 20vh;
+  position: relative;
 }
 
 body {

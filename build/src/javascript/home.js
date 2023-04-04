@@ -8,7 +8,7 @@ urlInputForm.addEventListener("submit", function(event){
 
 function sendUrl(url) {
     let jsonData;
-    const data = { 'url': url};
+    const data = { fetchRecipeFromUrl: true, 'url': url};
     fetch('../json/recipe.json', {
         method: "POST",
         body: JSON.stringify(data),

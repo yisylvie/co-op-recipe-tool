@@ -3,13 +3,7 @@
 
 #everything{
     form{
-        width: 75%;
-        background-color: white;
-        border: global.$thinGreyBorder;
-        margin: auto;
-        margin-top: 7vh;
-        margin-bottom: 20vh;
-        position: relative;
+        
 
         #stuck-top{
             height: 3em + .07em * 2;
@@ -149,13 +143,15 @@
                 }
 
                 #original-ingredients > div{
-                    font-size: inherit;
+                    // font-size: inherit;
                     font-family: inherit;
-                    line-height: 1.2em;
+                    // line-height: 1.2em;
                     padding: .5em;
                     background: global.$grey5;
                     border-radius: global.$borderRadius1;
                     border: global.$thinGreyBorder;
+                    min-height: 25em;
+                    max-height: 50em;
                 }
 
                 #instructions-input{
@@ -171,7 +167,7 @@
                     ul{
                         width: math.div(40, 60) * 100% - 2.5% ;
                         margin: auto;
-                        line-height: 1.2em;
+                        // line-height: 1.2em;
                     }
                 }
                 
@@ -199,25 +195,19 @@
                     border-color: global.$green2;
                 }
 
-                ul, ol{
-                    padding-left: 1.6em;
-                    li{
-                        margin-block-end: 1em;
-                    }
-                }
-
                 div[contenteditable]{
                     color: global.$grey0;
                     font-size: inherit;
                     font-family: inherit;
-                    line-height: 1.5em;
+                    // line-height: 1.5em;
                     padding: .5em;
                     background: none;
                     border-radius: global.$borderRadius1;
                     border: global.$thinGreyBorder;
                     border-color: global.$grey3;
 
-                    height: 25em;
+                    min-height: 25em;
+                    max-height: 50em;
                     width: -webkit-fill-available;
                     resize: none;
                     overflow: scroll;

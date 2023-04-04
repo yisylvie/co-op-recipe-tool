@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Coopify</title>
+        <link href="styles/global.css" type="text/css" rel="stylesheet">
+        <link href="styles/recipe.css" type="text/css" rel="stylesheet">
+    </head>
+    <body id="body">
+        <nav>
+            <a href="home.html">
+                <h1>
+                    coopify
+                </h1>
+            </a>
+            <form action="create_recipe.html">
+                <div class="url-input-div">
+                    <input type="text" placeholder="recipe url...">
+                    <button class="tertiary-button">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 23.4 23.3" style="enable-background:new 0 0 23.4 23.3;" xml:space="preserve">
+                        <path fill="currentColor" d="M11.7,23.3c-0.4,0-0.7-0.1-1-0.4s-0.4-0.6-0.4-1V13H1.4c-0.4,0-0.7-0.1-1-0.4C0.1,12.3,0,12,0,11.6s0.1-0.7,0.4-1
+                            s0.6-0.4,1-0.4h8.9V1.4c0-0.4,0.1-0.7,0.4-1C11,0.1,11.3,0,11.7,0s0.7,0.1,1,0.4s0.4,0.6,0.4,1v8.9H22c0.4,0,0.7,0.1,1,0.4
+                            c0.3,0.3,0.4,0.6,0.4,1s-0.1,0.7-0.4,1s-0.6,0.4-1,0.4h-8.9V22c0,0.4-0.1,0.7-0.4,1C12.4,23.2,12.1,23.3,11.7,23.3z"/>
+                        </svg>
+                        <h4 class="center-fill-width">new</h4>
+                    </button>
+                </div>
+            </form>
+        </nav>
+        <div id="everything">
+            <div class="main">
+                <div>
+                    <h2 id="title">
+                    </h2>
+                    <p id="servings">
+                    </p>
+                    <div id="times-div">
+                        <div>
+                            <p id="prep time"></p>
+                        </div>
+                        <div>
+                            <p id="cook time"></p>
+                        </div>
+                        <div>
+                            <p id="total time"></p>
+                        </div>
+                    </div>
+                    <div id="recipe-body-div">
+                        <div id="notes-instructions-div">
+                            <!-- <h3>
+                                Notes
+                            </h3>
+                            <ul>
+                                <li>
+                                </li>
+                            </ul> -->
+                            <h3>
+                                Ingredients
+                            </h3>
+                            <ul id="ingredients-list">
+                                <li>
+                                    1 tablespoon butter
+                                </li>
+                                <li>
+                                    1 tablespoon butter
+                                </li>
+                                <li>
+                                    1 tablespoon butter
+                                </li>
+                                <li>
+                                    1 tablespoon butter
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="instructions-div">
+                            <h3>
+                                Instructions
+                            </h3>
+                            <ol id="instructions-list">
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://unpkg.com/numeric-quantity"></script>
+        <script src="https://unpkg.com/parse-ingredient"></script>
+        <script src="https://unpkg.com/format-quantity"></script>
+        <script src="javascript/styles.js"></script>
+        <script src="javascript/recipe.js"></script>
+    </body>
+</html>

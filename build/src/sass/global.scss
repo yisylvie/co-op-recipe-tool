@@ -76,6 +76,17 @@ h2{
     line-height: 1.2em;
 }
 
+ul, ol{
+    font-size: 1rem;
+    line-height: 1.6em;
+    padding-left: 1.6em;
+    li{
+        font-size: inherit;
+        line-height: inherit;
+        margin-block-end: 1em;
+    }
+}
+
 button, input{
     margin: 0;
     background: none;
@@ -212,4 +223,14 @@ nav{
             }
         }
     }
+}
+
+.main{
+    width: 75%;
+    background-color: white;
+    border: $thinGreyBorder;
+    margin: auto;
+    margin-top: 7vh;
+    margin-bottom: 20vh;
+    position: relative;
 }
