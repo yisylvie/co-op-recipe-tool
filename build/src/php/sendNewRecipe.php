@@ -17,11 +17,13 @@
     setcookie(session_name(), session_id());
 
 
-    $url = $_SESSION['originalRecipe']['url'];
+    // $url = $_SESSION['originalRecipe']['url'];
+    // $bro = $_SESSION['bro'];
 
     echo json_encode(array(
-        "bro" => $_SESSION['bro'],
+        // "bro" => $bro,
         "url" => $url,
+        "bro" => $_SESSION['bro']
     ));
     exit;
 ?>

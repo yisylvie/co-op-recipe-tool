@@ -1,18 +1,22 @@
+var myVar = localStorage['myKey'] || 'defaultValue';
+
+console.log(myVar);
 let url;
 // grab recipe from ../json/recipe.json and input it into the form
 function recieveRecipe() {
     let jsonData;
     const data = { "fetchNewRecipe": true};
-    fetch('http://ec2-54-160-249-237.compute-1.amazonaws.com/~yisylvie/coopify/sendNewRecipe.php', {
+    fetch('http://localhost:3456/php/sendNewRecipe.php', {
         method: "POST",
         body: JSON.stringify(data),
-        // credentials:"same-origin",
-        // mode: "no-cors",
-        headers: { 'content-type': 'application/json', 
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "*"
-        }
+        credentials:"same-origin",
+        mode: 'cors'
+        // headers: { 'content-type': 'application/json', 
+        // // "Access-Control-Allow-Origin": "*",
+        // // 'Access-Control-Allow-Credentials': 'true',
+        // // "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
+        // // "Access-Control-Allow-Headers": "*"
+        // }
     })
     .then(response => response.json())
     .then(data => {console.log(data); jsonData = data; sent();})

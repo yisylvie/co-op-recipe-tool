@@ -53,15 +53,15 @@ var app = http.createServer(function(req, resp){
 });
 app.listen(3456);
 
-app.onload = function() {
-	console.log("load");
-	fs.writeFile('src/json/recipe.json', "{}", err => {
-		if (err) {
-			console.error(err);
-		}
-		// file written successfully
-	});
-}
+// app.onload = function() {
+// }
+fs.writeFile('src/json/recipe.json', "{}", err => {
+	if (err) {
+		console.error(err);
+	}
+	console.log("file cleared");
+	// file written successfully
+});
 
 // when data is sent from client
 app.on('request', function (req, resp) {
@@ -94,6 +94,7 @@ function fetchRecipeFromUrl(urlData) {
 	let recipeJson = {};
 	let url = urlData.url;
 	console.log(url);
+	// console.log(localStorage['myKey'] || 'defaultValue');
 	recipe_parse.default(url)
 		// .then(recipeResult => console.log(recipeResult))
 		.then(recipeResult => {console.log("96" + recipeResult); recipeJson = recipeResult; sent(recipeJson);})
@@ -101,14 +102,16 @@ function fetchRecipeFromUrl(urlData) {
 	function sent(recipeJson){
 		const content = JSON.stringify(recipeJson);
 
-		fetch('http://ec2-54-160-249-237.compute-1.amazonaws.com/~yisylvie/coopify/getRecipeFromUrl.php', {
+		fetch('http://localhost:3456/php/sendNewRecipe.php', {
 			method: "POST",
 			body: content,
-			// credentials:"include",
+			credentials:"same-origin",
+        	mode: 'cors',
 			headers: { 'content-type': 'application/json', 
-			"Access-Control-Allow-Origin": "*",
-			"Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
-			"Access-Control-Allow-Headers": "*"
+			// "Access-Control-Allow-Origin": "*",
+			// 'Access-Control-Allow-Credentials': 'true',
+			// "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
+			// "Access-Control-Allow-Headers": "*"
 			}
 		})
 		.then(response => response.json())
@@ -186,3 +189,4 @@ function writeScaledRecipe(data) {
 // 		bro = slicer.formatFraction(recipe.ingredients[index]);
 // 		console.log(JSON.stringify(bro));
 // 	}
+

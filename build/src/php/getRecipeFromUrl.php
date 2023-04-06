@@ -26,16 +26,22 @@
     $recipeInstructions = $json_obj['recipeInstructions'];
     $recipeYield = $json_obj['recipeYield'];
     $description = $json_obj['description'];
-    $_SESSION['originalRecipe'] = array(
-        'url' => $url,
-        'name' => $name
-    );
+    // $_SESSION['originalRecipe'] = array(
+    //     'url' => $url,
+    //     'name' => $name
+    // );
 
-    $_SESSION['bro'] = "bro";
+    $cookie_name = "user";
+    $cookie_value = "John Doe";
+    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+
+    if(isset($json_obj['fetchRecipeFromUrl'])) {
+        $_SESSION['bro'] = "bro";
+    }
+
 
     echo json_encode(array(
-        "url" => $_SESSION['originalRecipe']['url'],
-        "name" => $name
+        "bro" => $_SESSION['bro']
     ));
     // phpinfo();
     // echo json_encode($json_obj);
