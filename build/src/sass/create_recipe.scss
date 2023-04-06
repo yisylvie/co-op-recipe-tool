@@ -152,6 +152,7 @@
                     border: global.$thinGreyBorder;
                     min-height: 25em;
                     max-height: 50em;
+                    overflow: scroll;
                 }
 
                 #instructions-input{

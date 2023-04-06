@@ -7,7 +7,10 @@ var http = require('http'),
 	path = require('path'),
 	fs = require('fs'),
     slicer = require('recipe-slicer'),
-	fetch = require('node-fetch');
+	fetch = require('node-fetch'),
+	cookieParser = require("cookie-parser"),
+	sessions = require('express-session'),
+    express = require('express'),
     recipe_parse = require('recipe-data-scraper');
 
 // Make a simple fileserver for all of our static content.
@@ -81,26 +84,27 @@ app.on('request', function (req, resp) {
 			} else if("writeScaledRecipe" in jsonData) {
 				writeScaledRecipe(jsonData);
 			}
-		}        
+		}
     });
 });
 
 // grab a recipe from the url in data then send recipe json back to client
-function fetchRecipeFromUrl(data) {
-	
+function fetchRecipeFromUrl(urlData) {
+	let phpJsonData;
 	let recipeJson = {};
-	let url = data.url;
+	let url = urlData.url;
 	console.log(url);
 	recipe_parse.default(url)
 		// .then(recipeResult => console.log(recipeResult))
-		.then(recipeResult => {console.log("80" + recipeResult); recipeJson = recipeResult; sent(recipeJson);})
+		.then(recipeResult => {console.log("96" + recipeResult); recipeJson = recipeResult; sent(recipeJson);})
   		.catch(e => console.log("78" + e));
 	function sent(recipeJson){
 		const content = JSON.stringify(recipeJson);
 
-		fetch('http://[::1]:8000/php/testing.php', {
+		fetch('http://ec2-54-160-249-237.compute-1.amazonaws.com/~yisylvie/coopify/getRecipeFromUrl.php', {
 			method: "POST",
 			body: content,
+			// credentials:"include",
 			headers: { 'content-type': 'application/json', 
 			"Access-Control-Allow-Origin": "*",
 			"Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
@@ -108,12 +112,13 @@ function fetchRecipeFromUrl(data) {
 			}
 		})
 		.then(response => response.json())
-		.then(data => {console.log(data); jsonData = data; sent();})
+		.then(data => {console.log(114 + data); phpJsonData = data; sentPHP();})
 		.catch(err => console.error(err));
 	
-		function sent() {
+		function sentPHP() {
 			// window.location.href = 'recipe.html';
-			console.log(data);
+			console.log(119);
+			console.log(phpJsonData);
 		}
 
 		// fs.writeFile('src/json/recipe.json', content, err => {
