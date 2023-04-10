@@ -1,4 +1,18 @@
-localStorage['myKey'] = 'somestring'; // only strings
+function getCookie(cname) {
+    let  name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 
 const urlInputForm = document.getElementById("url-input-form");
 
@@ -10,7 +24,7 @@ urlInputForm.addEventListener("submit", function(event){
 
 function sendUrl(url) {
     let jsonData;
-    const data = { "fetchRecipeFromUrl": true, "url": url};
+    const data = { "fetchRecipeFromUrl": true, "url": url, "cookie": getCookie("PHPSESSID")};
     fetch('json/recipe.json', {
         method: "POST",
         body: JSON.stringify(data),
@@ -39,6 +53,6 @@ function sendUrl(url) {
     // .catch(err => console.error(err));
     
     function sent() {
-        // window.location.href = 'create_recipe.html';
+        window.location.href = 'create_recipe.html';
     }
 }

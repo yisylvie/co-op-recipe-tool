@@ -1,12 +1,27 @@
-var myVar = localStorage['myKey'] || 'defaultValue';
+// from https://www.w3schools.com/js/js_cookies.asp
+function getCookie(cname) {
+    let  name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+console.log(getCookie("PHPSESSID"));
 
-console.log(myVar);
 let url;
 // grab recipe from ../json/recipe.json and input it into the form
 function recieveRecipe() {
     let jsonData;
     const data = { "fetchNewRecipe": true};
-    fetch('http://localhost:3456/php/sendNewRecipe.php', {
+    fetch('json/recipe.json', {
         method: "POST",
         body: JSON.stringify(data),
         credentials:"same-origin",

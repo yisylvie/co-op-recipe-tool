@@ -6,11 +6,11 @@ var http = require('http'),
 	mime = require('mime'),
 	path = require('path'),
 	fs = require('fs'),
-    slicer = require('recipe-slicer'),
-	fetch = require('node-fetch'),
-	cookieParser = require("cookie-parser"),
-	sessions = require('express-session'),
-    express = require('express'),
+    // slicer = require('recipe-slicer'),
+	// fetch = require('node-fetch'),
+	// cookieParser = require("cookie-parser"),
+	// sessions = require('express-session'),
+    // express = require('express'),
     recipe_parse = require('recipe-data-scraper');
 
 // Make a simple fileserver for all of our static content.
@@ -55,13 +55,16 @@ app.listen(3456);
 
 // app.onload = function() {
 // }
-fs.writeFile('src/json/recipe.json', "{}", err => {
-	if (err) {
-		console.error(err);
-	}
-	console.log("file cleared");
-	// file written successfully
-});
+clearFile();
+function clearFile() {
+	fs.writeFile('src/json/recipe.json', "{}", err => {
+		if (err) {
+			console.error(err);
+		}
+		console.log("file cleared");
+		// file written successfully
+	});
+}
 
 // when data is sent from client
 app.on('request', function (req, resp) {
@@ -90,46 +93,32 @@ app.on('request', function (req, resp) {
 
 // grab a recipe from the url in data then send recipe json back to client
 function fetchRecipeFromUrl(urlData) {
-	let phpJsonData;
 	let recipeJson = {};
 	let url = urlData.url;
+	let cookie = urlData.cookie;
 	console.log(url);
 	// console.log(localStorage['myKey'] || 'defaultValue');
 	recipe_parse.default(url)
 		// .then(recipeResult => console.log(recipeResult))
 		.then(recipeResult => {console.log("96" + recipeResult); recipeJson = recipeResult; sent(recipeJson);})
   		.catch(e => console.log("78" + e));
+	// add this recipe to recipe.json with its key set to the recipe's cookie
 	function sent(recipeJson){
-		const content = JSON.stringify(recipeJson);
-
-		fetch('http://localhost:3456/php/sendNewRecipe.php', {
-			method: "POST",
-			body: content,
-			credentials:"same-origin",
-        	mode: 'cors',
-			headers: { 'content-type': 'application/json', 
-			// "Access-Control-Allow-Origin": "*",
-			// 'Access-Control-Allow-Credentials': 'true',
-			// "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
-			// "Access-Control-Allow-Headers": "*"
-			}
-		})
-		.then(response => response.json())
-		.then(data => {console.log(114 + data); phpJsonData = data; sentPHP();})
-		.catch(err => console.error(err));
-	
-		function sentPHP() {
-			// window.location.href = 'recipe.html';
-			console.log(119);
-			console.log(phpJsonData);
+		try {
+			const old = fs.readFileSync('src/json/recipe.json', 'utf8');
+			console.log(121 + old);
+			let content = JSON.parse(old);
+			content[cookie] = recipeJson;
+			console.log(content);
+			content = JSON.stringify(content);
+			fs.writeFile('src/json/recipe.json', content, err => {
+				if (err) {
+					console.error(err);
+				}
+			});
+		} catch (err) {
+			console.error(err);
 		}
-
-		// fs.writeFile('src/json/recipe.json', content, err => {
-		// if (err) {
-		// 	console.error(err);
-		// }
-		// // file written successfully
-		// });
 	}
 }
 
