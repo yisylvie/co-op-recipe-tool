@@ -3,16 +3,18 @@ const upButton = document.getElementById("scale-up-button");
 const downButton = document.getElementById("scale-down-button");
 const scaleServingsForm = document.getElementById("scale-servings-form");
 const viewRecipeButton = document.getElementById("view-recipe-button");
+const servings = document.getElementById("servings");
+const servingsHidden = document.getElementById("servingsHidden");
 
 let originalServings;
 let scaledServings;
 let originalIngredientsArray = [];
 let scaledIngredientsArray = [];
 
-// grab recipe from ../json/modified_recipe.json and input it into the form
+// grab recipe from json/modified_recipe.json and input it into the form
 function recieveRecipe() {
     let jsonData;
-    fetch('../json/modified_recipe.json', {
+    fetch('json/modified_recipe.json', {
         method: "POST",
         headers: { 'content-type': 'application/json', 
         "Access-Control-Allow-Origin": "*",
@@ -25,17 +27,30 @@ function recieveRecipe() {
     .catch(err => console.error(err));
     
     function sent() {
-        originalServings = ParseIngredient.parseIngredient(jsonData.recipeYield)[0];
-        scaledServings = ParseIngredient.parseIngredient(jsonData.recipeYield)[0];
-        if(originalServings.description == "") {
-            originalServings.description = "Servings";
-            scaledServings.description = "Servings";
+        if(cookie in jsonData) {
+            jsonData = jsonData[cookie];
+            // set servings to 1 recipe if servings is unset
+            if(jsonData.recipeYield == "") {
+                originalServings = ParseIngredient.parseIngredient("1 Recipes")[0];
+                scaledServings = ParseIngredient.parseIngredient("1 Recipes")[0];
+            } else {
+                // get servings and unit of servings, setting unit to "servings" if there is none
+                originalServings = ParseIngredient.parseIngredient(jsonData.recipeYield)[0];
+                scaledServings = ParseIngredient.parseIngredient(jsonData.recipeYield)[0];
+                if(originalServings.description == "") {
+                    originalServings.description = "Servings";
+                    scaledServings.description = "Servings";
+                }
+            }
+            servings.value = prettify(originalServings, true);
+            resizeServings();
+            document.getElementsByName("prep time")[0].value = jsonData.prepTime;
+            document.getElementsByName("cook time")[0].value = jsonData.cookTime;
+            document.getElementsByName("total time")[0].value = jsonData.totalTime;
+            appendIngredients(jsonData.recipeIngredients);
+        } else{
+            window.location.href = 'home.html';
         }
-        document.getElementById("servings").innerHTML = prettify(originalServings, true);
-        document.getElementsByName("prep time")[0].value = jsonData.prepTime;
-        document.getElementsByName("cook time")[0].value = jsonData.cookTime;
-        document.getElementsByName("total time")[0].value = jsonData.totalTime;
-        appendIngredients(jsonData.recipeIngredients);
     }
 }
 
@@ -81,21 +96,48 @@ backButton.addEventListener('keypress', function(event){
 
 downButton.addEventListener('click', function(event){
     event.preventDefault();
+    // make sure that we don't decrease below one serving
+    if(scaledServings.quantity > 1) {
+        scaledServings.quantity -= 1;
+        document.getElementById("servings").value = prettify(scaledServings, true);
+    }
+    resizeServings();
     alterIngredients(-1);
 }, false);
 downButton.addEventListener('keypress', function(event){
     event.preventDefault();
+    // make sure that we don't decrease below one serving
+    if(scaledServings.quantity > 1) {
+        scaledServings.quantity -= 1;
+        document.getElementById("servings").value = prettify(scaledServings, true);
+    }
+    resizeServings();
     alterIngredients(-1);
 }, false);
 
 upButton.addEventListener('click', function(event){
     event.preventDefault();
+    // make sure that we don't decrease below one serving
+    scaledServings.quantity += 1;
+    document.getElementById("servings").value = prettify(scaledServings, true);
+    resizeServings();
     alterIngredients(1);
 }, false);
 upButton.addEventListener('keypress', function(event){
     event.preventDefault();
+    // make sure that we don't decrease below one serving
+    scaledServings.quantity += 1;
+    document.getElementById("servings").value = prettify(scaledServings, true);
+    resizeServings();
     alterIngredients(1);
 }, false);
+
+servings.addEventListener("input", function(event) {
+    event.preventDefault();
+    scaledServings = ParseIngredient.parseIngredient(servings.value)[0];
+    resizeServings();
+    alterIngredients(scaledServings.quantity);
+});
 
 viewRecipeButton.addEventListener('click', function(event){
     event.preventDefault();
@@ -108,10 +150,6 @@ viewRecipeButton.addEventListener('keypress', function(event){
 
 // increase number of servings by amount and scale ingredients accordingly
 function alterIngredients(amount) {
-    if(scaledServings.quantity > 1 || amount > 0) {
-        scaledServings.quantity += amount;
-        document.getElementById("servings").innerHTML = prettify(scaledServings, true);
-    }
     
     let prevServings = originalServings.quantity;
     let scaleFactor = scaledServings.quantity / prevServings;
@@ -142,6 +180,11 @@ function prettify(ingredient, isServing = false) {
     return FormatQuantity.formatQuantity(ingredient.quantity, { tolerance: 0.1 }) + " " + ingredient.description;
 }
 
+function resizeServings(){
+    servingsHidden.innerHTML = servings.value;
+    servings.style.width = servingsHidden.clientWidth + 3 + "px";
+}
+
 // add the ingredients from ingredients input on form into the json data
 function grabIngredients(jsonData) {
     let lis = document.getElementsByName("ingredients")[0].querySelectorAll("li");
@@ -157,7 +200,8 @@ function sendRecipe() {
     let jsonData = {
         writeScaledRecipe: true,
         recipeIngredients:[],
-        recipeYield: prettify(scaledServings, true)
+        recipeYield: prettify(scaledServings, true),
+        "cookie": cookie
     };
     grabIngredients(jsonData);
     console.log(jsonData);

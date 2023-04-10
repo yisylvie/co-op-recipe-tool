@@ -16,11 +16,11 @@
             <form action="create_recipe.html" id="url-input-form">
                 <div class="url-input-div">
                     <input name="url" type="text" placeholder="recipe url...">
-                    <input class="primary-button" type="submit" value="go">
+                    <input id="submit-url-button" class="primary-button" type="submit" value="go">
                 </div>
                 <div>
-                    <!-- <p>
-                    </p> -->
+                    <p class="error-message">
+                    </p>
                     <button class="secondary-button" id="input-manually-button">
                         <h4 class="center-fill-width">
                             input manually
@@ -29,7 +29,14 @@
                 </div>
             </form>
         </div>
-        <script src="javascript/styles.js"></script>
+        <!-- <script src="javascript/styles.js"></script> -->
+        <script type="module">
+            import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+            if(!("id" in sessionStorage)) {
+                sessionStorage.id = (uuidv4());
+            }
+        </script>
+        <script src="javascript/global.js"></script>
         <script src="javascript/home.js"></script>
     </body>
 </html>

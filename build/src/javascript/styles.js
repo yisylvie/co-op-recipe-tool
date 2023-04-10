@@ -29,3 +29,5 @@ document.querySelectorAll("div[contenteditable]").forEach((contenteditable) => {
         document.execCommand("insertHTML", false, text);
     });
 });
+
+

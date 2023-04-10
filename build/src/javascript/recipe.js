@@ -1,7 +1,7 @@
 // grab recipe from ../json/modified_recipe.json and input it into the form
 function recieveRecipe() {
     let jsonData;
-    fetch('../json/modified_recipe.json', {
+    fetch('json/modified_recipe.json', {
         method: "POST",
         headers: { 'content-type': 'application/json', 
         "Access-Control-Allow-Origin": "*",
@@ -14,13 +14,18 @@ function recieveRecipe() {
     .catch(err => console.error(err));
     
     function sent() {
-        document.getElementById("title").innerHTML = jsonData.name;
-        document.getElementById("servings").innerHTML = jsonData.recipeYield;
-        document.getElementById("prep time").innerHTML = "Prep: " + jsonData.prepTime;
-        document.getElementById("cook time").innerHTML = "Cook: " + jsonData.cookTime;
-        document.getElementById("total time").innerHTML = "Total: " + jsonData.totalTime;
-        appendIngredients(jsonData.recipeIngredients);
-        appendInstructions(jsonData.recipeInstructions);
+        if(cookie in jsonData) {
+            jsonData = jsonData[cookie];
+            document.getElementById("title").innerHTML = jsonData.name;
+            document.getElementById("servings").innerHTML = jsonData.recipeYield;
+            document.getElementById("prep time").innerHTML = "Prep: " + jsonData.prepTime;
+            document.getElementById("cook time").innerHTML = "Cook: " + jsonData.cookTime;
+            document.getElementById("total time").innerHTML = "Total: " + jsonData.totalTime;
+            appendIngredients(jsonData.recipeIngredients);
+            appendInstructions(jsonData.recipeInstructions);
+        } else{
+            window.location.href = 'home.html';
+        }
     }
 }
 

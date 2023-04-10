@@ -55,9 +55,16 @@ app.listen(3456);
 
 // app.onload = function() {
 // }
-clearFile();
-function clearFile() {
+clearFiles();
+function clearFiles() {
 	fs.writeFile('src/json/recipe.json', "{}", err => {
+		if (err) {
+			console.error(err);
+		}
+		console.log("file cleared");
+		// file written successfully
+	});
+	fs.writeFile('src/json/modified_recipe.json', "{}", err => {
 		if (err) {
 			console.error(err);
 		}
@@ -86,10 +93,33 @@ app.on('request', function (req, resp) {
 				writeModifiedRecipe(jsonData);
 			} else if("writeScaledRecipe" in jsonData) {
 				writeScaledRecipe(jsonData);
+			} else if("clearRecipe" in jsonData) {
+				clearRecipe(jsonData);
 			}
 		}
     });
 });
+
+// clear the recipe belonging to the given cookie
+function clearRecipe(sentData) {
+	let cookie = sentData.cookie;
+	// remove recipe in recipe.json 
+	try {
+		const old = fs.readFileSync('src/json/recipe.json', 'utf8');
+		console.log(102 + old);
+		let content = JSON.parse(old);
+		delete content[cookie];
+		console.log(content);
+		content = JSON.stringify(content);
+		fs.writeFile('src/json/recipe.json', content, err => {
+			if (err) {
+				console.error(err);
+			}
+		});
+	} catch (err) {
+		console.error(err);
+	}
+}
 
 // grab a recipe from the url in data then send recipe json back to client
 function fetchRecipeFromUrl(urlData) {
@@ -101,7 +131,8 @@ function fetchRecipeFromUrl(urlData) {
 	recipe_parse.default(url)
 		// .then(recipeResult => console.log(recipeResult))
 		.then(recipeResult => {console.log("96" + recipeResult); recipeJson = recipeResult; sent(recipeJson);})
-  		.catch(e => console.log("78" + e));
+  		.catch(e => {console.log("78" + e); sendError(e)});
+	
 	// add this recipe to recipe.json with its key set to the recipe's cookie
 	function sent(recipeJson){
 		try {
@@ -120,26 +151,59 @@ function fetchRecipeFromUrl(urlData) {
 			console.error(err);
 		}
 	}
-}
 
-// write modified recipe from client into modified_recipe.json after user clicks scale recipe
-function writeModifiedRecipe(data) {
-	const content = JSON.stringify(data);
-	fs.writeFile('src/json/modified_recipe.json', content, err => {
-		if (err) {
+	// add error to recipe.json with its key set to the recipe's cookie
+	function sendError(error){
+		try {
+			const old = fs.readFileSync('src/json/recipe.json', 'utf8');
+			console.log(121 + old);
+			let content = JSON.parse(old);
+			content[cookie] = "Could not find recipe data";
+			content = JSON.stringify(content);
+			fs.writeFile('src/json/recipe.json', content, err => {
+				if (err) {
+					console.error(err + "159");
+				}
+			});
+		} catch (err) {
 			console.error(err);
 		}
-	});
+	}
+}
+
+// write modified recipe from client into modified_recipe.json after user clicks "scale recipe"
+function writeModifiedRecipe(sentData) {
+	// add this recipe to modified_recipe.json with its key set to the recipe's cookie
+	try {
+		let cookie = sentData.cookie;
+		const old = fs.readFileSync('src/json/modified_recipe.json', 'utf8');
+		console.log(177 + old);
+		let content = JSON.parse(old);
+		content[cookie] = sentData.recipe;
+		console.log(content);
+		content = JSON.stringify(content);
+		fs.writeFile('src/json/modified_recipe.json', content, err => {
+			if (err) {
+				console.error(err);
+			}
+		});
+	} catch (err) {
+		console.error(err);
+	}
 }
 
 // edit modified_recipe.json based on ingredients data sent from client after user clicks view recipe
-function writeScaledRecipe(data) {
+function writeScaledRecipe(sentData) {
+	// add changed ingredients to modified_recipe.json with its key set to the recipe's cookie
 	try {
+		let cookie = sentData.cookie;
 		const old = fs.readFileSync('src/json/modified_recipe.json', 'utf8');
 		// console.log(121 + old);
+		console.log(177 + old);
 		let content = JSON.parse(old);
-		content.recipeIngredients = data.recipeIngredients;
-		content.recipeYield = data.recipeYield;
+
+		content[cookie].recipeIngredients = sentData.recipeIngredients;
+		content[cookie].recipeYield = sentData.recipeYield;
 		console.log(content);
 		content = JSON.stringify(content);
 		fs.writeFile('src/json/modified_recipe.json', content, err => {

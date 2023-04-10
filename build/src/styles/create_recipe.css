@@ -31,13 +31,13 @@ h2 {
 
 ul, ol {
   font-size: 1rem;
-  line-height: 1.6em;
+  line-height: 1.5em;
   padding-left: 1.6em;
 }
 ul li, ol li {
   font-size: inherit;
   line-height: inherit;
-  margin-block-end: 1em;
+  margin-block-end: 0.9em;
 }
 
 button, input {
@@ -186,6 +186,12 @@ nav form div input[type=text] {
   position: relative;
 }
 
+.error-message {
+  color: #d2232a;
+  display: none;
+  font-size: 0.9rem;
+}
+
 #everything form #stuck-top {
   height: 3.14em;
   width: 100%;
@@ -233,8 +239,8 @@ nav form div input[type=text] {
   align-items: center;
   gap: 0em;
   justify-content: space-between;
-  padding-left: 3em;
-  padding-right: 3em;
+  padding-left: 5%;
+  padding-right: 5%;
   height: 6em;
   border-bottom: 0.07rem solid #e5e5e5;
   position: sticky;
@@ -282,6 +288,20 @@ nav form div input[type=text] {
   color: white;
   background-color: #78a671;
   outline: unset;
+}
+#everything form header > div #servings {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2em;
+  text-overflow: ellipsis;
+  max-width: 27vw;
+  min-width: 3em;
+}
+#everything form header > div #servingsHidden {
+  position: absolute;
+  visibility: hidden;
+  z-index: -1;
 }
 #everything form > div {
   overflow: hidden;

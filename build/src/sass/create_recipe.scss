@@ -55,8 +55,8 @@
         header{
             @include global.flex(false, 0em, false);
             justify-content: space-between;
-            padding-left: 3em;
-            padding-right: 3em;
+            padding-left: 5%;
+            padding-right: 5%;
             height: 6em;
             border-bottom: global.$thinGreyBorder;
             position: sticky;
@@ -99,6 +99,22 @@
                     color: white;
                     background-color: global.$green2;
                     outline: unset;
+                }
+
+                #servings{
+                    font-family: global.$openSans;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    line-height: 1.2em;
+                    text-overflow: ellipsis;
+                    max-width: 27vw;
+                    min-width: 3em;
+                }
+
+                #servingsHidden{
+                    position: absolute;
+                    visibility: hidden;
+                    z-index: -1;
                 }
             }
         }

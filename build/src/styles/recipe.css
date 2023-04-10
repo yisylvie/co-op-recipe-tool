@@ -31,13 +31,13 @@ h2 {
 
 ul, ol {
   font-size: 1rem;
-  line-height: 1.6em;
+  line-height: 1.5em;
   padding-left: 1.6em;
 }
 ul li, ol li {
   font-size: inherit;
   line-height: inherit;
-  margin-block-end: 1em;
+  margin-block-end: 0.9em;
 }
 
 button, input {
@@ -184,6 +184,12 @@ nav form div input[type=text] {
   margin-top: 7vh;
   margin-bottom: 20vh;
   position: relative;
+}
+
+.error-message {
+  color: #d2232a;
+  display: none;
+  font-size: 0.9rem;
 }
 
 .main > div {
