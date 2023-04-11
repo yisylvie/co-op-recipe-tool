@@ -31,17 +31,43 @@ function getCookie(cname) {
 }
 
 function setCookie(cname, cvalue) {
-  document.cookie = cname + "=" + cvalue;
+    document.cookie = cname + "=" + cvalue;
 }
 console.log(sessionStorage);
 let cookie = sessionStorage.id;
 
+
+// check if a url is actually a url
 function isValidHttpUrl(string) {
-  let url;
-  try {
-    url = new URL(string);
-  } catch (_) {
-    return false;
-  }
-  return url.protocol === "http:" || url.protocol === "https:";
+    let url;
+    try {
+        url = new URL(string);
+    } catch (_) {
+        return false;
+    }
+    return url.protocol === "http:" || url.protocol === "https:";
+}
+
+// change html entities into their actual values
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+
+// listener to detect all possible changes in a contenteditable box
+function setTextChangeListener (div, listener) {
+    div.addEventListener("blur", listener);
+    div.addEventListener("keyup", listener);
+    div.addEventListener("paste", listener);
+    div.addEventListener("copy", listener);
+    div.addEventListener("cut", listener);
+    div.addEventListener("delete", listener);
+    div.addEventListener("mouseup", listener);
+}
+
+// listener to detect button click or keypress
+function setClickListener (el, listener) {
+    el.addEventListener("keypress", listener);
+    el.addEventListener("click", listener);
 }

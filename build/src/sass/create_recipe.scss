@@ -31,6 +31,7 @@
             h2{
                 font-size: 1.2rem;
             }
+            
             > div{ 
                 .scale-factor{
                     height: 2em;
@@ -48,6 +49,9 @@
                             height: .8em;
                         }
                     }
+                }
+                #servings{
+                    font-size: 1.2rem;
                 }
             }
         }
@@ -109,6 +113,7 @@
                     text-overflow: ellipsis;
                     max-width: 27vw;
                     min-width: 3em;
+                    width: 10vw;
                 }
 
                 #servingsHidden{

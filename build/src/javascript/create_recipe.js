@@ -13,28 +13,31 @@ function recieveRecipe() {
     
     function sent() {
         if(cookie in jsonData) {
-            jsonData = jsonData[cookie];
-            if("name" in jsonData) {
-                document.getElementsByName("title")[0].value = jsonData.name;
-            }
-            if("recipeYield" in jsonData) {
-                document.getElementsByName("servings")[0].value = jsonData.recipeYield;
-            }
-            if("prepTime" in jsonData) {
-                document.getElementsByName("prep time")[0].value = jsonData.prepTime;
-            }
-            if("cookTime" in jsonData) {
-                document.getElementsByName("cook time")[0].value = jsonData.cookTime;
-            }
-            if("totalTime" in jsonData) {
-                document.getElementsByName("total time")[0].value = jsonData.totalTime;
-            }
-            url = jsonData.url;
-            if("recipeIngredients" in jsonData) {
-                appendIngredients(jsonData.recipeIngredients);
-            }
-            if("recipeInstructions" in jsonData) {
-                appendInstructions(jsonData.recipeInstructions);
+            if(jsonData[cookie] == "Could not find recipe data") {
+            } else {
+                jsonData = jsonData[cookie];
+                if("name" in jsonData) {
+                    document.getElementsByName("title")[0].value = jsonData.name;
+                }
+                if("recipeYield" in jsonData) {
+                    document.getElementsByName("servings")[0].value = jsonData.recipeYield;
+                }
+                if("prepTime" in jsonData) {
+                    document.getElementsByName("prep time")[0].value = jsonData.prepTime;
+                }
+                if("cookTime" in jsonData) {
+                    document.getElementsByName("cook time")[0].value = jsonData.cookTime;
+                }
+                if("totalTime" in jsonData) {
+                    document.getElementsByName("total time")[0].value = jsonData.totalTime;
+                }
+                url = jsonData.url;
+                if("recipeIngredients" in jsonData) {
+                    appendIngredients(jsonData.recipeIngredients);
+                }
+                if("recipeInstructions" in jsonData) {
+                    appendInstructions(jsonData.recipeInstructions);
+                }
             }
         }
     }

@@ -3,8 +3,6 @@ const upButton = document.getElementById("scale-up-button");
 const downButton = document.getElementById("scale-down-button");
 const scaleServingsForm = document.getElementById("scale-servings-form");
 const viewRecipeButton = document.getElementById("view-recipe-button");
-const servings = document.getElementById("servings");
-const servingsHidden = document.getElementById("servingsHidden");
 
 let originalServings;
 let scaledServings;
@@ -178,11 +176,6 @@ function prettify(ingredient, isServing = false) {
         return FormatQuantity.formatQuantity(ingredient.quantity, { tolerance: 0.1 }) + " " + ingredient.unitOfMeasure + " " + ingredient.description;
     }
     return FormatQuantity.formatQuantity(ingredient.quantity, { tolerance: 0.1 }) + " " + ingredient.description;
-}
-
-function resizeServings(){
-    servingsHidden.innerHTML = servings.value;
-    servings.style.width = servingsHidden.clientWidth + 3 + "px";
 }
 
 // add the ingredients from ingredients input on form into the json data

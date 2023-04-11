@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   font-size: 16px;
   color: #262626;
@@ -218,6 +219,29 @@ h2 {
 
 form p {
   text-align: left;
+}
+form .loading {
+  display: none;
+  color: #397d2f;
+}
+form .loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
+  content: "…"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+@keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
 }
 form .url-input-div {
   gap: 0;

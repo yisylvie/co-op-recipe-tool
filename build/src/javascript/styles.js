@@ -1,4 +1,6 @@
 const unstuck = document.getElementsByClassName("unstuck");
+const servings = document.getElementById("servings");
+const servingsHidden = document.getElementById("servingsHidden");
 
 var observer = new IntersectionObserver(function(entries) {
 	// no intersection with screen
@@ -7,6 +9,7 @@ var observer = new IntersectionObserver(function(entries) {
             unstuck[i].classList.add("stuck");
             unstuck[i].classList.remove("unstuck");
         }
+        // resizeServings();
     }
 
 	// fully intersects with screen
@@ -16,6 +19,8 @@ var observer = new IntersectionObserver(function(entries) {
             stuck[i].classList.add("unstuck");
             stuck[i].classList.remove("stuck");
         }
+        console.log("unstuck");
+        // resizeServings();
     }
 }, { threshold: [0,1] });
 
@@ -30,4 +35,21 @@ document.querySelectorAll("div[contenteditable]").forEach((contenteditable) => {
     });
 });
 
+// change size of servings input to match size width of text
+function resizeServings(){
+    console.log(servingsHidden.clientWidth);
+    servingsHidden.innerHTML = servings.value;
+    servings.style.width = servingsHidden.clientWidth + 3 + "px";
+}
 
+// detect when user is editting ingredients or instructions and make um more better
+const ingredients = document.getElementsByName("ingredients")[0];
+setTextChangeListener(ingredients, function(event){
+    console.log(event);
+    console.log('Hey, somebody changed something in my text!');
+
+});
+
+// ingredients.addEventListener('input', function() {
+//     console.log('Hey, somebody changed something in my text!');
+// });

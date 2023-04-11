@@ -234,6 +234,9 @@ nav form div input[type=text] {
 #everything form .stuck > div > div .scale-arrow svg {
   height: 0.8em;
 }
+#everything form .stuck > div #servings {
+  font-size: 1.2rem;
+}
 #everything form header {
   display: flex;
   align-items: center;
@@ -297,6 +300,7 @@ nav form div input[type=text] {
   text-overflow: ellipsis;
   max-width: 27vw;
   min-width: 3em;
+  width: 10vw;
 }
 #everything form header > div #servingsHidden {
   position: absolute;
