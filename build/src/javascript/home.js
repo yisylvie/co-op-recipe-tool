@@ -47,43 +47,10 @@ setClickListener(submitUrlButton, function(event){
         inputManuallyButton.classList.remove("secondary-button");
     }
 });
-// submitUrlButton.addEventListener("keypress", function(event){
-//     clearRecipeData();
-//     timedOut = false;
-//     let url = document.getElementsByName("url")[0].value;
-//     if(isValidHttpUrl(url)) {
-//         sendUrl(url);
-//     } else {
-//         errorMessage[0].innerHTML = "Invalid URL (must include http or https). Try another or"
-//         errorMessage[0].style.display = "block";
-//         loading[0].style.display = "none";
-//         inputManuallyButton.classList.add("primary-button");
-//         inputManuallyButton.classList.remove("secondary-button");
-//     }
-// }, false);
 
-// submitUrlButton.addEventListener("click", function(event){
-//     clearRecipeData();
-//     timedOut = false;
-//     let url = document.getElementsByName("url")[0].value;
-//     if(isValidHttpUrl(url)) {
-//         sendUrl(url);
-//     } else {
-//         errorMessage[0].innerHTML = "Invalid URL (URL must start with http or https). Try another or"
-//         errorMessage[0].style.display = "block";
-//         loading[0].style.display = "none";
-//         inputManuallyButton.classList.add("primary-button");
-//         inputManuallyButton.classList.remove("secondary-button");
-//     }
-// }, false);
-
-inputManuallyButton.addEventListener("keypress", function(event){
+setClickListener(inputManuallyButton, function(event){
     window.location.href = 'create_recipe.html';
-}, false);
-
-inputManuallyButton.addEventListener("click", function(event){
-    window.location.href = 'create_recipe.html';
-}, false);
+});
 
 function sendUrl(url) {
     loading[0].innerHTML = "Fetching Recipe Data";

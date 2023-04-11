@@ -71,3 +71,15 @@ function setClickListener (el, listener) {
     el.addEventListener("keypress", listener);
     el.addEventListener("click", listener);
 }
+
+function getTrueHeight(element) {
+    let computedStyle = getComputedStyle(element);
+    let elementHeight = element.clientHeight;  // height with padding
+    return elementHeight -= parseFloat(computedStyle.paddingTop) + parseFloat(computedStyle.paddingBottom);
+}
+
+function getTrueWidth(element) {
+    let computedStyle = getComputedStyle(element);
+    let elementWidth = element.clientWidth;   // width with padding
+    return elementWidth -= parseFloat(computedStyle.paddingLeft) + parseFloat(computedStyle.paddingRight);
+}

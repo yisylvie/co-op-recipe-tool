@@ -309,7 +309,7 @@ nav form div input[type=text] {
 }
 #everything form > div {
   overflow: hidden;
-  padding: 7% 15%;
+  padding: 4% 15% 9% 15%;
   color: #4e4e4e;
 }
 #everything form > div :last-child {
@@ -322,6 +322,8 @@ nav form div input[type=text] {
   width: 100%;
   margin-bottom: 3em;
   align-items: flex-start;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 #everything form > div > div a, #everything form > div > div h2, #everything form > div > div h3, #everything form > div > div h4, #everything form > div > div h5, #everything form > div > div h6, #everything form > div > div input[type=text] {
   text-align: left;
@@ -364,7 +366,6 @@ nav form div input[type=text] {
   width: 57.5%;
 }
 #everything form > div > div #scaled-input ul {
-  width: 64.1666666667%;
   margin: auto;
 }
 #everything form > div > div #notes-input {

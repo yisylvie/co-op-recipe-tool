@@ -127,7 +127,7 @@
         // all the form elements
         > div{
             overflow: hidden;
-            padding: 7% 15%;
+            padding: 4% 15% 9% 15%;
             color: global.$grey1;
             :last-child{
                 margin-bottom: 0;
@@ -139,6 +139,12 @@
                 width: 100%;
                 margin-bottom: 3em;
                 align-items: flex-start;
+                
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                // -webkit-hyphens: auto;
+                // -moz-hyphens: auto;
+                // hyphens: auto;
                 
                 // one form item
                 > div {
@@ -187,7 +193,7 @@
                 #scaled-input{
                     width: 60% - 2.5%;
                     ul{
-                        width: math.div(40, 60) * 100% - 2.5% ;
+                        // width: math.div(40, 60) * 100% - 2.5% ;
                         margin: auto;
                         // line-height: 1.2em;
                     }

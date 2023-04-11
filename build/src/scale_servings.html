@@ -122,14 +122,14 @@
                     </div>
                 </header>
                 <div>
-                    <!-- <div>
+                    <div>
                         <div class="reminder">
                             <p>
                                 Check that ingredients scale as expected and cook times, equipment sizes, and other instructions are accurate.
                             </p>
                         </div>
-                    </div> -->
-                    <div style="display: none;">
+                    </div>
+                    <div>
                         <div>
                             <label for="prep time">Prep Time</label>
                             <input name="prep time" type="text">
@@ -148,7 +148,7 @@
                         <div id="original-ingredients">
                             <label for="ingredients">Original Ingredients</label>
                             <div>
-                                <ul>
+                                <ul id="original-ingredients-list">
                                     <li>
                                         
                                     </li>
@@ -158,7 +158,7 @@
                         <div id="scaled-input">
                             <label for="ingredients">Ingredients</label>
                             <div name="ingredients" contenteditable="true" role="textbox">
-                                <ul id="ingredients">
+                                <ul id="scaled-ingredients-list">
                                     <li>
                                         
                                     </li>
@@ -185,8 +185,8 @@
         <script src="https://unpkg.com/numeric-quantity"></script>
         <script src="https://unpkg.com/parse-ingredient"></script>
         <script src="https://unpkg.com/format-quantity"></script>
-        <script src="javascript/styles.js"></script>
         <script src="javascript/global.js"></script>
+        <script src="javascript/styles.js"></script>
         <script src="javascript/scale_servings.js"></script>
     </body>
 </html>

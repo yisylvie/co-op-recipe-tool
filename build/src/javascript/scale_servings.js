@@ -66,7 +66,7 @@ function appendIngredients(ingredients) {
         ul.appendChild(li);
     });
     document.getElementById("original-ingredients").querySelector("div").appendChild(ul);
-    
+
     document.getElementsByName("ingredients")[0].innerHTML = "";
     ul = document.createElement("ul");
     ingredients.forEach((ingredient) => {
@@ -76,6 +76,7 @@ function appendIngredients(ingredients) {
     });
     document.getElementsByName("ingredients")[0].appendChild(ul);
     console.log(originalIngredientsArray);
+    document.getElementsByName("ingredients")[0].querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
 }
 
 scaleServingsForm.addEventListener("submit", function(e) {
@@ -83,16 +84,12 @@ scaleServingsForm.addEventListener("submit", function(e) {
 });
 
 // go to previous page when back button is clicked
-backButton.addEventListener('click', function(event){
+setClickListener(backButton, function(event){
     event.preventDefault();
     window.location.href = 'create_recipe.html';
-}, false);
-backButton.addEventListener('keypress', function(event){
-    event.preventDefault();
-    window.location.href = 'create_recipe.html';
-}, false);
+});
 
-downButton.addEventListener('click', function(event){
+setClickListener(downButton, function(event){
     event.preventDefault();
     // make sure that we don't decrease below one serving
     if(scaledServings.quantity > 1) {
@@ -101,34 +98,16 @@ downButton.addEventListener('click', function(event){
     }
     resizeServings();
     alterIngredients(-1);
-}, false);
-downButton.addEventListener('keypress', function(event){
-    event.preventDefault();
-    // make sure that we don't decrease below one serving
-    if(scaledServings.quantity > 1) {
-        scaledServings.quantity -= 1;
-        document.getElementById("servings").value = prettify(scaledServings, true);
-    }
-    resizeServings();
-    alterIngredients(-1);
-}, false);
+});
 
-upButton.addEventListener('click', function(event){
+setClickListener(upButton, function(event){
     event.preventDefault();
     // make sure that we don't decrease below one serving
     scaledServings.quantity += 1;
     document.getElementById("servings").value = prettify(scaledServings, true);
     resizeServings();
     alterIngredients(1);
-}, false);
-upButton.addEventListener('keypress', function(event){
-    event.preventDefault();
-    // make sure that we don't decrease below one serving
-    scaledServings.quantity += 1;
-    document.getElementById("servings").value = prettify(scaledServings, true);
-    resizeServings();
-    alterIngredients(1);
-}, false);
+});
 
 servings.addEventListener("input", function(event) {
     event.preventDefault();

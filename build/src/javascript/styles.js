@@ -1,6 +1,7 @@
 const unstuck = document.getElementsByClassName("unstuck");
 const servings = document.getElementById("servings");
 const servingsHidden = document.getElementById("servingsHidden");
+const originalIngredients = document.getElementById("original-ingredients").querySelector("div");
 
 var observer = new IntersectionObserver(function(entries) {
 	// no intersection with screen
@@ -47,9 +48,25 @@ const ingredients = document.getElementsByName("ingredients")[0];
 setTextChangeListener(ingredients, function(event){
     console.log(event);
     console.log('Hey, somebody changed something in my text!');
-
+    ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
 });
 
-// ingredients.addEventListener('input', function() {
-//     console.log('Hey, somebody changed something in my text!');
-// });
+// make original ingredients and new ingredients scroll at the same rate
+ingredients.addEventListener("scroll", function(event) {
+    scrollUm(false);
+});
+originalIngredients.addEventListener("scroll", function(event) {
+    scrollUm(true);
+});
+function scrollUm(original) {
+    if(original) {
+        ingredients.scrollTop = originalIngredients.scrollTop;
+    } else {
+        originalIngredients.scrollTop = ingredients.scrollTop;
+    }
+}
+
+// listener for when window is resized
+addEventListener("resize", function(e) {
+    ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
+});
