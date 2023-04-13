@@ -33,9 +33,34 @@ function getCookie(cname) {
 function setCookie(cname, cvalue) {
     document.cookie = cname + "=" + cvalue;
 }
-console.log(sessionStorage);
-let cookie = sessionStorage.id;
 
+console.log(sessionStorage);
+let cookie;
+
+// try to get the cookie every 20 milliseconds until it is set or 5 seconds have past
+async function grabCookie() {
+    let myPromise = new Promise(function(resolve) {
+        var grabbed = setInterval(function(){
+            cookie = sessionStorage.id;
+            console.log(sessionStorage);
+            console.log(cookie);
+            if(cookie != undefined) {
+                clearInterval(grabbed);
+                resolve("we got the cookie yay");
+            }
+        }, 10);
+        setTimeout(function( ) { 
+            clearInterval( grabbed ); 
+            console.log("cookie grab timeout");
+            if(cookie == undefined) {
+                console.log("cookie was not grabbed before timeout");
+            }
+        }, 5000);
+    });
+    console.log(await myPromise);
+}
+
+grabCookie();
 
 // check if a url is actually a url
 function isValidHttpUrl(string) {
@@ -72,14 +97,63 @@ function setClickListener (el, listener) {
     el.addEventListener("click", listener);
 }
 
+// returns the height of an element excluding its padding
 function getTrueHeight(element) {
     let computedStyle = getComputedStyle(element);
     let elementHeight = element.clientHeight;  // height with padding
     return elementHeight -= parseFloat(computedStyle.paddingTop) + parseFloat(computedStyle.paddingBottom);
 }
 
+// returns the width of an element excluding its padding
 function getTrueWidth(element) {
     let computedStyle = getComputedStyle(element);
     let elementWidth = element.clientWidth;   // width with padding
     return elementWidth -= parseFloat(computedStyle.paddingLeft) + parseFloat(computedStyle.paddingRight);
 }
+
+// check if an element exists
+function elementExists(el) {
+    return document.body.contains(el);
+}
+
+// tell the server to clear any recipe data for the current user
+function clearRecipeData() {
+    const data = { "clearRecipe": true, "cookie": cookie};
+    fetch('json/recipe.json', {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { 'content-type': 'application/json', 
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "*"
+        }
+    })
+    .then(response => response.json())
+    .then(data => {console.log(data); jsonData = data; sent();})
+    .catch(err => console.error(err));
+    function sent() {
+        // window.location.href = 'create_recipe.html';
+        console.log("data cleared");
+    }
+}
+
+// tell the server to clear any modified recipe data for the current user
+// function clearRecipeData() {
+//     const data = { "clearRecipe": true, "cookie": cookie};
+//     fetch('json/recipe.json', {
+//         method: "POST",
+//         body: JSON.stringify(data),
+//         headers: { 'content-type': 'application/json', 
+//         "Access-Control-Allow-Origin": "*",
+//         "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
+//         "Access-Control-Allow-Headers": "*"
+//         }
+//     })
+//     .then(response => response.json())
+//     .then(data => {console.log(data); jsonData = data; sent();})
+//     .catch(err => console.error(err));
+//     function sent() {
+//         // window.location.href = 'create_recipe.html';
+//         console.log("data cleared");
+//     }
+// }

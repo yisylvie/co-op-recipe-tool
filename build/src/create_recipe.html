@@ -50,10 +50,10 @@
                     </button>
                 </header>
                 <div>
-                    <div>
+                    <div id="reminderDiv">
                         <div class="reminder">
                             <p>
-                                Input any missing information and double check that all recipe information populated as expected.
+                                Input any missing information, and double check that the recipe populated as expected.
                             </p>
                         </div>
                     </div>
@@ -125,6 +125,14 @@
                 </div>
             </form>
         </div>
+        <script type="module">
+            import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+            if(!("id" in sessionStorage)) {
+                // sessionStorage.id = (uuidv4());
+                sessionStorage.setItem('id', (uuidv4()));
+            }
+            console.log(sessionStorage);
+        </script>
         <script src="javascript/global.js"></script>
         <script src="javascript/styles.js"></script>
         <script src="javascript/create_recipe.js"></script>

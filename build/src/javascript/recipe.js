@@ -51,4 +51,8 @@ function appendInstructions(instructions) {
     });
 }
 
-recieveRecipe();
+// only recieveRecipe if cookie is set 
+grabCookie().then(
+    function(value) {recieveRecipe();},
+    function(error) {console.log(error);}
+);

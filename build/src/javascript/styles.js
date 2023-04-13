@@ -1,7 +1,7 @@
 const unstuck = document.getElementsByClassName("unstuck");
 const servings = document.getElementById("servings");
-const servingsHidden = document.getElementById("servingsHidden");
-const originalIngredients = document.getElementById("original-ingredients").querySelector("div");
+const servingsHidden = document.getElementById("servings-hidden");
+const servingsHiddenStuck = document.getElementById("servings-hidden-stuck");
 
 var observer = new IntersectionObserver(function(entries) {
 	// no intersection with screen
@@ -10,7 +10,7 @@ var observer = new IntersectionObserver(function(entries) {
             unstuck[i].classList.add("stuck");
             unstuck[i].classList.remove("unstuck");
         }
-        // resizeServings();
+        resizeServings();
     }
 
 	// fully intersects with screen
@@ -20,8 +20,8 @@ var observer = new IntersectionObserver(function(entries) {
             stuck[i].classList.add("unstuck");
             stuck[i].classList.remove("stuck");
         }
-        console.log("unstuck");
-        // resizeServings();
+        // console.log("unstuck");
+        resizeServings();
     }
 }, { threshold: [0,1] });
 
@@ -38,35 +38,81 @@ document.querySelectorAll("div[contenteditable]").forEach((contenteditable) => {
 
 // change size of servings input to match size width of text
 function resizeServings(){
-    console.log(servingsHidden.clientWidth);
-    servingsHidden.innerHTML = servings.value;
-    servings.style.width = servingsHidden.clientWidth + 3 + "px";
+    try {
+        if(servings.parentElement.parentElement.className == "unstuck") {
+            servingsHidden.innerHTML = servings.value;
+            servings.style.width = servingsHidden.clientWidth + 3 + "px";
+        } else{
+            servingsHiddenStuck.innerHTML = servings.value;
+            servings.style.width = servingsHiddenStuck.clientWidth + 1 + "px";
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 // detect when user is editting ingredients or instructions and make um more better
-const ingredients = document.getElementsByName("ingredients")[0];
-setTextChangeListener(ingredients, function(event){
-    console.log(event);
-    console.log('Hey, somebody changed something in my text!');
-    ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
-});
+try {
+    const ingredients = document.getElementsByName("ingredients")[0];
+    const originalIngredients = document.getElementById("original-ingredients").querySelector("div");
 
-// make original ingredients and new ingredients scroll at the same rate
-ingredients.addEventListener("scroll", function(event) {
-    scrollUm(false);
-});
-originalIngredients.addEventListener("scroll", function(event) {
-    scrollUm(true);
-});
-function scrollUm(original) {
-    if(original) {
-        ingredients.scrollTop = originalIngredients.scrollTop;
-    } else {
-        originalIngredients.scrollTop = ingredients.scrollTop;
+    // resize ingredients to be the same width as original when editting
+    setTextChangeListener(ingredients, function(event){
+        console.log(event);
+        console.log('Hey, somebody changed something in my text!');
+        ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
+    });
+    
+    // make original ingredients and new ingredients scroll at the same rate
+    ingredients.addEventListener("scroll", function(event) {
+        scrollUm(false);
+    });
+    originalIngredients.addEventListener("scroll", function(event) {
+        scrollUm(true);
+    });
+    function scrollUm(original) {
+        if(original) {
+            ingredients.scrollTop = originalIngredients.scrollTop;
+        } else {
+            originalIngredients.scrollTop = ingredients.scrollTop;
+        }
     }
+} catch (error) {
+    // console.log(error);
+}
+
+try {
+    const ingredients = document.getElementsByName("ingredients")[0];
+    const instructions = document.getElementsByName("instructions")[0];
+    // prevent div element from appearing in ingredients input
+    setTextChangeListener(ingredients, function(event){
+        ingredients.querySelectorAll("div").forEach(
+            function(e) {
+                e.remove();
+                let li = document.createElement('li');
+                ingredients.querySelector("ul").appendChild(li);
+            }
+        );        
+    });
+
+    setTextChangeListener(instructions, function(event){
+        instructions.querySelectorAll("div").forEach(
+            function(e) {
+                e.remove();
+                let li = document.createElement('li');
+                instructions.querySelector("ol").appendChild(li);
+            }
+        );        
+    });
+} catch (error) {
+    // console.log(error);
 }
 
 // listener for when window is resized
 addEventListener("resize", function(e) {
-    ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
+    try {
+        ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
+    } catch (error) {
+        // console.log(error); 
+    }
 });

@@ -5,28 +5,16 @@ const errorMessage = document.getElementsByClassName("error-message");
 const loading = document.getElementsByClassName("loading");
 let timedOut = false;
 
-// tell the server to clear any recipe data for the current user
-function clearRecipeData() {
-    let jsonData;
-    const data = { "clearRecipe": true, "cookie": cookie};
-    fetch('json/recipe.json', {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { 'content-type': 'application/json', 
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "*"
-        }
-    })
-    .then(response => response.json())
-    .then(data => {console.log(data); jsonData = data; sent();})
-    .catch(err => console.error(err));
-    function sent() {
-        // window.location.href = 'create_recipe.html';
-    }
+// check that the cookie is set before clearing data
+if(cookie == undefined) {
+    grabCookie().then(
+        function(value) {clearRecipeData();},
+        function(error) {console.log(error);}
+    );
+} else {
+    clearRecipeData();
 }
 
-clearRecipeData();
 
 urlInputForm.addEventListener("submit", function(event){
     event.preventDefault();
@@ -38,9 +26,17 @@ setClickListener(submitUrlButton, function(event){
     timedOut = false;
     let url = document.getElementsByName("url")[0].value;
     if(isValidHttpUrl(url)) {
-        sendUrl(url);
+        // if the cookie is unset grab it first
+        if(cookie == undefined) {
+            grabCookie().then(
+                function(value) {sendUrl(url);},
+                function(error) {console.log(error);}
+            );
+        } else {
+            sendUrl(url);
+        }
     } else {
-        errorMessage[0].innerHTML = "Invalid URL (must include http or https). Try another or"
+        errorMessage[0].innerHTML = "Invalid URL (URL must begin with http or https). Try another or"
         errorMessage[0].style.display = "block";
         loading[0].style.display = "none";
         inputManuallyButton.classList.add("primary-button");
@@ -58,7 +54,6 @@ function sendUrl(url) {
     loading[0].style.display = "block";
     inputManuallyButton.classList.remove("primary-button");
     inputManuallyButton.classList.add("secondary-button");
-    let jsonData;
     const data = { "fetchRecipeFromUrl": true, "url": url, "cookie": cookie};
     fetch('json/recipe.json', {
         method: "POST",
@@ -101,6 +96,7 @@ function recieveRecipe() {
                 inputManuallyButton.classList.add("primary-button");
                 inputManuallyButton.classList.remove("secondary-button");
             } else {
+                loading[0].style.display = "none";
                 window.location.href = 'create_recipe.html';
             }
         } else {

@@ -2,8 +2,12 @@ const backButton = document.getElementById("back-button");
 const upButton = document.getElementById("scale-up-button");
 const downButton = document.getElementById("scale-down-button");
 const scaleServingsForm = document.getElementById("scale-servings-form");
+const resetButton = document.getElementById("reset");
+const scaleFactorButtons = document.getElementsByClassName("scale-factor");
 const viewRecipeButton = document.getElementById("view-recipe-button");
-
+const ingredients = document.getElementsByName("ingredients")[0];
+const originalIngredients = document.getElementById("original-ingredients").querySelector("div");
+    
 let originalServings;
 let scaledServings;
 let originalIngredientsArray = [];
@@ -11,6 +15,9 @@ let scaledIngredientsArray = [];
 
 // grab recipe from json/modified_recipe.json and input it into the form
 function recieveRecipe() {
+    if(cookie == undefined) {
+        console.log("cookie unset");
+    }
     let jsonData;
     fetch('json/modified_recipe.json', {
         method: "POST",
@@ -52,7 +59,11 @@ function recieveRecipe() {
     }
 }
 
-recieveRecipe();
+// only recieveRecipe if cookie is set 
+grabCookie().then(
+    function(value) {recieveRecipe();},
+    function(error) {console.log(error);}
+);
 
 // add the ingredients from the json data into ingredients input on form
 function appendIngredients(ingredients) {
@@ -89,45 +100,92 @@ setClickListener(backButton, function(event){
     window.location.href = 'create_recipe.html';
 });
 
+// scale down by 1 serving when down button is clicked
 setClickListener(downButton, function(event){
     event.preventDefault();
     // make sure that we don't decrease below one serving
     if(scaledServings.quantity > 1) {
         scaledServings.quantity -= 1;
+        unhighlightScaleButton();
         document.getElementById("servings").value = prettify(scaledServings, true);
+        alterIngredients();
+        // resizeServings();
     }
-    resizeServings();
-    alterIngredients(-1);
 });
 
+// scale up by 1 serving when up button is clicked
 setClickListener(upButton, function(event){
     event.preventDefault();
-    // make sure that we don't decrease below one serving
     scaledServings.quantity += 1;
     document.getElementById("servings").value = prettify(scaledServings, true);
-    resizeServings();
-    alterIngredients(1);
+    unhighlightScaleButton();
+    alterIngredients();
+    // resizeServings();
 });
 
+// reset servings to original when reset button is clicked
+setClickListener(resetButton, function(event){
+    event.preventDefault();
+    scaledServings.quantity = originalServings.quantity;
+    unhighlightScaleButton();
+    document.getElementById("servings").value = prettify(scaledServings, true);
+    alterIngredients();
+});
+
+// scale up by # servings inputted when servings size is editted
 servings.addEventListener("input", function(event) {
     event.preventDefault();
-    scaledServings = ParseIngredient.parseIngredient(servings.value)[0];
     resizeServings();
-    alterIngredients(scaledServings.quantity);
+    oldServings = scaledServings;
+    scaledServings = ParseIngredient.parseIngredient(servings.value)[0];
+    // document.getElementById("servings").value = prettify(scaledServings, true);
+    if(scaledServings.quantity > 0) {
+        unhighlightScaleButton();
+        alterIngredients();
+    } else {
+        scaledServings = oldServings;
+        // document.getElementById("servings").value = prettify(scaledServings, true);
+    }
 });
 
-viewRecipeButton.addEventListener('click', function(event){
+servings.addEventListener("change", function(event) {
+    event.preventDefault();
+    document.getElementById("servings").value = prettify(scaledServings, true);
+    console.log("servingsSubmitted");
+    // if(scaledServings.quantity < 1) {
+    //     unhighlightScaleButton();
+    //     alterIngredients();
+    // } else {
+    //     // document.getElementById("servings").value = prettify(scaledServings, true);
+    // }
+});
+
+// send scaled recipe to server when user clicks "scale servings" then redirect to recipe.html
+setClickListener(viewRecipeButton, function(event){
     event.preventDefault();
     sendRecipe();
-}, false);
-viewRecipeButton.addEventListener('keypress', function(event){
-    event.preventDefault();
-    sendRecipe();
-}, false);
+});
+
+// scale up by scale factor when a scale factor button is clicked
+for (let i = 0; i < scaleFactorButtons.length; i++) {    
+    // index starts with 0 but scale starts from 2x
+    let scaleFactor = i + 2;
+    setClickListener(scaleFactorButtons[i], function(event){
+        event.preventDefault();       
+        
+        unhighlightScaleButton();
+
+        // highlight button being clicked
+        scaleFactorButtons[i].classList.add("primary-button");
+        scaleFactorButtons[i].classList.remove("secondary-button");
+        scaledServings.quantity = originalServings.quantity * scaleFactor;
+        document.getElementById("servings").value = prettify(scaledServings, true);
+        alterIngredients();
+    });
+}
 
 // increase number of servings by amount and scale ingredients accordingly
-function alterIngredients(amount) {
-    
+function alterIngredients() {
     let prevServings = originalServings.quantity;
     let scaleFactor = scaledServings.quantity / prevServings;
 
@@ -143,6 +201,8 @@ function alterIngredients(amount) {
         ul.appendChild(li);
     });
     document.getElementsByName("ingredients")[0].appendChild(ul);
+    resizeServings();
+    ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
 }
 
 // format ingredient from ingredient object into viewable string
@@ -155,6 +215,15 @@ function prettify(ingredient, isServing = false) {
         return FormatQuantity.formatQuantity(ingredient.quantity, { tolerance: 0.1 }) + " " + ingredient.unitOfMeasure + " " + ingredient.description;
     }
     return FormatQuantity.formatQuantity(ingredient.quantity, { tolerance: 0.1 }) + " " + ingredient.description;
+}
+
+// if a scale button was previously clicked, unhighlight it
+function unhighlightScaleButton() {
+    let oldScaleButton = document.querySelector(".primary-button.scale-factor");
+    if(oldScaleButton) {
+        oldScaleButton.classList.add("secondary-button");
+        oldScaleButton.classList.remove("primary-button");
+    }
 }
 
 // add the ingredients from ingredients input on form into the json data

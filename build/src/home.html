@@ -35,8 +35,10 @@
         <script type="module">
             import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
             if(!("id" in sessionStorage)) {
-                sessionStorage.id = (uuidv4());
+                // sessionStorage.id = (uuidv4());
+                sessionStorage.setItem('id', (uuidv4()));
             }
+            console.log(sessionStorage);
         </script>
         <script src="javascript/global.js"></script>
         <script src="javascript/home.js"></script>

@@ -1,4 +1,6 @@
 let url;
+console.log(cookie);
+console.log(sessionStorage);
 
 // grab recipe from json/recipe.json and input it into the form
 function recieveRecipe() {
@@ -14,7 +16,14 @@ function recieveRecipe() {
     function sent() {
         if(cookie in jsonData) {
             if(jsonData[cookie] == "Could not find recipe data") {
+            } else if(cookie == undefined) {
+                console.log("cookie unset");
+                cookie = sessionStorage.id;
+                console.log(cookie);
+                console.log(sessionStorage.id);
+                return;
             } else {
+                document.querySelector(".reminder").parentElement.style.display = "flex";
                 jsonData = jsonData[cookie];
                 if("name" in jsonData) {
                     document.getElementsByName("title")[0].value = jsonData.name;
@@ -39,11 +48,21 @@ function recieveRecipe() {
                     appendInstructions(jsonData.recipeInstructions);
                 }
             }
+        } else{
+            console.log("cookie not in jsonData");
         }
     }
 }
 
-recieveRecipe();
+// check that the cookie is set before grabbing recipe
+if(cookie == undefined) {
+    grabCookie().then(
+        function(value) {recieveRecipe();},
+        function(error) {console.log(error);}
+    );
+} else {
+    recieveRecipe();
+}
 
 // add the ingredients from the json data into ingredients input on form
 function appendIngredients(ingredients) {
@@ -82,6 +101,13 @@ recipeInputForm.addEventListener("submit", function(e) {
 
 // send edited recipe to server when user clicks "scale servings"
 function sendRecipe() {
+    if(cookie == undefined) {
+        console.log("cookie unset");
+        cookie = sessionStorage.id;
+        console.log(cookie);
+        console.log(sessionStorage.id);
+        // return;
+    }
     let jsonData = {
         name:undefined,
         recipeYield:undefined,
