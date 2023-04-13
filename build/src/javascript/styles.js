@@ -2,6 +2,7 @@ const unstuck = document.getElementsByClassName("unstuck");
 const servings = document.getElementById("servings");
 const servingsHidden = document.getElementById("servings-hidden");
 const servingsHiddenStuck = document.getElementById("servings-hidden-stuck");
+const timeInputs = document.getElementsByClassName("time-input");
 
 var observer = new IntersectionObserver(function(entries) {
 	// no intersection with screen
@@ -55,14 +56,6 @@ function resizeServings(){
 try {
     const ingredients = document.getElementsByName("ingredients")[0];
     const originalIngredients = document.getElementById("original-ingredients").querySelector("div");
-
-    // resize ingredients to be the same width as original when editting
-    setTextChangeListener(ingredients, function(event){
-        console.log(event);
-        console.log('Hey, somebody changed something in my text!');
-        ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
-    });
-    
     // make original ingredients and new ingredients scroll at the same rate
     ingredients.addEventListener("scroll", function(event) {
         scrollUm(false);
@@ -84,25 +77,50 @@ try {
 try {
     const ingredients = document.getElementsByName("ingredients")[0];
     const instructions = document.getElementsByName("instructions")[0];
+
     // prevent div element from appearing in ingredients input
+    // and ul from disappearing
     setTextChangeListener(ingredients, function(event){
+        console.log("ediitttting");
+        if(!ingredients.contains(ingredients.querySelector("ul"))) {
+            let ul = document.createElement('ul');
+            // ul.appendChild(document.createElement('li'));
+            ingredients.appendChild(ul);
+        }   
         ingredients.querySelectorAll("div").forEach(
             function(e) {
                 e.remove();
-                let li = document.createElement('li');
-                ingredients.querySelector("ul").appendChild(li);
+                // let li = document.createElement('li');
+                // ingredients.querySelector("ul").appendChild(li);
             }
-        );        
+        );  
+        if(!ingredients.contains(ingredients.querySelector("li"))) {
+            let li = document.createElement('li');
+            ingredients.querySelector("ul").appendChild(li);
+        }   
+        ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
     });
 
+    // prevent div element from appearing in ingredients input
+    // and ol from disappearing
     setTextChangeListener(instructions, function(event){
+        console.log("ediitttting");
+        if(!instructions.contains(instructions.querySelector("ol"))) {
+            let ol = document.createElement('ol');
+            // ol.appendChild(document.createElement('li'));
+            instructions.appendChild(ol);
+        }   
         instructions.querySelectorAll("div").forEach(
             function(e) {
                 e.remove();
-                let li = document.createElement('li');
-                instructions.querySelector("ol").appendChild(li);
+                // let li = document.createElement('li');
+                // instructions.querySelector("ol").appendChild(li);
             }
-        );        
+        );    
+        if(!instructions.contains(instructions.querySelector("li"))) {
+            let li = document.createElement('li');
+            instructions.querySelector("ol").appendChild(li);
+        }   
     });
 } catch (error) {
     // console.log(error);
@@ -116,3 +134,19 @@ addEventListener("resize", function(e) {
         // console.log(error); 
     }
 });
+
+
+function checkValue(str) {
+    var num = parseInt(str);
+    if (isNaN(num)) num = 0;
+    str = num;
+    return str;
+}
+
+// event fired when form is sent when a required field is unfilled
+document.addEventListener('invalid', (function () {
+    return function (e) {
+        e.preventDefault();
+        console.log("invaliiddd");
+    };
+})(), true);

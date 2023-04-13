@@ -77,9 +77,31 @@
                     height: 1.2em;
                     color: global.$grey1;
                     svg{
+                        display: block;
+                        width: fit-content;
                         height: 100%;
                     }
+                    transition: none;
+                    // animation:twist 4s linear 1;
                 }
+
+                @keyframes bounceTwist {
+                    0%   {rotate: 0;}
+                    30%  {rotate: -30deg;}
+                    60%  {rotate: -0deg;}
+                    80% {rotate: -15deg;}
+                    100% {rotate: 0;}
+                }
+
+                #reset:hover{
+                    animation: bounceTwist 300ms 1;
+                }
+
+                #reset.twist{
+                    transform: rotate(-360deg);
+                    transition: 250ms;
+                }
+
                 > div{
                     display: flex;
                     flex-direction: column;
@@ -103,11 +125,16 @@
                     }
                 }
 
-                .scale-factor:hover{
+                .scale-factor.secondary-button:hover{
                     color: white;
                     background-color: global.$green2;
                     outline: unset;
                     border-color: global.$green2;
+                }
+
+                .scale-factor.primary-button:hover{
+                    background-color: global.$green1;
+                    border-color: global.$green1;
                 }
 
                 #servings{

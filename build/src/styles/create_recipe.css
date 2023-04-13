@@ -265,9 +265,36 @@ nav form div input[type=text] {
 #everything form header > div > #reset {
   height: 1.2em;
   color: #4e4e4e;
+  transition: none;
 }
 #everything form header > div > #reset svg {
+  display: block;
+  width: fit-content;
   height: 100%;
+}
+@keyframes bounceTwist {
+  0% {
+    rotate: 0;
+  }
+  30% {
+    rotate: -30deg;
+  }
+  60% {
+    rotate: 0deg;
+  }
+  80% {
+    rotate: -15deg;
+  }
+  100% {
+    rotate: 0;
+  }
+}
+#everything form header > div #reset:hover {
+  animation: bounceTwist 300ms 1;
+}
+#everything form header > div #reset.twist {
+  transform: rotate(-360deg);
+  transition: 250ms;
 }
 #everything form header > div > div {
   display: flex;
@@ -291,11 +318,15 @@ nav form div input[type=text] {
   text-align: center;
   font-size: 1.1em;
 }
-#everything form header > div .scale-factor:hover {
+#everything form header > div .scale-factor.secondary-button:hover {
   color: white;
   background-color: #78a671;
   outline: unset;
   border-color: #78a671;
+}
+#everything form header > div .scale-factor.primary-button:hover {
+  background-color: #397d2f;
+  border-color: #397d2f;
 }
 #everything form header > div #servings {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;

@@ -44,6 +44,7 @@ setClickListener(submitUrlButton, function(event){
     }
 });
 
+// redirect to create recipe on manual input click
 setClickListener(inputManuallyButton, function(event){
     window.location.href = 'create_recipe.html';
 });

@@ -90,7 +90,7 @@ function appendIngredients(ingredients) {
     document.getElementsByName("ingredients")[0].querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
 }
 
-scaleServingsForm.addEventListener("submit", function(e) {
+scaleServingsForm.addEventListener("change", function(e) {
     e.preventDefault();
 });
 
@@ -120,16 +120,29 @@ setClickListener(upButton, function(event){
     document.getElementById("servings").value = prettify(scaledServings, true);
     unhighlightScaleButton();
     alterIngredients();
+    console.log('1 scale upper');
     // resizeServings();
 });
 
 // reset servings to original when reset button is clicked
 setClickListener(resetButton, function(event){
+    // if(resetButton.classList.contains("twist")) {
+    //     resetButton.classList.remove("twist");
+    //     resetButton.classList.add("twist2");
+    // } else{
+    //     resetButton.classList.remove("twist2");
+        resetButton.classList.add("twist");
+    // }
+    // resetButton.classList.remove("twist");
     event.preventDefault();
     scaledServings.quantity = originalServings.quantity;
     unhighlightScaleButton();
     document.getElementById("servings").value = prettify(scaledServings, true);
     alterIngredients();
+});
+
+resetButton.addEventListener('transitionend', function(){
+    resetButton.classList.remove("twist");
 });
 
 // scale up by # servings inputted when servings size is editted
@@ -148,16 +161,24 @@ servings.addEventListener("input", function(event) {
     }
 });
 
+// check that servings are formatted properly once user stops inputting
 servings.addEventListener("change", function(event) {
     event.preventDefault();
+    // event.stopImmediatePropagation();
     document.getElementById("servings").value = prettify(scaledServings, true);
     console.log("servingsSubmitted");
-    // if(scaledServings.quantity < 1) {
-    //     unhighlightScaleButton();
-    //     alterIngredients();
-    // } else {
-    //     // document.getElementById("servings").value = prettify(scaledServings, true);
-    // }
+    resizeServings();
+});
+
+// fix weird bug that makes servings increase by 1 when enter is clicked
+servings.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        console.log("bro");
+        e.preventDefault();
+        document.getElementById("servings").value = prettify(scaledServings, true);
+        console.log("servingsSubmitted");
+        resizeServings();
+    }
 });
 
 // send scaled recipe to server when user clicks "scale servings" then redirect to recipe.html
