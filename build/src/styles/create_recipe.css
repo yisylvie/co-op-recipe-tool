@@ -136,8 +136,8 @@ button:hover, input[type=submit]:hover {
 nav {
   display: flex;
   align-items: center;
-  gap: 20em;
-  padding: 0.6em 3em;
+  gap: 0;
+  padding: 0.9em 3em;
   border-bottom: 0.07rem solid #e5e5e5;
   background-color: white;
 }
@@ -147,6 +147,11 @@ nav a, nav h2, nav h3, nav h4, nav h5, nav h6, nav input[type=text] {
 nav h1 {
   font-size: 1.3rem;
   font-weight: 300;
+}
+nav form {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 nav form p {
   text-align: left;
@@ -184,6 +189,13 @@ nav form div input[type=text] {
   margin-top: 7vh;
   margin-bottom: 20vh;
   position: relative;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
 .error-message {
@@ -337,6 +349,16 @@ nav form div input[type=text] {
   max-width: 27vw;
   min-width: 3em;
   width: 10vw;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border-radius: 0.2rem;
+  border: 0.07rem solid #e5e5e5;
+  border-color: #bbbcbb;
+  line-height: 2em;
+}
+#everything form header > div #servings:focus {
+  outline: 0.07rem solid #78a671;
+  border-color: #78a671;
 }
 #everything form header > div #servings-hidden {
   position: absolute;
@@ -394,6 +416,20 @@ nav form div input[type=text] {
 }
 #everything form > div > div .reminder {
   width: 100%;
+}
+#everything form > div > div .required-label:after {
+  color: #d2232a;
+  content: " *";
+  display: inline;
+}
+#everything form > div > div input[type=text].invalid {
+  border-color: red;
+}
+#everything form > div > div div[contenteditable].invalid {
+  border-color: red;
+}
+#everything form > div > div .error-message {
+  margin-top: -0.2em;
 }
 #everything form > div > div #original-ingredients {
   width: 37.5%;
@@ -476,8 +512,8 @@ nav form div input[type=text] {
   border-radius: 0.2rem;
   border: 0.07rem solid #e5e5e5;
   border-color: #bbbcbb;
-  min-height: 25em;
-  max-height: 50em;
+  min-height: 16em;
+  max-height: 80vh;
   width: -webkit-fill-available;
   resize: none;
   overflow: scroll;

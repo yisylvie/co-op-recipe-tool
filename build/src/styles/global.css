@@ -136,8 +136,8 @@ button:hover, input[type=submit]:hover {
 nav {
   display: flex;
   align-items: center;
-  gap: 20em;
-  padding: 0.6em 3em;
+  gap: 0;
+  padding: 0.9em 3em;
   border-bottom: 0.07rem solid #e5e5e5;
   background-color: white;
 }
@@ -147,6 +147,11 @@ nav a, nav h2, nav h3, nav h4, nav h5, nav h6, nav input[type=text] {
 nav h1 {
   font-size: 1.3rem;
   font-weight: 300;
+}
+nav form {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 nav form p {
   text-align: left;
@@ -184,6 +189,13 @@ nav form div input[type=text] {
   margin-top: 7vh;
   margin-bottom: 20vh;
   position: relative;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
 .error-message {

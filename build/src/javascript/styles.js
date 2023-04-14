@@ -82,6 +82,10 @@ try {
     // and ul from disappearing
     setTextChangeListener(ingredients, function(event){
         console.log("ediitttting");
+        if (ingredients.querySelector("ul").textContent) {
+            ingredients.classList.remove("invalid");
+            ingredients.parentElement.querySelector(".error-message").style.display = "none";
+        }
         if(!ingredients.contains(ingredients.querySelector("ul"))) {
             let ul = document.createElement('ul');
             // ul.appendChild(document.createElement('li'));
@@ -98,13 +102,17 @@ try {
             let li = document.createElement('li');
             ingredients.querySelector("ul").appendChild(li);
         }   
-        ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
+        // ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
     });
 
     // prevent div element from appearing in ingredients input
     // and ol from disappearing
     setTextChangeListener(instructions, function(event){
         console.log("ediitttting");
+        if (instructions.querySelector("ol").textContent) {
+            instructions.classList.remove("invalid");
+            instructions.parentElement.querySelector(".error-message").style.display = "none";
+        }
         if(!instructions.contains(instructions.querySelector("ol"))) {
             let ol = document.createElement('ol');
             // ol.appendChild(document.createElement('li'));
@@ -147,6 +155,5 @@ function checkValue(str) {
 document.addEventListener('invalid', (function () {
     return function (e) {
         e.preventDefault();
-        console.log("invaliiddd");
     };
 })(), true);

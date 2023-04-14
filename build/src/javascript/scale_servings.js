@@ -40,8 +40,9 @@ function recieveRecipe() {
                 scaledServings = ParseIngredient.parseIngredient("1 Recipes")[0];
             } else {
                 // get servings and unit of servings, setting unit to "servings" if there is none
-                originalServings = ParseIngredient.parseIngredient(jsonData.recipeYield)[0];
-                scaledServings = ParseIngredient.parseIngredient(jsonData.recipeYield)[0];
+                originalServings = ParseIngredient.parseIngredient(jsonData.recipeYield, { allowLeadingOf: true })[0];
+                scaledServings = ParseIngredient.parseIngredient(jsonData.recipeYield, { allowLeadingOf: true })[0];
+
                 if(originalServings.description == "") {
                     originalServings.description = "Servings";
                     scaledServings.description = "Servings";
@@ -70,8 +71,8 @@ function appendIngredients(ingredients) {
     document.getElementById("original-ingredients").querySelector("div").innerHTML = "";
     let ul = document.createElement("ul");
     ingredients.forEach((ingredient) => {
-        originalIngredientsArray.push(ParseIngredient.parseIngredient(ingredient)[0]);
-        scaledIngredientsArray.push(ParseIngredient.parseIngredient(ingredient)[0]);
+        originalIngredientsArray.push(ParseIngredient.parseIngredient(ingredient, { allowLeadingOf: true })[0]);
+        scaledIngredientsArray.push(ParseIngredient.parseIngredient(ingredient, { allowLeadingOf: true })[0]);
         let li = document.createElement("li");
         li.innerHTML = ingredient;
         ul.appendChild(li);
@@ -126,16 +127,9 @@ setClickListener(upButton, function(event){
 
 // reset servings to original when reset button is clicked
 setClickListener(resetButton, function(event){
-    // if(resetButton.classList.contains("twist")) {
-    //     resetButton.classList.remove("twist");
-    //     resetButton.classList.add("twist2");
-    // } else{
-    //     resetButton.classList.remove("twist2");
-        resetButton.classList.add("twist");
-    // }
-    // resetButton.classList.remove("twist");
+    resetButton.classList.add("twist");
     event.preventDefault();
-    scaledServings.quantity = originalServings.quantity;
+    scaledServings = originalServings;
     unhighlightScaleButton();
     document.getElementById("servings").value = prettify(scaledServings, true);
     alterIngredients();
@@ -150,15 +144,26 @@ servings.addEventListener("input", function(event) {
     event.preventDefault();
     resizeServings();
     oldServings = scaledServings;
-    scaledServings = ParseIngredient.parseIngredient(servings.value)[0];
-    // document.getElementById("servings").value = prettify(scaledServings, true);
-    if(scaledServings.quantity > 0) {
+    scaledServings = ParseIngredient.parseIngredient(servings.value, { allowLeadingOf: true })[0];
+
+    console.log(scaledServings);
+    
+    // fix bug where # of servings can't be in the form .4 (no 0 before decimal point)
+    if(scaledServings.quantity == null && scaledServings.description[0] == ".") {
+        scaledServings = ParseIngredient.parseIngredient("0" + scaledServings.description, { allowLeadingOf: true });
+    }
+
+    // don't change unless input is valid
+    if(scaledServings != undefined && scaledServings.quantity > 0) {
         unhighlightScaleButton();
         alterIngredients();
-    } else {
-        scaledServings = oldServings;
-        // document.getElementById("servings").value = prettify(scaledServings, true);
+        if(scaledServings.description == "") {
+            scaledServings.description = oldServings.description;
+        }
+        return;
     }
+    // change to previous value if invalid input
+    scaledServings = oldServings;
 });
 
 // check that servings are formatted properly once user stops inputting
@@ -228,9 +233,11 @@ function alterIngredients() {
 
 // format ingredient from ingredient object into viewable string
 function prettify(ingredient, isServing = false) {
+    // round numbers and remove numbers in the description
+    scaledServings.description = scaledServings.description.replace(/^\.*\d+/, "");
     if(isServing) {
-        return scaledServings.quantity + " " + scaledServings.description;
-    }
+        return parseFloat(Number(scaledServings.quantity).toFixed(3)) + " " + scaledServings.description;
+    } 
 
     if(ingredient.unitOfMeasure) {
         return FormatQuantity.formatQuantity(ingredient.quantity, { tolerance: 0.1 }) + " " + ingredient.unitOfMeasure + " " + ingredient.description;

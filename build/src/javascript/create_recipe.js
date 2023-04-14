@@ -1,7 +1,9 @@
 let url;
 console.log(cookie);
 console.log(sessionStorage);
-
+const ingredientsInput = document.getElementsByName("ingredients")[0];
+// const ingredientsInput = document.querySelector('[name = "ingredients"]');
+const instructionsInput = document.getElementsByName("instructions")[0];
 // grab recipe from json/recipe.json and input it into the form
 function recieveRecipe() {
     let jsonData;
@@ -66,7 +68,7 @@ if(cookie == undefined) {
 
 // add the ingredients from the json data into ingredients input on form
 function appendIngredients(ingredients) {
-    document.getElementsByName("ingredients")[0].innerHTML = "";
+    ingredientsInput.innerHTML = "";
     let ul = document.createElement("ul");
     ingredients.forEach((ingredient) => {
         if(ingredient != null) {
@@ -75,12 +77,12 @@ function appendIngredients(ingredients) {
             ul.appendChild(li);
         }
     });
-    document.getElementsByName("ingredients")[0].appendChild(ul);
+    ingredientsInput.appendChild(ul);
 }
 
 // add the instructions from the json data into instructions input on form
 function appendInstructions(instructions) {
-    document.getElementsByName("instructions")[0].innerHTML = "";
+    instructionsInput.innerHTML = "";
     let ol = document.createElement("ol");
     instructions.forEach((instruction) => {
         if(instruction != null) {
@@ -89,15 +91,58 @@ function appendInstructions(instructions) {
             ol.appendChild(li);
         }
     });
-    document.getElementsByName("instructions")[0].appendChild(ol);
+    instructionsInput.appendChild(ol);
 }
 
 const recipeInputForm = document.getElementById("recipe-input-form");
 
 recipeInputForm.addEventListener("submit", function(e) {
     e.preventDefault();
-    sendRecipe();
+    // if there is only whitespace in the ingredients give error message
+    let error = false;
+    if(/^\s*$/.test(ingredientsInput.querySelector("ul").textContent)) {
+        console.log("stuff:" + ingredientsInput.querySelector("ul").textContent + ":end");
+        ingredientsInput.classList.add("invalid");
+        ingredientsInput.parentElement.querySelector(".error-message").style.display = "block";
+        error = true;
+    } 
+    if(/^\s*$/.test(instructionsInput.querySelector("ol").textContent)) {
+        console.log("stuff:" + instructionsInput.querySelector("ol").textContent + ":end");
+        instructionsInput.classList.add("invalid");
+        instructionsInput.parentElement.querySelector(".error-message").style.display = "block";
+        error = true;
+    } 
+    if(!error) {
+        sendRecipe();
+    }
 });
+
+// event fired when servings is written in wrong format or title is blank
+recipeInputForm.addEventListener('invalid', (function () {
+    return function (e) {
+        e.preventDefault();
+        if(/^\s*$/.test(ingredientsInput.querySelector("ul").textContent)) {
+            console.log("stuff:" + ingredientsInput.querySelector("ul").textContent + ":end");
+            ingredientsInput.classList.add("invalid");
+            ingredientsInput.parentElement.querySelector(".error-message").style.display = "block";
+            error = true;
+        } 
+        if(/^\s*$/.test(instructionsInput.querySelector("ol").textContent)) {
+            console.log("stuff:" + instructionsInput.querySelector("ol").textContent + ":end");
+            instructionsInput.classList.add("invalid");
+            instructionsInput.parentElement.querySelector(".error-message").style.display = "block";
+            error = true;
+        } 
+        e.target.classList.add("invalid");
+        e.target.parentElement.querySelector(".error-message").style.display = "block";
+    };
+})(), true);
+
+recipeInputForm.addEventListener("input", function(e) {
+    e.target.classList.remove("invalid");
+    e.target.parentElement.querySelector(".error-message").style.display = "none";
+});
+
 
 // send edited recipe to server when user clicks "scale servings"
 function sendRecipe() {
@@ -155,7 +200,7 @@ function sendRecipe() {
 
 // add the ingredients from ingredients input on form into the json data
 function grabIngredients(jsonData) {
-    let lis = document.getElementsByName("ingredients")[0].querySelectorAll("li");
+    let lis = ingredientsInput.querySelectorAll("li");
     let ingredients = [];
     lis.forEach((li) => {
         ingredients.push(li.innerHTML);
@@ -165,7 +210,7 @@ function grabIngredients(jsonData) {
 
 // add the instructions from instructions input on form into the json data
 function grabInstructions(jsonData) {
-    let lis = document.getElementsByName("instructions")[0].querySelectorAll("li");
+    let lis = ingredientsInput.querySelectorAll("li");
     let instructions = [];
     lis.forEach((li) => {
         instructions.push(li.innerHTML);

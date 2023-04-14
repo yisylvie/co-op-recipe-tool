@@ -191,8 +191,8 @@ button:hover, input[type="submit"]:hover{
 }
 
 nav{
-    @include flex(false, 20em, false);
-    padding: .6em 3em;
+    @include flex(false, 0, false);
+    padding: .9em 3em;
     border-bottom: $thinGreyBorder;
     background-color: white;
     
@@ -202,6 +202,10 @@ nav{
     }
     
     form{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+
         p{
             text-align: left;
         }
@@ -236,6 +240,13 @@ nav{
     margin-top: 7vh;
     margin-bottom: 20vh;
     position: relative;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
 .error-message{

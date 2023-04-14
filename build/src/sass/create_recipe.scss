@@ -102,6 +102,7 @@
                     transition: 250ms;
                 }
 
+                // scale arrow div
                 > div{
                     display: flex;
                     flex-direction: column;
@@ -146,6 +147,21 @@
                     max-width: 27vw;
                     min-width: 3em;
                     width: 10vw;
+
+                    // width: -webkit-fill-available;
+                    // font-size: inherit;
+                    padding-left: .5em;
+                    padding-right: .5em;
+                    // background: none;
+                    border-radius: global.$borderRadius1;
+                    border: global.$thinGreyBorder;
+                    border-color: global.$grey3;
+                    line-height: 2em;
+                }
+                
+                #servings:focus {
+                    outline: .07rem solid global.$green2;
+                    border-color: global.$green2;
                 }
 
                 #servings-hidden{
@@ -215,6 +231,24 @@
 
                 .reminder{
                     width: 100%;
+                }
+
+                .required-label:after {
+                    color: global.$red;
+                    content: ' *';
+                    display:inline;
+                }
+
+                input[type="text"].invalid {
+                    border-color: red;
+                }
+
+                div[contenteditable].invalid {
+                    border-color: red;
+                }
+
+                .error-message{
+                    margin-top: -.2em;
                 }
 
                 #original-ingredients{
@@ -312,8 +346,8 @@
                     border: global.$thinGreyBorder;
                     border-color: global.$grey3;
 
-                    min-height: 25em;
-                    max-height: 50em;
+                    min-height: 16em;
+                    max-height: 80vh;
                     width: -webkit-fill-available;
                     resize: none;
                     overflow: scroll;
