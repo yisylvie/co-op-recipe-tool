@@ -7,25 +7,41 @@
     </head>
     <body id="body">
         <nav>
-            <a href="home.html">
-                <h1>
-                    coopify
-                </h1>
-            </a>
-            <form action="create_recipe.html">
-                <div class="url-input-div">
-                    <input type="text" placeholder="recipe url...">
-                    <button class="tertiary-button">
-                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                            viewBox="0 0 23.4 23.3" style="enable-background:new 0 0 23.4 23.3;" xml:space="preserve">
-                        <path fill="currentColor" d="M11.7,23.3c-0.4,0-0.7-0.1-1-0.4s-0.4-0.6-0.4-1V13H1.4c-0.4,0-0.7-0.1-1-0.4C0.1,12.3,0,12,0,11.6s0.1-0.7,0.4-1
-                            s0.6-0.4,1-0.4h8.9V1.4c0-0.4,0.1-0.7,0.4-1C11,0.1,11.3,0,11.7,0s0.7,0.1,1,0.4s0.4,0.6,0.4,1v8.9H22c0.4,0,0.7,0.1,1,0.4
-                            c0.3,0.3,0.4,0.6,0.4,1s-0.1,0.7-0.4,1s-0.6,0.4-1,0.4h-8.9V22c0,0.4-0.1,0.7-0.4,1C12.4,23.2,12.1,23.3,11.7,23.3z"/>
-                        </svg>
-                        <h4 class="center-fill-width">new</h4>
-                    </button>
-                </div>
-            </form>
+            <div id="top-margin-goop">
+
+            </div>
+            <div id="actual-nav">
+                <a href="home.html">
+                    <h1>
+                        coopify
+                    </h1>
+                </a>
+                <form action="create_recipe.html" id="url-input-form">
+                    <div>
+                        <div class="url-input-div">
+                            <input name="url" type="text" placeholder="recipe url...">
+                            <input class="hidden-nav primary-button" id="submit-url-button" type="submit" value="go">
+                        </div>
+                        <div>
+                            <button class="tertiary-button" id="input-manually-button">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 23.4 23.3" style="enable-background:new 0 0 23.4 23.3;" xml:space="preserve">
+                                <path fill="currentColor" d="M11.7,23.3c-0.4,0-0.7-0.1-1-0.4s-0.4-0.6-0.4-1V13H1.4c-0.4,0-0.7-0.1-1-0.4C0.1,12.3,0,12,0,11.6s0.1-0.7,0.4-1
+                                    s0.6-0.4,1-0.4h8.9V1.4c0-0.4,0.1-0.7,0.4-1C11,0.1,11.3,0,11.7,0s0.7,0.1,1,0.4s0.4,0.6,0.4,1v8.9H22c0.4,0,0.7,0.1,1,0.4
+                                    c0.3,0.3,0.4,0.6,0.4,1s-0.1,0.7-0.4,1s-0.6,0.4-1,0.4h-8.9V22c0,0.4-0.1,0.7-0.4,1C12.4,23.2,12.1,23.3,11.7,23.3z"/>
+                                </svg>
+                                <h4 class="center-fill-width">new</h4>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hidden-nav">
+                        <p class="error-message">
+                        </p>
+                        <p class="loading">
+                        </p>
+                    </div>
+                </form>
+            </div>
         </nav>
         <div id="everything">
             <form id="scale-servings-form" class="main" action="scale_servings.html">
@@ -199,5 +215,6 @@
         <script src="javascript/global.js"></script>
         <script src="javascript/styles.js"></script>
         <script src="javascript/scale_servings.js"></script>
+        <script src="javascript/navigation.js"></script>
     </body>
 </html>

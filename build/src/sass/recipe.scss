@@ -4,12 +4,17 @@
 .main > div{
     padding: 7% 15%;
 
-    h2, p{
+    h2, p, a{
         text-align: center;
+        display: block;
     }
 
     h2{
-        margin-bottom: 1em;
+        margin-bottom: .5em;
+    }
+
+    a{
+        margin-bottom: 2em;
     }
 
     h3{
@@ -41,6 +46,8 @@
         width: 40% - 2.5%;
         position: sticky;
         top:1em;
+        height: calc(100vh - 2em);
+        overflow: scroll;
     }
 
 

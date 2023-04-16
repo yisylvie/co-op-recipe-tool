@@ -30,6 +30,14 @@ h2 {
   line-height: 1.2em;
 }
 
+a {
+  color: #397d2f;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 ul, ol {
   font-size: 1rem;
   line-height: 1.5em;
@@ -97,6 +105,7 @@ button:hover, input[type=submit]:hover {
 
 .primary-button:active {
   background-color: #78a671;
+  border: 0.1rem solid #78a671;
 }
 
 .secondary-button {
@@ -110,6 +119,10 @@ button:hover, input[type=submit]:hover {
   transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
 }
 
+.secondary-button:active {
+  outline: 0.1rem solid #397d2f;
+}
+
 .tertiary-button {
   color: #78a671;
   border: 0.1rem solid #b6d1b2;
@@ -118,6 +131,10 @@ button:hover, input[type=submit]:hover {
 .tertiary-button:hover {
   outline: 0.1rem solid #b6d1b2;
   transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
+}
+
+.tertiary-button:active {
+  outline: 0.1rem solid #b6d1b2;
 }
 
 .reminder {
@@ -134,7 +151,7 @@ button:hover, input[type=submit]:hover {
   line-height: 2.2rem;
 }
 
-nav {
+nav #actual-nav {
   display: flex;
   align-items: center;
   gap: 0;
@@ -142,37 +159,51 @@ nav {
   border-bottom: 0.07rem solid #e5e5e5;
   background-color: white;
 }
-nav a, nav h2, nav h3, nav h4, nav h5, nav h6, nav input[type=text] {
+nav #actual-nav a, nav #actual-nav h2, nav #actual-nav h3, nav #actual-nav h4, nav #actual-nav h5, nav #actual-nav h6, nav #actual-nav input[type=text] {
   text-align: left;
 }
-nav h1 {
+nav #actual-nav .hidden-nav {
+  display: none;
+}
+nav #actual-nav h1 {
   font-size: 1.3rem;
   font-weight: 300;
 }
-nav form {
+nav #actual-nav a {
+  color: unset;
+}
+nav #actual-nav form {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
 }
-nav form p {
+nav #actual-nav form p {
   text-align: left;
 }
-nav form .tertiary-button {
+nav #actual-nav form .tertiary-button {
   line-height: 1.7rem;
 }
-nav form div {
+nav #actual-nav form .tertiary-button h4 {
+  text-align: center;
+}
+nav #actual-nav form div {
   display: flex;
   align-items: center;
   gap: 0.5em;
-  width: 40vw;
-  font-size: 1rem;
 }
-nav form div a, nav form div h2, nav form div h3, nav form div h4, nav form div h5, nav form div h6, nav form div input[type=text] {
+nav #actual-nav form div a, nav #actual-nav form div h2, nav #actual-nav form div h3, nav #actual-nav form div h4, nav #actual-nav form div h5, nav #actual-nav form div h6, nav #actual-nav form div input[type=text] {
   width: -webkit-fill-available;
   text-align: center;
   text-align: left;
 }
-nav form div input[type=text] {
+nav #actual-nav form .url-input-div {
+  width: 33vw;
+  font-size: 1rem;
+}
+nav #actual-nav form .url-input-div input[type=text] {
+  color: #828282;
+  -webkit-text-fill-color: #828282;
+  text-overflow: ellipsis;
   width: -webkit-fill-available;
   font-size: inherit;
   padding-left: 0.5em;
@@ -180,6 +211,78 @@ nav form div input[type=text] {
   border-radius: 0.3rem;
   border: 0.1rem solid #e5e5e5;
   line-height: 1.7rem;
+}
+nav #actual-nav form .url-input-div input[type=text]:focus {
+  outline: 0.15rem solid #78a671;
+  border: none;
+}
+
+#focused-nav #top-margin-goop {
+  height: 6rem;
+  transition-duration: 1000ms;
+  transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
+}
+#focused-nav #actual-nav {
+  position: fixed;
+  z-index: 10;
+  width: calc(100vw - 6em);
+  top: 0;
+  justify-content: space-between;
+  padding-bottom: 1.7rem;
+  padding-top: 1.7rem;
+  box-shadow: 0 0 1em -0.2em black;
+}
+#focused-nav #actual-nav .hidden-nav {
+  display: initial;
+}
+#focused-nav #actual-nav .tertiary-button {
+  line-height: 2rem;
+}
+#focused-nav #actual-nav form {
+  position: initial;
+  transform: unset;
+}
+#focused-nav #actual-nav form div {
+  display: flex;
+  align-items: center;
+  gap: 2%;
+}
+#focused-nav #actual-nav form div a, #focused-nav #actual-nav form div h2, #focused-nav #actual-nav form div h3, #focused-nav #actual-nav form div h4, #focused-nav #actual-nav form div h5, #focused-nav #actual-nav form div h6, #focused-nav #actual-nav form div input[type=text] {
+  width: -webkit-fill-available;
+  text-align: center;
+  text-align: left;
+}
+#focused-nav #actual-nav form .url-input-div {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 80vw;
+  -webkit-text-fill-color: #262626;
+}
+#focused-nav #actual-nav form .url-input-div a, #focused-nav #actual-nav form .url-input-div h2, #focused-nav #actual-nav form .url-input-div h3, #focused-nav #actual-nav form .url-input-div h4, #focused-nav #actual-nav form .url-input-div h5, #focused-nav #actual-nav form .url-input-div h6, #focused-nav #actual-nav form .url-input-div input[type=text] {
+  width: -webkit-fill-available;
+  text-align: center;
+  text-align: left;
+}
+#focused-nav #actual-nav form .url-input-div input[type=text] {
+  -webkit-text-fill-color: #262626;
+  z-index: 1;
+  border-radius: 0.3rem 0 0 0.3rem;
+  line-height: 2rem;
+}
+#focused-nav #actual-nav form .url-input-div input[type=submit] {
+  padding: 0 2em;
+  font-size: inherit;
+  -webkit-text-fill-color: white;
+  border-radius: 0 0.3rem 0.3rem 0;
+}
+#focused-nav #actual-nav form .url-input-div input[type=submit]:hover {
+  border: 0.1rem solid #78a671;
+}
+#focused-nav #actual-nav form .error-message, #focused-nav #actual-nav form .loading {
+  position: absolute;
+  line-height: 1.7rem;
+  margin-left: 0.5em;
 }
 
 .main {
@@ -195,8 +298,21 @@ nav form div input[type=text] {
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px white inset;
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: inherit;
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #828282;
+  opacity: 1; /* Firefox */
+  -webkit-text-fill-color: #828282;
 }
 
 .error-message {
@@ -205,6 +321,32 @@ input:-webkit-autofill:active {
   font-size: 0.9rem;
 }
 
+.loading {
+  display: none;
+  color: #397d2f;
+  font-size: 0.9rem;
+}
+
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
+  content: "…"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
 body {
   text-align: center;
   height: 100vh;
@@ -231,29 +373,6 @@ h2 {
 
 form p {
   text-align: left;
-}
-form .loading {
-  display: none;
-  color: #397d2f;
-}
-form .loading:after {
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
-  animation: ellipsis steps(4, end) 900ms infinite;
-  content: "…"; /* ascii code for the ellipsis character */
-  width: 0px;
-}
-@keyframes ellipsis {
-  to {
-    width: 1.25em;
-  }
-}
-@-webkit-keyframes ellipsis {
-  to {
-    width: 1.25em;
-  }
 }
 form .url-input-div {
   gap: 0;

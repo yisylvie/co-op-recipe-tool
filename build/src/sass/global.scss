@@ -79,6 +79,14 @@ h2{
     line-height: 1.2em;
 }
 
+a{
+    color: $green1;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
 ul, ol{
     font-size: 1rem;
     line-height: 1.5em;
@@ -144,6 +152,7 @@ button:hover, input[type="submit"]:hover{
   
 .primary-button:active{
     background-color: $green2;
+    border: .1rem solid $green2;
 }
 
 .secondary-button{
@@ -159,6 +168,7 @@ button:hover, input[type="submit"]:hover{
   
 .secondary-button:active{
     // background-color: $green2;
+    outline: .1rem solid $green1;
 }
 
 .tertiary-button{
@@ -172,7 +182,7 @@ button:hover, input[type="submit"]:hover{
 }
   
 .tertiary-button:active{
-    // background-color: $green2;
+    outline: .1rem solid $green3;
 }
 
 .reminder{
@@ -191,43 +201,142 @@ button:hover, input[type="submit"]:hover{
 }
 
 nav{
-    @include flex(false, 0, false);
-    padding: .9em 3em;
-    border-bottom: $thinGreyBorder;
-    background-color: white;
+    #actual-nav{
+        @include flex(false, 0, false);
+        padding: .9em 3em;
+        border-bottom: $thinGreyBorder;
+        background-color: white;
     
-    h1{
-        font-size: 1.3rem;
-        font-weight: 300;
-    }
+        .hidden-nav{
+            display: none;
+        }
     
-    form{
-        position: absolute;
-        left: 50%;
-        transform: translate(-50%, 0);
+        h1{
+            font-size: 1.3rem;
+            font-weight: 300;
+        }
 
-        p{
-            text-align: left;
+        a{
+            color: unset;
         }
-    
-        .tertiary-button{
-            line-height: 1.7rem;
-        }
-    
-        div {
-            @include flex($centered: false, $gap: .5em);
-            width: 40vw;
-            font-size: 1rem;
         
-            input[type="text"]{
-                width: -webkit-fill-available;
-                font-size: inherit;
-                padding-left: .5em;
-                background: none;
-                border-radius: $borderRadius;
-                border: .1rem solid $grey4;
-                line-height: 1.7rem;
+        form{
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0);
+            
+            p{
+                text-align: left;
             }
+            
+            .tertiary-button{
+                line-height: 1.7rem;
+                h4{
+                    text-align: center;
+                }
+            }
+            
+            div{
+                @include flex($centered: false, $gap: .5em);
+            }
+    
+            .url-input-div {
+                width: 33vw;
+                font-size: 1rem;
+                
+                input[type="text"]{
+                    color: $grey2;
+                    -webkit-text-fill-color:$grey2;
+                    text-overflow: ellipsis;
+                    width: -webkit-fill-available;
+                    font-size: inherit;
+                    padding-left: .5em;
+                    background: none;
+                    border-radius: $borderRadius;
+                    border: .1rem solid $grey4;
+                    line-height: 1.7rem;
+                }
+                input[type="text"]:focus{
+                    outline: .15rem solid $green2;
+                    border: none;
+                }
+            }
+        }
+    }
+}
+
+// when nav is clicked into
+#focused-nav{
+    * {
+        // transition: $transition;
+        // transition-duration: 1ms;
+    }
+    #top-margin-goop{
+        height: 1.7rem * 2 + 2rem + .3rem * 2;
+        transition-duration: 1000ms;
+         transition: $transition;
+    }
+    #actual-nav{    
+        position: fixed;
+        z-index: 10;
+        width: calc(100vw - 6em);
+        top: 0;
+        justify-content: space-between;
+        padding-bottom: 1.7rem;
+        padding-top: 1.7rem;
+        box-shadow: 0 0 1em -.2em black;
+
+        .hidden-nav{
+            display:initial;
+        }
+
+        .tertiary-button{
+            line-height: 2rem;
+        }
+
+        form{
+            position: initial;
+            transform: unset;
+            div{
+                @include flex($centered: false, $gap: 2%);
+                // position: relative;
+            }
+            .url-input-div{
+                @include flex($centered: false, $gap: 0);
+                width: 80vw;
+                // color:$grey0;
+                -webkit-text-fill-color:$grey0;
+                
+                input[type="text"]{
+                    -webkit-text-fill-color:$grey0;
+                    z-index: 1;
+                    border-radius: $borderRadius 0 0 $borderRadius;
+                    line-height: 2rem;
+                }
+            
+                input[type="submit"]{
+                    // border-radius: 0 $borderRadius $borderRadius 0;
+                    padding: 0 2em;
+                    font-size: inherit;
+                    -webkit-text-fill-color:white;
+                    // line-height: 2rem;
+                    // margin-left: .2rem;
+                    border-radius: 0 $borderRadius $borderRadius 0;
+                    // border: .1rem solid $green1;
+                }
+
+                input[type="submit"]:hover{
+                    border: .1rem solid $green2;
+                }
+            }
+            .error-message, .loading{
+                position: absolute;
+                line-height: 1.7rem;
+                // transform: translate(0, 50%);
+                margin-left: .5em;
+                // top: math.div(1.5em,2);
+            }
+
         }
     }
 }
@@ -242,15 +351,59 @@ nav{
     position: relative;
 }
 
+// prevent form input from being weird and blue
+// and have weird color
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px white inset;
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: inherit;
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $grey2;
+    opacity: 1; /* Firefox */
+    -webkit-text-fill-color: $grey2;
 }
 
 .error-message{
     color: $red;
     display: none;
     font-size: .9rem;
+}
+
+.loading{
+    display: none;
+    color: $green1;
+    font-size: .9rem;
+}
+
+// stole from https://codepen.io/thetallweeks/pen/yybGra
+.loading:after {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
+    animation: ellipsis steps(4,end) 900ms infinite;
+    content: "\2026"; /* ascii code for the ellipsis character */
+    width: 0px;
+}
+
+@keyframes ellipsis {
+    to {
+        width: 1.25em;    
+    }
+}
+
+@-webkit-keyframes ellipsis {
+    to {
+        width: 1.25em;    
+    }
 }

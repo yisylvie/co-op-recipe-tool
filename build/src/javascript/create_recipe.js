@@ -1,9 +1,11 @@
 let url;
 console.log(cookie);
 console.log(sessionStorage);
+const recipeInputForm = document.getElementById("recipe-input-form");
 const ingredientsInput = document.getElementsByName("ingredients")[0];
-// const ingredientsInput = document.querySelector('[name = "ingredients"]');
 const instructionsInput = document.getElementsByName("instructions")[0];
+const scaleServingsButton = document.getElementById("scale-servings-button");
+
 // grab recipe from json/recipe.json and input it into the form
 function recieveRecipe() {
     let jsonData;
@@ -18,29 +20,23 @@ function recieveRecipe() {
     function sent() {
         if(cookie in jsonData) {
             if(jsonData[cookie] == "Could not find recipe data") {
-            } else if(cookie == undefined) {
-                console.log("cookie unset");
-                cookie = sessionStorage.id;
-                console.log(cookie);
-                console.log(sessionStorage.id);
-                return;
             } else {
                 document.querySelector(".reminder").parentElement.style.display = "flex";
                 jsonData = jsonData[cookie];
                 if("name" in jsonData) {
-                    document.getElementsByName("title")[0].value = jsonData.name;
+                    document.getElementsByName("title")[0].value = sterilize(jsonData.name);
                 }
                 if("recipeYield" in jsonData) {
-                    document.getElementsByName("servings")[0].value = jsonData.recipeYield;
+                    document.getElementsByName("servings")[0].value = sterilize(jsonData.recipeYield);
                 }
                 if("prepTime" in jsonData) {
-                    document.getElementsByName("prep time")[0].value = jsonData.prepTime;
+                    document.getElementsByName("prep time")[0].value = sterilize(jsonData.prepTime);
                 }
                 if("cookTime" in jsonData) {
-                    document.getElementsByName("cook time")[0].value = jsonData.cookTime;
+                    document.getElementsByName("cook time")[0].value = sterilize(jsonData.cookTime);
                 }
                 if("totalTime" in jsonData) {
-                    document.getElementsByName("total time")[0].value = jsonData.totalTime;
+                    document.getElementsByName("total time")[0].value = sterilize(jsonData.totalTime);
                 }
                 url = jsonData.url;
                 if("recipeIngredients" in jsonData) {
@@ -94,7 +90,6 @@ function appendInstructions(instructions) {
     instructionsInput.appendChild(ol);
 }
 
-const recipeInputForm = document.getElementById("recipe-input-form");
 
 recipeInputForm.addEventListener("submit", function(e) {
     e.preventDefault();
@@ -138,11 +133,20 @@ recipeInputForm.addEventListener('invalid', (function () {
     };
 })(), true);
 
+// remove error message if field has been editted
 recipeInputForm.addEventListener("input", function(e) {
-    e.target.classList.remove("invalid");
-    e.target.parentElement.querySelector(".error-message").style.display = "none";
+    if(e.target.classList.contains("invalid")) {
+        e.target.classList.remove("invalid");
+        e.target.parentElement.querySelector(".error-message").style.display = "none";
+    }
 });
 
+// make html entities real symbols and collapse whitespace
+function sterilize(text) {
+    let sterilizedText = document.createElement("textarea");
+    sterilizedText.innerHTML = text.replace(/\s+/g, " ");
+    return sterilizedText.value;
+}
 
 // send edited recipe to server when user clicks "scale servings"
 function sendRecipe() {
@@ -210,7 +214,7 @@ function grabIngredients(jsonData) {
 
 // add the instructions from instructions input on form into the json data
 function grabInstructions(jsonData) {
-    let lis = ingredientsInput.querySelectorAll("li");
+    let lis = instructionsInput.querySelectorAll("li");
     let instructions = [];
     lis.forEach((li) => {
         instructions.push(li.innerHTML);

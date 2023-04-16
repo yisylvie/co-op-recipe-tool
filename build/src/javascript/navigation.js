@@ -1,3 +1,5 @@
+// const urlInput = document.getElementsByName("url")[0];
+const nav = document.querySelector("nav");
 const urlInputForm = document.getElementById("url-input-form");
 const inputManuallyButton = document.getElementById("input-manually-button");
 const submitUrlButton = document.getElementById("submit-url-button");
@@ -7,15 +9,17 @@ const urlInput = document.getElementsByName("url")[0];
 let timedOut = false;
 let urlFocused = false;
 
-// check that the cookie is set before clearing data
-if(cookie == undefined) {
-    grabCookie().then(
-        function(value) {clearRecipeData();},
-        function(error) {console.log(error);}
-    );
-} else {
-    clearRecipeData();
-}
+// const urlInputForm = document.getElementById("url-input-form");
+
+// highlight text when clicking into url form
+setClickListener(document, function(event) {
+    if(nav.id != "focused-nav" && document.activeElement == urlInput) {
+        nav.setAttribute("id", "focused-nav");
+        urlInput.select();
+    } else if(!nav.contains(event.target)) {
+        nav.removeAttribute("id");
+    }
+});
 
 urlInputForm.addEventListener("submit", function(event){
     event.preventDefault();
@@ -37,22 +41,9 @@ setClickListener(submitUrlButton, function(event){
             sendUrl(url);
         }
     } else {
-        errorMessage[0].innerHTML = "Invalid URL (URL must begin with http or https). Try another or"
+        errorMessage[0].innerHTML = "Invalid URL (URL must begin with http or https). Try another or input manually."
         errorMessage[0].style.display = "block";
         loading[0].style.display = "none";
-        inputManuallyButton.classList.add("primary-button");
-        inputManuallyButton.classList.remove("secondary-button");
-    }
-});
-
-// highlight text when clicking into url form
-setClickListener(document, function(event) {
-    if(!urlFocused && document.activeElement == urlInput) {
-        console.log(document.activeElement);
-        urlInput.select();
-        urlFocused = true;
-    } else if(document.activeElement != urlInput){
-        urlFocused = false;
     }
 });
 
@@ -67,8 +58,6 @@ function sendUrl(url) {
     loading[0].innerHTML = "Fetching Recipe Data";
     errorMessage[0].style.display = "none";
     loading[0].style.display = "block";
-    inputManuallyButton.classList.remove("primary-button");
-    inputManuallyButton.classList.add("secondary-button");
     const data = { "fetchRecipeFromUrl": true, "url": url, "cookie": cookie};
     fetch('json/recipe.json', {
         method: "POST",
@@ -84,12 +73,13 @@ function sendUrl(url) {
     .catch(err => console.error(err));
     function sent() {
         setTimeout(function(){timedOut = true; console.log("timed out getting recipe") },8000);
-        recieveRecipe();
+        recieveingDeezNutsHeyo();
     }
 }
 
-// grab recipe from json/recipe.json and check if url was a valid recipe before redirect
-function recieveRecipe() {
+// // grab recipe from json/recipe.json and check if url was a valid recipe before redirect
+function recieveingDeezNutsHeyo() {
+    console.log("what the fuck");
     let jsonData;
     // const data = { "fetchNewRecipe": true};
     fetch('json/recipe.json', {
@@ -106,11 +96,9 @@ function recieveRecipe() {
             // if there was no recipe
             if(jsonData[cookie] == "Could not find recipe data") {
                 errorMessage[0].classList.remove("loading");
-                errorMessage[0].innerHTML = "We couldn&#8217;t find a recipe at that link. Try another or"
+                errorMessage[0].innerHTML = "We couldn&#8217;t find a recipe at that link. Try another or input manually."
                 loading[0].style.display = "none";
                 errorMessage[0].style.display = "block";
-                inputManuallyButton.classList.add("primary-button");
-                inputManuallyButton.classList.remove("secondary-button");
             } else {
                 // recipe received; redirect
                 loading[0].style.display = "none";
@@ -122,7 +110,7 @@ function recieveRecipe() {
                 // recieveRecipe();
                 // setInterval(function () {recieveRecipe();}, 100);
 
-                setTimeout(function(){recieveRecipe();},100);
+                setTimeout(function(){recieveingDeezNutsHeyo();},100);
             }
         }
     }

@@ -144,7 +144,7 @@
                     font-weight: 600;
                     line-height: 1.2em;
                     text-overflow: ellipsis;
-                    max-width: 27vw;
+                    max-width: 25vw;
                     min-width: 3em;
                     width: 10vw;
 
@@ -346,8 +346,8 @@
                     border: global.$thinGreyBorder;
                     border-color: global.$grey3;
 
-                    min-height: 16em;
-                    max-height: 80vh;
+                    min-height: 25em;
+                    max-height: 50em;
                     width: -webkit-fill-available;
                     resize: none;
                     overflow: scroll;

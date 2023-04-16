@@ -54,6 +54,7 @@ async function grabCookie() {
             console.log("cookie grab timeout");
             if(cookie == undefined) {
                 console.log("cookie was not grabbed before timeout");
+                document.location.reload();
             }
         }, 5000);
     });
