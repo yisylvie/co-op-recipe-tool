@@ -366,6 +366,59 @@ select:-webkit-autofill:focus {
   font-size: 1.1rem;
   margin-bottom: 0.5em;
 }
+.main > div #servings-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+}
+.main > div #servings-div > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+.main > div #servings-div > div .scale-arrow {
+  border-radius: 0.2rem;
+  padding: 0.3em 0.5em;
+}
+.main > div #servings-div > div .scale-arrow svg {
+  height: 0.7em;
+  width: fit-content;
+}
+.main > div #servings-div > #reset {
+  height: 1em;
+  color: #4e4e4e;
+  transition: none;
+}
+.main > div #servings-div > #reset svg {
+  display: block;
+  width: fit-content;
+  height: 100%;
+}
+@keyframes bounceTwist {
+  0% {
+    rotate: 0;
+  }
+  30% {
+    rotate: -30deg;
+  }
+  60% {
+    rotate: 0deg;
+  }
+  80% {
+    rotate: -15deg;
+  }
+  100% {
+    rotate: 0;
+  }
+}
+.main > div #servings-div #reset:hover {
+  animation: bounceTwist 300ms 1;
+}
+.main > div #servings-div #reset.twist {
+  transform: rotate(-360deg);
+  transition: 250ms;
+}
 .main > div #times-div {
   padding: 1.5em 0;
   margin: 3em 0;
@@ -395,7 +448,7 @@ select:-webkit-autofill:focus {
   width: 37.5%;
   position: sticky;
   top: 1em;
-  height: calc(100vh - 2em);
+  max-height: calc(100vh - 2em);
   overflow: scroll;
 }
 .main > div #instructions-div {

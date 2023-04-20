@@ -59,6 +59,14 @@ setClickListener(document, function(event) {
 // redirect to create recipe on manual input click
 setClickListener(inputManuallyButton, function(event){
     urlFocused = false;
+    if(cookie == undefined) {
+        grabCookie().then(
+            function(value) {clearRecipeData();},
+            function(error) {console.log(error);}
+        );
+    } else {
+        clearRecipeData();
+    }
     window.location.href = 'create_recipe.html';
 });
 
