@@ -46,7 +46,7 @@
         <div id="everything">
             <form id="scale-servings-form" class="main" action="scale_servings.html">
                 <div id="stuck-top"></div>
-                <header class="unstuck">
+                <header id="servings-header" class="unstuck">
                     <div>
                         <div>
                             <button class="primary-button scale-arrow" id="scale-up-button">
@@ -140,29 +140,11 @@
                         </button>
                     </div>
                 </header>
+                <div class="form-subheading">
+                    <h3>Scale Ingredients</h3>
+                    <h4>for Baked Zitti</h4>
+                </div>
                 <div>
-                    <div>
-                        <div class="reminder">
-                            <p>
-                                Check that ingredients scale as expected and cook times, equipment sizes, and other instructions are accurate.
-                            </p>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <label for="prep time">Prep Time</label>
-                            <input class="time-input" name="prep time" type="text">
-                        </div>
-                        <div>
-                            <label for="cook time">Cook Time</label>
-                            <input class="time-input" name="cook time" type="text">
-                        </div>
-                        <div>
-                            <label for="total time">Total Time</label>
-                            <input class="time-input" name="total time" type="text">
-                        </div>
-                    </div>
-
                     <div>
                         <div id="original-ingredients">
                             <label for="ingredients">Original Ingredients</label>
@@ -175,7 +157,7 @@
                             </div>
                         </div>
                         <div id="scaled-input">
-                            <label for="ingredients">Ingredients</label>
+                            <label for="ingredients">Scaled Ingredients</label>
                             <div name="ingredients" contenteditable="true" role="textbox">
                                 <ul id="scaled-ingredients-list">
                                     <li>
@@ -185,18 +167,38 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
+                <div class="form-subheading">
+                    <h3>Times and Instructions</h3>
+                    <h4>review accuracy for scaled recipe</h4>
+                </div>
+                <div>
                     <div>
-                        <!-- <div id="notes-input">
-                            <label for="notes">Notes</label>
-                            <div name="notes" contenteditable="true" role="textbox">
-                                <ul>
-                                    <li>
-
-                                    </li>
-                                </ul>
+                        <div>
+                            <div>
+                                <label for="prep time">Prep Time</label>
+                                <input class="time-input" name="prep time" type="text">
                             </div>
-                        </div> -->
+                            <div>
+                                <label for="cook time">Cook Time</label>
+                                <input class="time-input" name="cook time" type="text">
+                            </div>
+                            <div>
+                                <label for="total time">Total Time</label>
+                                <input class="time-input" name="total time" type="text">
+                            </div>
+                        </div>
+                        <div id="instructions-input">
+                            <label for="instructions">Instructions</label>
+                            <div name="instructions" contenteditable="true" role="textbox">
+                                <ol id="instuctions">
+                                    <li>
+                                        
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>

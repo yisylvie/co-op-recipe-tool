@@ -287,8 +287,6 @@ nav #actual-nav form .url-input-div input[type=text]:focus {
 
 .main {
   width: 75%;
-  background-color: white;
-  border: 0.07rem solid #e5e5e5;
   margin: auto;
   margin-top: 7vh;
   margin-bottom: 20vh;

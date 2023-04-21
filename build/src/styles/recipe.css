@@ -287,8 +287,6 @@ nav #actual-nav form .url-input-div input[type=text]:focus {
 
 .main {
   width: 75%;
-  background-color: white;
-  border: 0.07rem solid #e5e5e5;
   margin: auto;
   margin-top: 7vh;
   margin-bottom: 20vh;
@@ -432,6 +430,9 @@ select:-webkit-autofill:focus {
 .main > div #times-div a, .main > div #times-div h2, .main > div #times-div h3, .main > div #times-div h4, .main > div #times-div h5, .main > div #times-div h6, .main > div #times-div input[type=text] {
   width: -webkit-fill-available;
   text-align: center;
+}
+.main > div #times-div div {
+  max-width: 11em;
 }
 .main > div #recipe-body-div {
   display: flex;

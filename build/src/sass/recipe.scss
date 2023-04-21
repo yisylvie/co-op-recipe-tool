@@ -83,6 +83,9 @@
         border-bottom: global.$thinGreyBorder;
         @include global.flex($gap: 7em);
         justify-content: center;
+        div{
+            max-width: 11em;
+        }
     }
 
     #recipe-body-div{

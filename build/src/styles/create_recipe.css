@@ -287,8 +287,6 @@ nav #actual-nav form .url-input-div input[type=text]:focus {
 
 .main {
   width: 75%;
-  background-color: white;
-  border: 0.07rem solid #e5e5e5;
   margin: auto;
   margin-top: 7vh;
   margin-bottom: 20vh;
@@ -355,6 +353,7 @@ select:-webkit-autofill:focus {
   background-color: none;
   top: 0em;
   z-index: -1;
+  border: none;
 }
 #everything form .unstuck {
   transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
@@ -392,7 +391,12 @@ select:-webkit-autofill:focus {
 #everything form .stuck > div #servings {
   font-size: 1.2rem;
 }
+#everything form #servings-header {
+  margin-bottom: 3em;
+}
 #everything form header {
+  background-color: white;
+  border: 0.07rem solid #e5e5e5;
   display: flex;
   align-items: center;
   gap: 0em;
@@ -400,11 +404,11 @@ select:-webkit-autofill:focus {
   padding-left: 5%;
   padding-right: 5%;
   height: 6em;
-  border-bottom: 0.07rem solid #e5e5e5;
   position: sticky;
   top: 0;
   background-color: white;
   z-index: 2;
+  margin-bottom: -0.07rem;
 }
 #everything form header a, #everything form header h2, #everything form header h3, #everything form header h4, #everything form header h5, #everything form header h6, #everything form header input[type=text] {
   text-align: left;
@@ -518,6 +522,9 @@ select:-webkit-autofill:focus {
   font-size: 1.2rem;
 }
 #everything form > div {
+  background-color: white;
+  border: 0.07rem solid #e5e5e5;
+  margin-bottom: 3em;
   overflow: hidden;
   padding: 4% 15% 9% 15%;
   color: #4e4e4e;
@@ -546,6 +553,7 @@ select:-webkit-autofill:focus {
   flex-direction: column;
   gap: 0.5em;
   width: 16.25%;
+  width: 21.25%;
 }
 #everything form > div > div > div ul li {
   position: relative;
@@ -660,6 +668,24 @@ select:-webkit-autofill:focus {
   width: -webkit-fill-available;
   resize: none;
   overflow: scroll;
+}
+#everything form .form-subheading {
+  height: 3rem;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-bottom: -0.07rem;
+  padding: 0 5%;
+  font-size: 1.1rem;
+  color: #262626;
+}
+#everything form .form-subheading h3, #everything form .form-subheading h4 {
+  display: inline;
+  line-height: 3em;
+  font-size: inherit;
+}
+#everything form .form-subheading h4 {
+  padding-left: 1.5em;
+  font-size: 0.85em;
+  color: #828282;
 }
 
 /*# sourceMappingURL=create_recipe.css.map */

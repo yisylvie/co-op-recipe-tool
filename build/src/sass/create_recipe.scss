@@ -13,6 +13,7 @@
             background-color: none;
             top: 0em;
             z-index: -1;
+            border: none;
         }
 
         .unstuck{
@@ -56,17 +57,24 @@
             }
         }
 
+        #servings-header{
+            margin-bottom: 3em;
+        }
+
         header{
+            background-color: white;
+            border: global.$thinGreyBorder;
             @include global.flex(false, 0em, false);
             justify-content: space-between;
             padding-left: 5%;
             padding-right: 5%;
             height: 6em;
-            border-bottom: global.$thinGreyBorder;
+            // border-bottom: global.$thinGreyBorder;
             position: sticky;
             top:0;
             background-color: white;
             z-index: 2;
+            margin-bottom: -.07rem;
 
             > div {
                 @include global.flex(true, 1em, false);
@@ -183,6 +191,9 @@
 
         // all the form elements
         > div{
+            background-color: white;
+            border: global.$thinGreyBorder;
+            margin-bottom: 3em;
             overflow: hidden;
             padding: 4% 15% 9% 15%;
             color: global.$grey1;
@@ -213,6 +224,7 @@
                     flex-direction: column;
                     gap: .5em;
                     width: calc((40% - 2.5%) / 2 - 2.5%);
+                    width: calc((100% - (5% * 3)) / 4);
 
                     ul{
                         li{
@@ -353,6 +365,25 @@
                     overflow: scroll;
                 }
             } 
+        }
+
+        .form-subheading{
+            height: 3rem;
+            font-family: global.$openSans;
+            margin-bottom: -.07rem;
+            padding: 0 5%;
+            font-size: 1.1rem;
+            color: global.$grey0;
+            h3, h4{
+                display: inline;
+                line-height: 3em;
+                font-size: inherit;
+            }
+            h4{
+                padding-left: 1.5em;
+                font-size: 0.85em;
+                color: global.$grey2;
+            }
         }
     }
 }
