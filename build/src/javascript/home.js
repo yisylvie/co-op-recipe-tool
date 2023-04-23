@@ -6,6 +6,7 @@ const loading = document.getElementsByClassName("loading");
 const urlInput = document.getElementsByName("url")[0];
 let timedOut = false;
 let urlFocused = false;
+const suggestedRecipes = document.querySelectorAll("#suggested-recipe-div>div>a");
 
 // check that the cookie is set before clearing data
 if(cookie == undefined) {
@@ -27,6 +28,12 @@ setClickListener(submitUrlButton, function(event){
     timedOut = false;
     let url = urlInput.value;
     if(isValidHttpUrl(url)) {
+        // add fetching recipe/change button styling
+        loading[0].innerHTML = "Fetching Recipe Data";
+        errorMessage[0].style.display = "none";
+        loading[0].style.display = "block";
+        inputManuallyButton.classList.remove("primary-button");
+        inputManuallyButton.classList.add("secondary-button");
         // if the cookie is unset grab it first
         if(cookie == undefined) {
             grabCookie().then(
@@ -56,6 +63,27 @@ setClickListener(document, function(event) {
     }
 });
 
+// go to one of the suggested recipes
+suggestedRecipes.forEach((recipe) => {
+    console.log(recipe.href);
+    setClickListener(recipe, function(event){
+        event.preventDefault();
+        recipe.classList.add("loading-spin");
+        clearRecipeData();
+        timedOut = false;
+        let url = recipe.href;
+        // if the cookie is unset grab it first
+        if(cookie == undefined) {
+            grabCookie().then(
+                function(value) {sendUrl(url);},
+                function(error) {console.log(error);}
+            );
+        } else {
+            sendUrl(url);
+        }
+    });
+});
+
 // redirect to create recipe on manual input click
 setClickListener(inputManuallyButton, function(event){
     urlFocused = false;
@@ -71,12 +99,6 @@ setClickListener(inputManuallyButton, function(event){
 });
 
 function sendUrl(url) {
-    // add fetching recipe/change button styling
-    loading[0].innerHTML = "Fetching Recipe Data";
-    errorMessage[0].style.display = "none";
-    loading[0].style.display = "block";
-    inputManuallyButton.classList.remove("primary-button");
-    inputManuallyButton.classList.add("secondary-button");
     const data = { "fetchRecipeFromUrl": true, "url": url, "cookie": cookie};
     fetch('json/recipe.json', {
         method: "POST",
@@ -122,6 +144,9 @@ function recieveRecipe() {
             } else {
                 // recipe received; redirect
                 loading[0].style.display = "none";
+                document.querySelectorAll('.loading-spin').forEach(function(element) {
+                    element.classList.remove("loading-spin");
+                });
                 urlFocused = false;
                 window.location.href = 'create_recipe.html';
             }

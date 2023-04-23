@@ -2,26 +2,43 @@
 
 body{
     text-align: center;
-    height: 100vh;
-    position: relative;
+    // height: 100vh;
+    // position: relative;
 }
 
 #everything{
-    @include global.absoluteCenter();
+    // @include global.absoluteCenter();
+    // position: absolute;
+    // left: 50%;
+    // transform: translate(-50%, 0);
+    // margin: auto;
+
 }
 
-h1{
-    font-size: 4rem;
-    font-weight: 300;
-    line-height: 1.2em;
-    margin-bottom: 2.5em;
+#call-to-action-div{
+    width: fit-content;
+    margin: auto;
+    margin-top: 22vh;
+    h1{
+        font-size: 4rem;
+        font-weight: 300;
+        line-height: 1.2em;
+        margin-bottom: 2em;
+    }
+    
+    h2{
+        // margin-bottom: 1em;
+        margin-bottom: 8vh;
+    }
+
 }
 
-h2{
-    margin-bottom: 3em;
-}
 
 form{
+    margin: auto;
+    display: block;
+    width: fit-content;
+    // @include global.absoluteCenter();
     p{
         text-align: left;
     }
@@ -65,4 +82,119 @@ form{
             border: none;
         }
     }
+}
+
+#about{
+    margin-bottom: 10vh;
+
+    p{
+        font-size: 1.1rem;
+        line-height: 1.3em;
+        color: global.$grey1;
+        text-align: left;
+        width: 50vw;
+        margin: auto;
+        // margin-bottom: 1.5em;
+    }
+}
+
+#suggested-recipe-div{
+    margin-bottom: 25vh;
+    h3{
+        font-size: 1.3rem;
+        line-height: 1.3em;
+        font-family: global.$openSans;
+        margin-bottom: 1em;
+    }
+
+    // image carousal
+    >div {
+        @include global.flex($centered: true, $gap: 2.5%, $centerFillWidth: true);
+        align-items: baseline;
+        justify-content: center;
+
+        // one recipe boxa
+        >a{
+            color: unset;
+            display: block;
+            width: 17vw;
+            border: global.$thinGreyBorder;
+            background-color: white;
+            transition: global.$transition;
+            * {
+                transition: global.$transition;
+            }
+            >div{
+                // width: 17vw;
+                overflow: hidden;
+                height: 15vw;
+                position: relative;
+                .loader{
+                    display: none;
+                }
+                img{
+                    height: 100%;
+                    display: block;
+                    @include global.absoluteCenter;
+                }
+                // box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.29);
+            }
+            h4{
+                font-family: global.$openSans;
+                // font-weight: 600;
+                font-size: 1.1rem;
+                line-height: 2em;
+                // text-align: left;
+                // margin-left: 1em;
+            }
+        }
+
+        >a:hover{
+            text-decoration: unset;
+            transition: global.$transition;
+            * {
+                transition: global.$transition;
+            }
+            >div{
+                background-color: black;
+                img{
+                    height: 120%;
+                    opacity: 0.75;
+                }
+            }
+            font-weight: 600;
+
+            font-style: italic;
+            cursor: pointer;
+            // box-shadow: 1em 1em .3em 0px rgba(0,0,0,0.29);
+            // margin-left: -1em;
+            // margin-top: -1em;
+        }
+        >.loading-spin{
+            .loader {
+                width: 9vh;
+                height: 9vh;
+                border: 8px solid #ffffff6e;
+                border-bottom-color: transparent;
+                border-radius: 50%;
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 1;
+                animation: rotation 1s linear infinite;
+                }
+            
+            @keyframes rotation {
+                0% {
+                    transform: translate(-50%, -50%) rotate(0deg);
+                }
+                100% {
+                    transform: translate(-50%, -50%) rotate(360deg);
+                }
+            } 
+        }
+    }
+    
 }

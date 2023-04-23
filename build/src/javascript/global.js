@@ -105,6 +105,13 @@ function getTrueHeight(element) {
     return elementHeight -= parseFloat(computedStyle.paddingTop) + parseFloat(computedStyle.paddingBottom);
 }
 
+// make html entities real symbols and collapse whitespace
+function sterilize(text) {
+    let sterilizedText = document.createElement("textarea");
+    sterilizedText.innerHTML = text.replace(/\s+/g, " ");
+    return sterilizedText.value;
+}
+
 // returns the width of an element excluding its padding
 function getTrueWidth(element) {
     let computedStyle = getComputedStyle(element);

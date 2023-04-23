@@ -346,6 +346,8 @@ select:-webkit-autofill:focus {
   }
 }
 .main > div {
+  border: 0.07rem solid #e5e5e5;
+  background: white;
   padding: 7% 15%;
 }
 .main > div h2, .main > div p, .main > div a {

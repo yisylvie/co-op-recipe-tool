@@ -422,8 +422,9 @@ select:-webkit-autofill:focus {
   width: max-content;
 }
 #everything form header > div > #reset {
-  height: 1.2em;
   color: #4e4e4e;
+  height: 2em;
+  padding: 0.4em;
   transition: none;
 }
 #everything form header > div > #reset svg {
@@ -532,8 +533,11 @@ select:-webkit-autofill:focus {
 #everything form > div :last-child {
   margin-bottom: 0;
 }
-#everything form > div #reminderDiv {
-  display: none;
+#everything form > div #times-div > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin-bottom: 3em;
 }
 #everything form > div > div {
   display: flex;
@@ -542,6 +546,7 @@ select:-webkit-autofill:focus {
   width: 100%;
   margin-bottom: 3em;
   align-items: flex-start;
+  justify-content: space-between;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
@@ -552,8 +557,8 @@ select:-webkit-autofill:focus {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  width: 16.25%;
   width: 21.25%;
+  max-height: calc(100vh - 6em);
 }
 #everything form > div > div > div ul li {
   position: relative;
@@ -606,7 +611,6 @@ select:-webkit-autofill:focus {
   border-radius: 0.2rem;
   border: 0.07rem solid #e5e5e5;
   min-height: 25em;
-  max-height: 50em;
   overflow: scroll;
 }
 #everything form > div > div #instructions-input {
@@ -664,7 +668,6 @@ select:-webkit-autofill:focus {
   border: 0.07rem solid #e5e5e5;
   border-color: #bbbcbb;
   min-height: 25em;
-  max-height: 50em;
   width: -webkit-fill-available;
   resize: none;
   overflow: scroll;

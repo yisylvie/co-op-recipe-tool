@@ -20,8 +20,10 @@ function recieveRecipe() {
     function sent() {
         if(cookie in jsonData) {
             if(jsonData[cookie] == "Could not find recipe data") {
+                document.querySelector("header>h2").innerHTML = "Create Recipe";
             } else {
-                document.querySelector(".reminder").parentElement.style.display = "flex";
+                document.querySelector("header>h2").innerHTML = "Review Recipe";
+                // document.querySelector(".reminder").parentElement.style.display = "flex";
                 jsonData = jsonData[cookie];
                 if("name" in jsonData) {
                     document.getElementsByName("title")[0].value = sterilize(jsonData.name);
@@ -48,6 +50,7 @@ function recieveRecipe() {
             }
         } else{
             console.log("cookie not in jsonData");
+            document.querySelector("header>h2").innerHTML = "Create Recipe";
         }
     }
 }
@@ -140,13 +143,6 @@ recipeInputForm.addEventListener("input", function(e) {
         e.target.parentElement.querySelector(".error-message").style.display = "none";
     }
 });
-
-// make html entities real symbols and collapse whitespace
-function sterilize(text) {
-    let sterilizedText = document.createElement("textarea");
-    sterilizedText.innerHTML = text.replace(/\s+/g, " ");
-    return sterilizedText.value;
-}
 
 // send edited recipe to server when user clicks "scale servings"
 function sendRecipe() {

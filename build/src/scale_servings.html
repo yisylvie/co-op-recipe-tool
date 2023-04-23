@@ -44,12 +44,12 @@
             </div>
         </nav>
         <div id="everything">
-            <form id="scale-servings-form" class="main" action="scale_servings.html">
+            <form id="scale-servings-form" class="main">
                 <div id="stuck-top"></div>
                 <header id="servings-header" class="unstuck">
                     <div>
                         <div>
-                            <button class="primary-button scale-arrow" id="scale-up-button">
+                            <button type = "button" class="primary-button scale-arrow" id="scale-up-button">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     width="31.806px" height="17.917px" viewBox="0 0 31.806 17.917" enable-background="new 0 0 31.806 17.917" xml:space="preserve">
                                 <path fill="currentColor" d="M31.806,16.083c0,0.491-0.181,0.917-0.542,1.278c-0.343,0.343-0.762,0.519-1.257,0.528
@@ -59,7 +59,7 @@
                                     C31.634,15.176,31.806,15.593,31.806,16.083z"/>
                                 </svg>
                             </button>
-                            <button class="primary-button scale-arrow" id="scale-down-button">
+                            <button type = "button" class="primary-button scale-arrow" id="scale-down-button">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     width="31.806px" height="17.917px" viewBox="0 0 31.806 17.917" enable-background="new 0 0 31.806 17.917" xml:space="preserve">
                                 <path fill="currentColor" d="M31.292,3.084l-14.417,14.43c-0.148,0.148-0.301,0.252-0.458,0.312c-0.158,0.061-0.329,0.091-0.514,0.091
@@ -79,7 +79,7 @@
                         <!-- <input class="center-fill-width" id="servings" name="servings" type="text"> -->
 
                         
-                        <button id="reset">
+                        <button type = "button" id="reset">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 width="26.7px" height="26.7px" viewBox="0 0 26.7 26.7" style="enable-background:new 0 0 26.7 26.7;" xml:space="preserve">
                             <path fill="currentColor" d="M5.9,24.5C3.7,23,2.1,21,1,18.6c-0.2-0.5-0.2-0.9,0.1-1.2c0.2-0.4,0.6-0.5,1.2-0.5c0.3,0,0.6,0.1,0.8,0.3s0.5,0.4,0.6,0.6
@@ -91,29 +91,29 @@
                             </svg>
                         </button>
 
-                        <button class="secondary-button scale-factor">
+                        <button type = "button" class="secondary-button scale-factor">
                             <h4>
                                 2x
                             </h4>
                         </button>
-                        <button class="secondary-button scale-factor">
+                        <button type = "button" class="secondary-button scale-factor">
                             <h4>
                                 3x
                             </h4>
                         </button>
-                        <button class="secondary-button scale-factor">
+                        <button type = "button" class="secondary-button scale-factor">
                             <h4>
                                 4x
                             </h4>
                         </button>
-                        <button class="secondary-button scale-factor">
+                        <button type = "button" class="secondary-button scale-factor">
                             <h4>
                                 5x
                             </h4>
                         </button>
                     </div>
                     <div>
-                        <button id="back-button" class="secondary-button">
+                        <button type = "button" id="back-button" class="secondary-button">
                             <svg class="arrow-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 width="17.917px" height="31.806px" viewBox="0 0 17.917 31.806" enable-background="new 0 0 17.917 31.806" xml:space="preserve">
                             <path fill="currentColor" d="M14.833,31.292L0.403,16.875c-0.148-0.148-0.252-0.301-0.312-0.458C0.03,16.259,0,16.088,0,15.903s0.03-0.356,0.09-0.514
@@ -125,7 +125,7 @@
                                 back
                             </h4>
                         </button>
-                        <button id="view-recipe-button" class="primary-button">
+                        <button id="view-recipe-button" type = "button" class="primary-button">
                             <h4 class="center-fill-width">
                                 view recipe
                             </h4>
@@ -142,7 +142,7 @@
                 </header>
                 <div class="form-subheading">
                     <h3>Scale Ingredients</h3>
-                    <h4>for Baked Zitti</h4>
+                    <h4></h4>
                 </div>
                 <div>
                     <div>
@@ -157,14 +157,17 @@
                             </div>
                         </div>
                         <div id="scaled-input">
-                            <label for="ingredients">Scaled Ingredients</label>
-                            <div name="ingredients" contenteditable="true" role="textbox">
+                            <label for="ingredients" class="required-label">Scaled Ingredients</label>
+                            <div name="ingredients" contenteditable="true" role="textbox" required>
                                 <ul id="scaled-ingredients-list">
                                     <li>
                                         
                                     </li>
                                 </ul>
                             </div>
+                            <p class="error-message">
+                                Please add some ingredients
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -174,9 +177,16 @@
                     <h4>review accuracy for scaled recipe</h4>
                 </div>
                 <div>
+                    <div id="reminderDiv">
+                        <div class="reminder">
+                            <p>
+                                Cook times, equipment sizes, and other instructions often change with altered serving sizes.
+                            </p>
+                        </div>
+                    </div>
                     <div>
-                        <div>
-                            <div>
+                        <div id = "times-div">
+                            <div class>
                                 <label for="prep time">Prep Time</label>
                                 <input class="time-input" name="prep time" type="text">
                             </div>
@@ -190,14 +200,17 @@
                             </div>
                         </div>
                         <div id="instructions-input">
-                            <label for="instructions">Instructions</label>
-                            <div name="instructions" contenteditable="true" role="textbox">
+                            <label for="instructions" class="required-label">Instructions</label>
+                            <div name="instructions" contenteditable="true" role="textbox" required>
                                 <ol id="instuctions">
                                     <li>
                                         
                                     </li>
                                 </ol>
                             </div>
+                            <p class="error-message">
+                                Please add some instructions
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -206,6 +219,7 @@
         <script src="https://unpkg.com/numeric-quantity"></script>
         <script src="https://unpkg.com/parse-ingredient"></script>
         <script src="https://unpkg.com/format-quantity"></script>
+        <script src="pluralize.js"></script>
         <script type="module">
             import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
             if(!("id" in sessionStorage)) {
@@ -216,6 +230,7 @@
         </script>
         <script src="javascript/global.js"></script>
         <script src="javascript/styles.js"></script>
+        <script src="javascript/ingredient_scaler.js"></script>
         <script src="javascript/scale_servings.js"></script>
         <script src="javascript/navigation.js"></script>
     </body>

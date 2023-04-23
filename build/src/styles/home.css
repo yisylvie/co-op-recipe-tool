@@ -347,28 +347,28 @@ select:-webkit-autofill:focus {
 }
 body {
   text-align: center;
-  height: 100vh;
-  position: relative;
 }
 
-#everything {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+#call-to-action-div {
+  width: fit-content;
+  margin: auto;
+  margin-top: 22vh;
 }
-
-h1 {
+#call-to-action-div h1 {
   font-size: 4rem;
   font-weight: 300;
   line-height: 1.2em;
-  margin-bottom: 2.5em;
+  margin-bottom: 2em;
+}
+#call-to-action-div h2 {
+  margin-bottom: 8vh;
 }
 
-h2 {
-  margin-bottom: 3em;
+form {
+  margin: auto;
+  display: block;
+  width: fit-content;
 }
-
 form p {
   text-align: left;
 }
@@ -411,6 +411,110 @@ form div input[type=submit]:hover {
 form div input[type=text]:focus {
   outline: 0.15rem solid #78a671;
   border: none;
+}
+
+#about {
+  margin-bottom: 10vh;
+}
+#about p {
+  font-size: 1.1rem;
+  line-height: 1.3em;
+  color: #4e4e4e;
+  text-align: left;
+  width: 50vw;
+  margin: auto;
+}
+
+#suggested-recipe-div {
+  margin-bottom: 25vh;
+}
+#suggested-recipe-div h3 {
+  font-size: 1.3rem;
+  line-height: 1.3em;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-bottom: 1em;
+}
+#suggested-recipe-div > div {
+  display: flex;
+  align-items: center;
+  gap: 2.5%;
+  align-items: baseline;
+  justify-content: center;
+}
+#suggested-recipe-div > div a, #suggested-recipe-div > div h2, #suggested-recipe-div > div h3, #suggested-recipe-div > div h4, #suggested-recipe-div > div h5, #suggested-recipe-div > div h6, #suggested-recipe-div > div input[type=text] {
+  width: -webkit-fill-available;
+  text-align: center;
+}
+#suggested-recipe-div > div > a {
+  color: unset;
+  display: block;
+  width: 17vw;
+  border: 0.07rem solid #e5e5e5;
+  background-color: white;
+  transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
+}
+#suggested-recipe-div > div > a * {
+  transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
+}
+#suggested-recipe-div > div > a > div {
+  overflow: hidden;
+  height: 15vw;
+  position: relative;
+}
+#suggested-recipe-div > div > a > div .loader {
+  display: none;
+}
+#suggested-recipe-div > div > a > div img {
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#suggested-recipe-div > div > a h4 {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.1rem;
+  line-height: 2em;
+}
+#suggested-recipe-div > div > a:hover {
+  text-decoration: unset;
+  transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
+  font-weight: 600;
+  font-style: italic;
+  cursor: pointer;
+}
+#suggested-recipe-div > div > a:hover * {
+  transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
+}
+#suggested-recipe-div > div > a:hover > div {
+  background-color: black;
+}
+#suggested-recipe-div > div > a:hover > div img {
+  height: 120%;
+  opacity: 0.75;
+}
+#suggested-recipe-div > div > .loading-spin .loader {
+  width: 9vh;
+  height: 9vh;
+  border: 8px solid rgba(255, 255, 255, 0.431372549);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 /*# sourceMappingURL=home.css.map */

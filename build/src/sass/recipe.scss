@@ -2,6 +2,8 @@
 @use "sass:math";
 
 .main > div{
+    border: 0.07rem solid #e5e5e5;
+    background: white;
     padding: 7% 15%;
 
     h2, p, a{

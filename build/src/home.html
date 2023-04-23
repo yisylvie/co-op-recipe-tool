@@ -4,23 +4,26 @@
         <title>Coopify</title>
         <link href="styles/global.css" type="text/css" rel="stylesheet">
         <link href="styles/home.css" type="text/css" rel="stylesheet">
-        <meta property="og:url" content="website" />
+        <!-- <meta property="og:url" content="website" /> -->
         <meta property="og:title" content="Coopify" />
-        <meta property="og:type" content="video.movie" />
+        <meta property="og:type" content="website" />
         <meta property="og:description" content="Automatically parse, scale, and view online recipes"/>
         <!-- <meta property="og:image" content="" /> -->
+        <!-- Takes a recipe url and modifies the serving size  -->
     </head>
     <body id="body">
         <div id="everything">
-            <h1>
-                coopify
-            </h1>
-            <h2>
-                Automatically parse, scale, and view online recipes
-            </h2>
+            <div id = "call-to-action-div">
+                <h1>
+                    coopify
+                </h1>
+                <h2>
+                    Automatically parse, scale, and view online recipes
+                </h2>
+            </div>
             <form action="create_recipe.html" id="url-input-form">
                 <div class="url-input-div">
-                    <input name="url" type="text" placeholder="recipe url...">
+                    <input name="url" type="text" placeholder="input a recipe url...">
                     <input id="submit-url-button" class="primary-button" type="submit" value="go">
                 </div>
                 <div>
@@ -35,6 +38,54 @@
                     </p>
                 </div>
             </form>
+            <div id="about">
+                <p>
+                    Input the url to your favorite recipe, and watch its servings magically increase or decrease to cook for the number of people you need with just the click of a button. Then view your recipe in an easy-to-read, ad-free format.
+                </p>
+            </div>
+            <div id="suggested-recipe-div">
+                <h3>
+                    Not sure what to cook? Try some of our favorites:
+                </h3>
+                <div>
+                    <a href="https://www.kingarthurbaking.com/recipes/chocolate-stout-cake-recipe">
+                        <div>
+                            <span class="loader"></span>
+                            <img src="images/Chocolate-Stout-Cake.jpeg" alt="Chocolate Stout Cake">
+                        </div>
+                        <h4>
+                            Chocolate Stout Cake
+                        </h4>
+                    </a>
+                    <a href="https://simple-veganista.com/cuban-black-bean-soup-vegan/#tasty-recipes-8951-jump-target">
+                        <div>
+                            <span class="loader"></span>
+                            <img src="images/cuban-black-bean-soup.jpeg" alt="Cuban Black Bean Soup">
+                        </div>
+                        <h4>
+                            Cuban Black Bean Soup
+                        </h4>
+                    </a>
+                    <a href="https://www.foodnetwork.com/recipes/ree-drummond/baked-ziti-2312399">
+                        <div>
+                            <span class="loader"></span>
+                            <img src="images/baked-ziti.jpeg" alt="Baked Ziti">
+                        </div>
+                        <h4>
+                            Baked Ziti
+                        </h4>
+                    </a>
+                    <a href="https://cooking.nytimes.com/recipes/1024082-gochujang-potato-stew">
+                        <div>
+                            <span class="loader"></span>
+                            <img src="images/Gochujang-Potato-Stew.jpeg" alt="Gochujang Potato Stew">
+                        </div>
+                        <h4>
+                            Gochujang Potato Stew
+                        </h4>
+                    </a>
+                </div>
+            </div>
         </div>
         <!-- <script src="javascript/styles.js"></script> -->
         <script type="module">

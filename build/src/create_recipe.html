@@ -49,9 +49,9 @@
                 <div id="stuck-top"></div>
                 <header class="unstuck">
                     <h2>
-                        Review Recipe
+                        <!-- Review Recipe -->
                     </h2>
-                    <button class="primary-button" id="scale-servings-button">
+                    <button class="primary-button" id="scale-servings-button" type = "submit">
                         <h4 class="center-fill-width">
                             scale servings
                         </h4>
@@ -87,14 +87,14 @@
                     <div>
                         <div>
                             <label for="servings">Servings</label>
-                            <input name="servings" type="text" placeholder="## Servings" pattern="\s*\d+.*">
+                            <input name="servings" type="text" placeholder="## Servings" pattern="(^\s*\d+.*$)|(^\s*(s|S)erves\s*\d+\s*$)">
                             <p class="error-message">
                                 Format: # Servings (e.g. 32 Servings)
                             </p>
                         </div>
                         <div>
                             <label for="prep time">Prep Time</label>
-                            <input class="time-input" name="prep time" type="text" placeholder="00:00:00">
+                            <input class="time-input" name="prep time" type="text">
                         </div>
                         <div>
                             <label for="cook time">Cook Time</label>

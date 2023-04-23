@@ -5,9 +5,10 @@ const scaleServingsForm = document.getElementById("scale-servings-form");
 const resetButton = document.getElementById("reset");
 const scaleFactorButtons = document.getElementsByClassName("scale-factor");
 const viewRecipeButton = document.getElementById("view-recipe-button");
-const ingredients = document.getElementsByName("ingredients")[0];
+const ingredientsInput = document.getElementsByName("ingredients")[0];
 const originalIngredients = document.getElementById("original-ingredients").querySelector("div");
-    
+const instructionsInput = document.getElementsByName("instructions")[0];
+
 let originalServings;
 let scaledServings;
 let originalIngredientsArray = [];
@@ -38,6 +39,13 @@ function recieveRecipe() {
             if(jsonData.recipeYield == "") {
                 originalServings = ParseIngredient.parseIngredient("1 Recipes")[0];
                 scaledServings = ParseIngredient.parseIngredient("1 Recipes")[0];
+
+            // edge case for if servings is written in format "serves 5"
+            } else if(/^\s*(s|S)erves\s*\d+\s*$/.exec(jsonData.recipeYield)) {
+                let serves = /\d+/.exec(jsonData.recipeYield);
+                originalServings = ParseIngredient.parseIngredient(serves + " Servings", { allowLeadingOf: true })[0];
+                scaledServings = ParseIngredient.parseIngredient(serves + " Servings", { allowLeadingOf: true })[0];
+                
             } else {
                 // get servings and unit of servings, setting unit to "servings" if there is none
                 originalServings = ParseIngredient.parseIngredient(jsonData.recipeYield, { allowLeadingOf: true })[0];
@@ -50,10 +58,12 @@ function recieveRecipe() {
             }
             servings.value = prettify(originalServings, true);
             resizeServings();
+            document.querySelector(".form-subheading h4").innerHTML = "for " + jsonData.name;
             document.getElementsByName("prep time")[0].value = jsonData.prepTime;
             document.getElementsByName("cook time")[0].value = jsonData.cookTime;
             document.getElementsByName("total time")[0].value = jsonData.totalTime;
             appendIngredients(jsonData.recipeIngredients);
+            appendInstructions(jsonData.recipeInstructions);
         } else{
             window.location.href = 'home.html';
         }
@@ -71,28 +81,63 @@ function appendIngredients(ingredients) {
     document.getElementById("original-ingredients").querySelector("div").innerHTML = "";
     let ul = document.createElement("ul");
     ingredients.forEach((ingredient) => {
+        // api no like decimals written like .4 so make um 0.4
+        if(sterilize(ingredient).match(/^\s*\.\d+/)) {
+            ingredient = sterilize(ingredient).replace(/^\s*\./, "0.");
+            console.log(ingredient);
+        }
         originalIngredientsArray.push(ParseIngredient.parseIngredient(ingredient, { allowLeadingOf: true })[0]);
         scaledIngredientsArray.push(ParseIngredient.parseIngredient(ingredient, { allowLeadingOf: true })[0]);
         let li = document.createElement("li");
         li.innerHTML = ingredient;
         ul.appendChild(li);
     });
-    document.getElementById("original-ingredients").querySelector("div").appendChild(ul);
+    originalIngredients.appendChild(ul);
 
-    document.getElementsByName("ingredients")[0].innerHTML = "";
+    ingredientsInput.innerHTML = "";
     ul = document.createElement("ul");
     ingredients.forEach((ingredient) => {
+        if(sterilize(ingredient).match(/^\s*\.\d+/)) {
+            ingredient = sterilize(ingredient).replace(/^\s*\./, "0.");
+            console.log(ingredient);
+        }
         let li = document.createElement("li");
         li.innerHTML = ingredient;
         ul.appendChild(li);
     });
-    document.getElementsByName("ingredients")[0].appendChild(ul);
+    ingredientsInput.appendChild(ul);
     console.log(originalIngredientsArray);
-    document.getElementsByName("ingredients")[0].querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
+    ingredientsInput.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
 }
+
+// add the instructions from the json data into instructions input on form
+function appendInstructions(instructions) {
+    instructionsInput.innerHTML = "";
+    let ol = document.createElement("ol");
+    instructions.forEach((instruction) => {
+        if(instruction != null) {
+            let li = document.createElement("li");
+            li.innerHTML = instruction;
+            ol.appendChild(li);
+        }
+    });
+    instructionsInput.appendChild(ol);
+}
+
+scaleServingsForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+});
 
 scaleServingsForm.addEventListener("change", function(e) {
     e.preventDefault();
+});
+
+// remove error message if field has been editted
+scaleServingsForm.addEventListener("input", function(e) {
+    if(e.target.classList.contains("invalid")) {
+        e.target.classList.remove("invalid");
+        e.target.parentElement.querySelector(".error-message").style.display = "none";
+    }
 });
 
 // go to previous page when back button is clicked
@@ -121,7 +166,6 @@ setClickListener(upButton, function(event){
     document.getElementById("servings").value = prettify(scaledServings, true);
     unhighlightScaleButton();
     alterIngredients();
-    console.log('1 scale upper');
     // resizeServings();
 });
 
@@ -175,21 +219,26 @@ servings.addEventListener("change", function(event) {
     resizeServings();
 });
 
-// fix weird bug that makes servings increase by 1 when enter is clicked
-servings.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
-        console.log("bro");
-        e.preventDefault();
-        document.getElementById("servings").value = prettify(scaledServings, true);
-        console.log("servingsSubmitted");
-        resizeServings();
-    }
-});
-
 // send scaled recipe to server when user clicks "scale servings" then redirect to recipe.html
 setClickListener(viewRecipeButton, function(event){
     event.preventDefault();
-    sendRecipe();
+    // if there is only whitespace in the ingredients give error message
+    let error = false;
+    if(/^\s*$/.test(ingredientsInput.querySelector("ul").textContent)) {
+        console.log("stuff:" + ingredientsInput.querySelector("ul").textContent + ":end");
+        ingredientsInput.classList.add("invalid");
+        ingredientsInput.parentElement.querySelector(".error-message").style.display = "block";
+        error = true;
+    } 
+    if(/^\s*$/.test(instructionsInput.querySelector("ol").textContent)) {
+        console.log("stuff:" + instructionsInput.querySelector("ol").textContent + ":end");
+        instructionsInput.classList.add("invalid");
+        instructionsInput.parentElement.querySelector(".error-message").style.display = "block";
+        error = true;
+    } 
+    if(!error) {
+        sendRecipe();
+    }
 });
 
 // scale up by scale factor when a scale factor button is clicked
@@ -204,45 +253,13 @@ for (let i = 0; i < scaleFactorButtons.length; i++) {
         // highlight button being clicked
         scaleFactorButtons[i].classList.add("primary-button");
         scaleFactorButtons[i].classList.remove("secondary-button");
-        scaledServings.quantity = originalServings.quantity * scaleFactor;
+        let copy = JSON.parse(JSON.stringify(originalServings.quantity));
+        console.log(originalServings.quantity);
+        scaledServings.quantity = copy * scaleFactor;
+        console.log(originalServings.quantity);
         document.getElementById("servings").value = prettify(scaledServings, true);
         alterIngredients();
     });
-}
-
-// increase number of servings by amount and scale ingredients accordingly
-function alterIngredients() {
-    let prevServings = originalServings.quantity;
-    let scaleFactor = scaledServings.quantity / prevServings;
-
-    for (let i = 0; i < originalIngredientsArray.length; i++) {
-        scaledIngredientsArray[i].quantity = originalIngredientsArray[i].quantity * scaleFactor;
-    }
-
-    document.getElementsByName("ingredients")[0].innerHTML = "";
-    ul = document.createElement("ul");
-    scaledIngredientsArray.forEach((ingredient) => {
-        let li = document.createElement("li");
-        li.innerHTML = prettify(ingredient);
-        ul.appendChild(li);
-    });
-    document.getElementsByName("ingredients")[0].appendChild(ul);
-    resizeServings();
-    ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
-}
-
-// format ingredient from ingredient object into viewable string
-function prettify(ingredient, isServing = false) {
-    // round numbers and remove numbers in the description
-    scaledServings.description = scaledServings.description.replace(/^\.*\d+/, "");
-    if(isServing) {
-        return parseFloat(Number(scaledServings.quantity).toFixed(3)) + " " + scaledServings.description;
-    } 
-
-    if(ingredient.unitOfMeasure) {
-        return FormatQuantity.formatQuantity(ingredient.quantity, { tolerance: 0.1 }) + " " + ingredient.unitOfMeasure + " " + ingredient.description;
-    }
-    return FormatQuantity.formatQuantity(ingredient.quantity, { tolerance: 0.1 }) + " " + ingredient.description;
 }
 
 // if a scale button was previously clicked, unhighlight it
@@ -256,7 +273,7 @@ function unhighlightScaleButton() {
 
 // add the ingredients from ingredients input on form into the json data
 function grabIngredients(jsonData) {
-    let lis = document.getElementsByName("ingredients")[0].querySelectorAll("li");
+    let lis = ingredientsInput.querySelectorAll("li");
     let ingredients = [];
     lis.forEach((li) => {
         ingredients.push(li.innerHTML);

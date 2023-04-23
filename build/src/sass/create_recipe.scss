@@ -82,15 +82,15 @@
                     width: max-content;
                 }
                 > #reset{
-                    height: 1.2em;
                     color: global.$grey1;
+                    height: calc(1.2em + 0.4em * 2);
+                    padding: 0.4em;
+                    transition: none;
                     svg{
                         display: block;
                         width: fit-content;
                         height: 100%;
                     }
-                    transition: none;
-                    // animation:twist 4s linear 1;
                 }
 
                 @keyframes bounceTwist {
@@ -202,7 +202,16 @@
             }
 
             #reminderDiv{
-                display: none;
+                // display: none;
+            }
+
+            #times-div{
+                > div {
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5em;
+                    margin-bottom: 3em;
+                }
             }
 
             // one line of the form
@@ -211,20 +220,19 @@
                 width: 100%;
                 margin-bottom: 3em;
                 align-items: flex-start;
+                justify-content: space-between;
                 
                 word-wrap: break-word;
                 overflow-wrap: break-word;
-                // -webkit-hyphens: auto;
-                // -moz-hyphens: auto;
-                // hyphens: auto;
                 
                 // one form item
                 > div {
                     display: flex;
                     flex-direction: column;
                     gap: .5em;
-                    width: calc((40% - 2.5%) / 2 - 2.5%);
                     width: calc((100% - (5% * 3)) / 4);
+                    max-height: calc(100vh - 6em);
+
 
                     ul{
                         li{
@@ -290,7 +298,6 @@
                     border-radius: global.$borderRadius1;
                     border: global.$thinGreyBorder;
                     min-height: 25em;
-                    max-height: 50em;
                     overflow: scroll;
                 }
 
@@ -359,7 +366,6 @@
                     border-color: global.$grey3;
 
                     min-height: 25em;
-                    max-height: 50em;
                     width: -webkit-fill-available;
                     resize: none;
                     overflow: scroll;
