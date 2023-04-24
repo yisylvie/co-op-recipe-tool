@@ -111,8 +111,60 @@ button, input{
     }
 }
 
+@keyframes bounceLeft {
+    0%   {
+        margin-left: 0;
+        margin-right: 0.4em;
+    }
+    40% {
+        margin-left: -0.3em;
+        margin-right: 0.7em;
+    }
+    60% {
+        margin-left: 0.1em;
+        margin-right: 0.3em;
+    }
+    80% {
+        margin-left: -0.2em;
+        margin-right: 0.6em;
+    }
+    100% {
+        margin-left: 0;
+        margin-right: 0.4em;
+    }
+}
+
+@keyframes bounceRight {
+    0%   {
+        margin-right: 0;
+        margin-left: 0.4em;
+    }
+    40% {
+        margin-right: -0.3em;
+        margin-left: 0.7em;
+    }
+    60% {
+        margin-right: 0.1em;
+        margin-left: 0.3em;
+    }
+    80% {
+        margin-right: -0.2em;
+        margin-left: 0.6em;
+    }
+    100% {
+        margin-right: 0;
+        margin-left: 0.4em;
+    }
+}
+
 button:hover, input[type="submit"]:hover{
     cursor: pointer;
+    .right-arrow{
+        animation: bounceRight 400ms 1;
+    }
+    .left-arrow{
+        animation: bounceLeft 400ms 1;
+    }
 }
 
 .primary-button, .secondary-button, .tertiary-button{
@@ -130,7 +182,15 @@ button:hover, input[type="submit"]:hover{
 
     .arrow-icon{
         height:  1em;
+        // margin-left: .4em;
+    }
+
+    .right-arrow{
         margin-left: .4em;
+    }
+
+    .left-arrow{
+        margin-right: .4em;
     }
   
     svg{
@@ -143,7 +203,7 @@ button:hover, input[type="submit"]:hover{
     color: white;
     border: .1rem solid $green1;
 }
-  
+
 .primary-button:hover{
     background-color: $green2;
     border: .1rem solid $green2;

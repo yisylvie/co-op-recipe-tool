@@ -61,8 +61,58 @@ button svg, input svg {
   height: 0.5em;
 }
 
+@keyframes bounceLeft {
+  0% {
+    margin-left: 0;
+    margin-right: 0.4em;
+  }
+  40% {
+    margin-left: -0.3em;
+    margin-right: 0.7em;
+  }
+  60% {
+    margin-left: 0.1em;
+    margin-right: 0.3em;
+  }
+  80% {
+    margin-left: -0.2em;
+    margin-right: 0.6em;
+  }
+  100% {
+    margin-left: 0;
+    margin-right: 0.4em;
+  }
+}
+@keyframes bounceRight {
+  0% {
+    margin-right: 0;
+    margin-left: 0.4em;
+  }
+  40% {
+    margin-right: -0.3em;
+    margin-left: 0.7em;
+  }
+  60% {
+    margin-right: 0.1em;
+    margin-left: 0.3em;
+  }
+  80% {
+    margin-right: -0.2em;
+    margin-left: 0.6em;
+  }
+  100% {
+    margin-right: 0;
+    margin-left: 0.4em;
+  }
+}
 button:hover, input[type=submit]:hover {
   cursor: pointer;
+}
+button:hover .right-arrow, input[type=submit]:hover .right-arrow {
+  animation: bounceRight 400ms 1;
+}
+button:hover .left-arrow, input[type=submit]:hover .left-arrow {
+  animation: bounceLeft 400ms 1;
 }
 
 .primary-button, .secondary-button, .tertiary-button {
@@ -85,7 +135,12 @@ button:hover, input[type=submit]:hover {
 }
 .primary-button .arrow-icon, .secondary-button .arrow-icon, .tertiary-button .arrow-icon {
   height: 1em;
+}
+.primary-button .right-arrow, .secondary-button .right-arrow, .tertiary-button .right-arrow {
   margin-left: 0.4em;
+}
+.primary-button .left-arrow, .secondary-button .left-arrow, .tertiary-button .left-arrow {
+  margin-right: 0.4em;
 }
 .primary-button svg, .secondary-button svg, .tertiary-button svg {
   height: 1.5em;

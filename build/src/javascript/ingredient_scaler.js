@@ -60,12 +60,15 @@ function alterIngredients() {
 
 // format ingredient from ingredient object into viewable string
 function prettify(ingredient, isServing = false) {
-    // round numbers and remove numbers in the description
-    scaledServings.description = scaledServings.description.replace(/^\.*\d+/, "");
     if(isServing) {
+        console.log(scaledServings.description);
+
+        scaledServings.description = scaledServings.description.replace(/^\.*\d+/, "");
+        // scaled servings to 3 decimal points
         return parseFloat(Number(scaledServings.quantity).toFixed(3)) + " " + scaledServings.description;
     } 
-
+    
+    // round numbers and remove numbers in the description
     if(ingredient.quantity != null) {
         let unrounded = ingredient.quantity;
         let decimal = unrounded % 1;

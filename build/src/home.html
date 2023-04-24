@@ -18,13 +18,26 @@
                     coopify
                 </h1>
                 <h2>
-                    Automatically parse, scale, and view online recipes
+                    Automatically scale servings of online recipes.
                 </h2>
             </div>
             <form action="create_recipe.html" id="url-input-form">
                 <div class="url-input-div">
                     <input name="url" type="text" placeholder="input a recipe url...">
-                    <input id="submit-url-button" class="primary-button" type="submit" value="go">
+                    <!-- <input id="submit-url-button" class="primary-button" type="submit" value="go"> -->
+                    <button class="primary-button" id="submit-url-button" type = "submit">
+                        <h4 class="center-fill-width">
+                            get cookin'
+                        </h4>
+                        <svg version="1.1" class="arrow-icon right-arrow" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            width="17.917px" height="31.806px" viewBox="0 0 17.917 31.806" enable-background="new 0 0 17.917 31.806" xml:space="preserve">
+                        <path fill="currentColor" d="M1.834,31.806c-0.491,0-0.917-0.181-1.278-0.542c-0.343-0.343-0.519-0.762-0.528-1.257
+                            c-0.009-0.496,0.162-0.919,0.514-1.271l12.833-12.833L0.542,3.07C0.181,2.709,0,2.283,0,1.792s0.181-0.917,0.542-1.278
+                            C0.885,0.171,1.311,0,1.82,0c0.509,0,0.93,0.167,1.264,0.5l14.431,14.431c0.148,0.148,0.252,0.301,0.312,0.458
+                            c0.06,0.158,0.09,0.329,0.09,0.514s-0.03,0.356-0.091,0.514c-0.06,0.157-0.164,0.31-0.312,0.458L3.084,31.292
+                            C2.741,31.634,2.324,31.806,1.834,31.806z"/>
+                        </svg>
+                    </button>
                 </div>
                 <div>
                     <p class="error-message">
@@ -38,11 +51,6 @@
                     </p>
                 </div>
             </form>
-            <div id="about">
-                <p>
-                    Input the url to your favorite recipe, and watch its servings magically increase or decrease to cook for the number of people you need with just the click of a button. Then view your recipe in an easy-to-read, ad-free format.
-                </p>
-            </div>
             <div id="suggested-recipe-div">
                 <h3>
                     Not sure what to cook? Try some of our favorites:
@@ -85,6 +93,27 @@
                         </h4>
                     </a>
                 </div>
+            </div>
+            <div id="about">
+                <h2>
+                    What even is this?
+                </h2>
+                <p>
+                    Input the url to your favorite recipe, and watch its servings magically increase or decrease to cook for the number of people you need with just the click of a button. Then view your recipe in an easy-to-read, ad-free format.
+                </p>
+                <h2>
+                    Backstory
+                </h2>
+                <p>
+                    This site was made by Sylvie Lee for her 2023 BFA capstone in interaction design.
+                    I live in the WashU co-op, and every weekend we need to find recipes to cook for the following week. We take online recipes and scale them up manually to accommodate all of the folks in the co-op. I found this to be a tedious and time consuming process and I wanted to automate that process to help my co-op to save time when meal planning.
+                </p>
+                <h2>
+                    How does it work?
+                </h2>
+                <p>
+                    Most recipe sites have specially formatted recipe metadata, so they can show up on Google more easily. I just use this recipe scrapper library which scrapes this meta data.
+                </p>
             </div>
         </div>
         <!-- <script src="javascript/styles.js"></script> -->

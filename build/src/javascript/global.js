@@ -37,7 +37,7 @@ function setCookie(cname, cvalue) {
 console.log(sessionStorage);
 let cookie;
 
-// try to get the cookie every 20 milliseconds until it is set or 5 seconds have past
+// try to get the cookie every 10 milliseconds until it is set or 5 seconds have past
 async function grabCookie() {
     let myPromise = new Promise(function(resolve) {
         var grabbed = setInterval(function(){

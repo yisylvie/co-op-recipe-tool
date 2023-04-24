@@ -23,7 +23,7 @@ body{
         font-size: 4rem;
         font-weight: 300;
         line-height: 1.2em;
-        margin-bottom: 2em;
+        margin-bottom: 20vh;
     }
     
     h2{
@@ -38,6 +38,7 @@ form{
     margin: auto;
     display: block;
     width: fit-content;
+    margin-bottom: 15vh;
     // @include global.absoluteCenter();
     p{
         text-align: left;
@@ -56,24 +57,27 @@ form{
             width: -webkit-fill-available;
             font-size: inherit;
             padding-left: .5em;
-            background: none;
+            background: white;
             z-index: 1;
             border-radius: global.$borderRadius 0 0 global.$borderRadius;
             border: .1rem solid global.$grey3;
             line-height: 2rem;
         }
     
-        input[type="submit"]{
+        button[type="submit"]{
             border-radius: 0 global.$borderRadius global.$borderRadius 0;
-            padding: 0 2em;
-            font-size: inherit;
-            // line-height: 2rem;
+            // padding: 0 2em;
+            // font-size: inherit;
+            line-height: 2rem;
             // margin-left: .2rem;
             border-radius: 0 global.$borderRadius global.$borderRadius 0;
             border: .1rem solid global.$green1;
+            h4{
+                width: max-content;
+            }
         }
     
-        input[type="submit"]:hover{
+        button[type="submit"]:hover{
             border: .1rem solid global.$green2;
         }
     
@@ -84,22 +88,8 @@ form{
     }
 }
 
-#about{
-    margin-bottom: 10vh;
-
-    p{
-        font-size: 1.1rem;
-        line-height: 1.3em;
-        color: global.$grey1;
-        text-align: left;
-        width: 50vw;
-        margin: auto;
-        // margin-bottom: 1.5em;
-    }
-}
-
 #suggested-recipe-div{
-    margin-bottom: 25vh;
+    margin-bottom: 15vh;
     h3{
         font-size: 1.3rem;
         line-height: 1.3em;
@@ -158,8 +148,10 @@ form{
             >div{
                 background-color: black;
                 img{
-                    height: 120%;
+                    height: 115%;
                     opacity: 0.75;
+                    transition-timing-function: ease-in-out;
+                    transition-duration:100ms;
                 }
             }
             font-weight: 600;
@@ -170,6 +162,8 @@ form{
             // margin-left: -1em;
             // margin-top: -1em;
         }
+
+        // stole from https://cssloaders.github.io/
         >.loading-spin{
             .loader {
                 width: 9vh;
@@ -197,4 +191,25 @@ form{
         }
     }
     
+}
+
+#about{
+    font-size: 1.3rem;
+    width: 30em;
+    margin: auto;
+    margin-bottom: 20vh;
+
+    h2{
+        margin-bottom: .3em;
+        text-align: left;
+    }
+
+    p{
+        font-size: inherit;
+        line-height: 1.3em;
+        color: global.$grey1;
+        text-align: left;
+        // width: 30em;
+        margin-bottom: 2em;
+    }
 }

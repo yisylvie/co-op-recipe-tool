@@ -13,6 +13,9 @@ let originalServings;
 let scaledServings;
 let originalIngredientsArray = [];
 let scaledIngredientsArray = [];
+let mouseIsDown = false;
+let upPressing;
+let downPressing;
 
 // grab recipe from json/modified_recipe.json and input it into the form
 function recieveRecipe() {
@@ -43,8 +46,8 @@ function recieveRecipe() {
             // edge case for if servings is written in format "serves 5"
             } else if(/^\s*(s|S)erves\s*\d+\s*$/.exec(jsonData.recipeYield)) {
                 let serves = /\d+/.exec(jsonData.recipeYield);
-                originalServings = ParseIngredient.parseIngredient(serves + " Servings", { allowLeadingOf: true })[0];
-                scaledServings = ParseIngredient.parseIngredient(serves + " Servings", { allowLeadingOf: true })[0];
+                originalServings = ParseIngredient.parseIngredient(serves + " Servings")[0];
+                scaledServings = ParseIngredient.parseIngredient(serves + " Servings")[0];
                 
             } else {
                 // get servings and unit of servings, setting unit to "servings" if there is none
@@ -149,33 +152,118 @@ setClickListener(backButton, function(event){
 // scale down by 1 serving when down button is clicked
 setClickListener(downButton, function(event){
     event.preventDefault();
+    mouseIsDown = false;
+    clearInterval(upPressing);
+    clearInterval(downPressing);
     // make sure that we don't decrease below one serving
     if(scaledServings.quantity > 1) {
         scaledServings.quantity -= 1;
         unhighlightScaleButton();
         document.getElementById("servings").value = prettify(scaledServings, true);
+        resizeServings();
         alterIngredients();
-        // resizeServings();
     }
 });
+
+// delay for 500ms then fire hold down on mouse press
+downButton.addEventListener("mousedown", function(event) {
+    mouseIsDown = true;
+    console.log("decrease pre");
+
+    event.preventDefault();
+    setTimeout(function() {
+        holdDown();
+        console.log("decrease");
+    }, 500);
+});
+
+// repeatedly decrease servings every 100ms when button is held
+async function holdDown() {
+    let myPromise = new Promise(function(resolve) {
+        downPressing = setInterval(function(){
+            if(mouseIsDown) {
+                if(scaledServings.quantity > 1) {
+                    console.log("decrease");
+                    scaledServings.quantity -= 1;
+                    unhighlightScaleButton();
+                    document.getElementById("servings").value = prettify(scaledServings, true);
+                    resizeServings();
+                    alterIngredients();
+                } else {
+                    clearInterval(downPressing);
+                    resolve("trying for go under 1");
+                }
+            } else {
+                clearInterval(downPressing);
+                resolve("pau");
+            }
+        }, 130);
+    });
+    console.log(await myPromise);
+}
 
 // scale up by 1 serving when up button is clicked
 setClickListener(upButton, function(event){
     event.preventDefault();
+    mouseIsDown = false;
+    clearInterval(upPressing);
+    clearInterval(downPressing);
     scaledServings.quantity += 1;
     document.getElementById("servings").value = prettify(scaledServings, true);
     unhighlightScaleButton();
+    resizeServings();
     alterIngredients();
-    // resizeServings();
+});
+
+// delay for 500ms then fire hold down on mouse press
+upButton.addEventListener("mousedown", function(event) {
+    mouseIsDown = true;
+    console.log("increase pre");
+    event.preventDefault();
+    setTimeout(function() {
+        holdUp();
+        console.log("increase");
+    }, 500);
+});
+
+// repeatedly increase servings every 100ms when button is held
+async function holdUp() {
+    let thisPromise = new Promise(function(resolve) {
+        upPressing = setInterval(function(){
+            if(mouseIsDown) {
+                console.log("increase");
+                scaledServings.quantity += 1;
+                unhighlightScaleButton();
+                document.getElementById("servings").value = prettify(scaledServings, true);
+                resizeServings();
+                alterIngredients();
+            } else {
+                clearInterval(upPressing);
+                resolve("pau");
+            }
+        }, 130);
+    });
+    console.log(await thisPromise);
+}
+
+// check if mouse is unclicked to turn off up/down scaling
+window.addEventListener('mouseup', function() {
+    mouseIsDown = false;
+    clearInterval(upPressing);
+    clearInterval(downPressing);
+    console.log("mouseup");
 });
 
 // reset servings to original when reset button is clicked
 setClickListener(resetButton, function(event){
     resetButton.classList.add("twist");
     event.preventDefault();
-    scaledServings = originalServings;
+    let copy = JSON.parse(JSON.stringify(originalServings.quantity));
+    scaledServings.quantity = copy;
+    originalServings.quantity = copy;
     unhighlightScaleButton();
     document.getElementById("servings").value = prettify(scaledServings, true);
+    resizeServings();
     alterIngredients();
 });
 
@@ -183,39 +271,49 @@ resetButton.addEventListener('transitionend', function(){
     resetButton.classList.remove("twist");
 });
 
-// scale up by # servings inputted when servings size is editted
+// resize servings as user types
 servings.addEventListener("input", function(event) {
     event.preventDefault();
     resizeServings();
-    oldServings = scaledServings;
-    scaledServings = ParseIngredient.parseIngredient(servings.value, { allowLeadingOf: true })[0];
-
-    console.log(scaledServings);
-    
-    // fix bug where # of servings can't be in the form .4 (no 0 before decimal point)
-    if(scaledServings.quantity == null && scaledServings.description[0] == ".") {
-        scaledServings = ParseIngredient.parseIngredient("0" + scaledServings.description, { allowLeadingOf: true });
-    }
-
-    // don't change unless input is valid
-    if(scaledServings != undefined && scaledServings.quantity > 0) {
-        unhighlightScaleButton();
-        alterIngredients();
-        if(scaledServings.description == "") {
-            scaledServings.description = oldServings.description;
-        }
-        return;
-    }
-    // change to previous value if invalid input
-    scaledServings = oldServings;
 });
 
+// if servings is entered leave focus and fire change event
+servings.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.code === 'Enter') {
+        event.target.blur();
+    }
+});
+
+// scale up by # servings inputted on servings enter and
 // check that servings are formatted properly once user stops inputting
 servings.addEventListener("change", function(event) {
     event.preventDefault();
     // event.stopImmediatePropagation();
+    oldServings = scaledServings;
+    scaledServings = ParseIngredient.parseIngredient(servings.value, { allowLeadingOf: true })[0];
+
+    // don't change unless input is valid
+    if(scaledServings != undefined) {
+        unhighlightScaleButton();
+        // fix bug where # of servings can't be in the form .4 (no 0 before decimal point)
+        if(scaledServings.quantity == null && scaledServings.description[0] == ".") {
+            scaledServings = ParseIngredient.parseIngredient("0" + scaledServings.description, { allowLeadingOf: true })[0];
+        }
+        if(scaledServings.description == "") {
+            scaledServings.description = oldServings.description;
+        }
+        if(scaledServings.quantity <= 0) {
+            scaledServings.quantity = oldServings.quantity;
+        }
+        document.getElementById("servings").value = prettify(scaledServings, true);
+        resizeServings();
+        alterIngredients();
+        return;
+    }
+    // change to previous value if invalid input
+    scaledServings = oldServings;
     document.getElementById("servings").value = prettify(scaledServings, true);
-    console.log("servingsSubmitted");
     resizeServings();
 });
 
@@ -254,10 +352,10 @@ for (let i = 0; i < scaleFactorButtons.length; i++) {
         scaleFactorButtons[i].classList.add("primary-button");
         scaleFactorButtons[i].classList.remove("secondary-button");
         let copy = JSON.parse(JSON.stringify(originalServings.quantity));
-        console.log(originalServings.quantity);
         scaledServings.quantity = copy * scaleFactor;
-        console.log(originalServings.quantity);
+        originalServings.quantity = copy;
         document.getElementById("servings").value = prettify(scaledServings, true);
+        resizeServings();
         alterIngredients();
     });
 }

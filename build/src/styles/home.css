@@ -61,8 +61,58 @@ button svg, input svg {
   height: 0.5em;
 }
 
+@keyframes bounceLeft {
+  0% {
+    margin-left: 0;
+    margin-right: 0.4em;
+  }
+  40% {
+    margin-left: -0.3em;
+    margin-right: 0.7em;
+  }
+  60% {
+    margin-left: 0.1em;
+    margin-right: 0.3em;
+  }
+  80% {
+    margin-left: -0.2em;
+    margin-right: 0.6em;
+  }
+  100% {
+    margin-left: 0;
+    margin-right: 0.4em;
+  }
+}
+@keyframes bounceRight {
+  0% {
+    margin-right: 0;
+    margin-left: 0.4em;
+  }
+  40% {
+    margin-right: -0.3em;
+    margin-left: 0.7em;
+  }
+  60% {
+    margin-right: 0.1em;
+    margin-left: 0.3em;
+  }
+  80% {
+    margin-right: -0.2em;
+    margin-left: 0.6em;
+  }
+  100% {
+    margin-right: 0;
+    margin-left: 0.4em;
+  }
+}
 button:hover, input[type=submit]:hover {
   cursor: pointer;
+}
+button:hover .right-arrow, input[type=submit]:hover .right-arrow {
+  animation: bounceRight 400ms 1;
+}
+button:hover .left-arrow, input[type=submit]:hover .left-arrow {
+  animation: bounceLeft 400ms 1;
 }
 
 .primary-button, .secondary-button, .tertiary-button {
@@ -85,7 +135,12 @@ button:hover, input[type=submit]:hover {
 }
 .primary-button .arrow-icon, .secondary-button .arrow-icon, .tertiary-button .arrow-icon {
   height: 1em;
+}
+.primary-button .right-arrow, .secondary-button .right-arrow, .tertiary-button .right-arrow {
   margin-left: 0.4em;
+}
+.primary-button .left-arrow, .secondary-button .left-arrow, .tertiary-button .left-arrow {
+  margin-right: 0.4em;
 }
 .primary-button svg, .secondary-button svg, .tertiary-button svg {
   height: 1.5em;
@@ -358,7 +413,7 @@ body {
   font-size: 4rem;
   font-weight: 300;
   line-height: 1.2em;
-  margin-bottom: 2em;
+  margin-bottom: 20vh;
 }
 #call-to-action-div h2 {
   margin-bottom: 8vh;
@@ -368,6 +423,7 @@ form {
   margin: auto;
   display: block;
   width: fit-content;
+  margin-bottom: 15vh;
 }
 form p {
   text-align: left;
@@ -392,20 +448,22 @@ form div input[type=text] {
   width: -webkit-fill-available;
   font-size: inherit;
   padding-left: 0.5em;
-  background: none;
+  background: white;
   z-index: 1;
   border-radius: 0.3rem 0 0 0.3rem;
   border: 0.1rem solid #bbbcbb;
   line-height: 2rem;
 }
-form div input[type=submit] {
+form div button[type=submit] {
   border-radius: 0 0.3rem 0.3rem 0;
-  padding: 0 2em;
-  font-size: inherit;
+  line-height: 2rem;
   border-radius: 0 0.3rem 0.3rem 0;
   border: 0.1rem solid #397d2f;
 }
-form div input[type=submit]:hover {
+form div button[type=submit] h4 {
+  width: max-content;
+}
+form div button[type=submit]:hover {
   border: 0.1rem solid #78a671;
 }
 form div input[type=text]:focus {
@@ -413,20 +471,8 @@ form div input[type=text]:focus {
   border: none;
 }
 
-#about {
-  margin-bottom: 10vh;
-}
-#about p {
-  font-size: 1.1rem;
-  line-height: 1.3em;
-  color: #4e4e4e;
-  text-align: left;
-  width: 50vw;
-  margin: auto;
-}
-
 #suggested-recipe-div {
-  margin-bottom: 25vh;
+  margin-bottom: 15vh;
 }
 #suggested-recipe-div h3 {
   font-size: 1.3rem;
@@ -491,8 +537,10 @@ form div input[type=text]:focus {
   background-color: black;
 }
 #suggested-recipe-div > div > a:hover > div img {
-  height: 120%;
+  height: 115%;
   opacity: 0.75;
+  transition-timing-function: ease-in-out;
+  transition-duration: 100ms;
 }
 #suggested-recipe-div > div > .loading-spin .loader {
   width: 9vh;
@@ -515,6 +563,24 @@ form div input[type=text]:focus {
   100% {
     transform: translate(-50%, -50%) rotate(360deg);
   }
+}
+
+#about {
+  font-size: 1.3rem;
+  width: 30em;
+  margin: auto;
+  margin-bottom: 20vh;
+}
+#about h2 {
+  margin-bottom: 0.3em;
+  text-align: left;
+}
+#about p {
+  font-size: inherit;
+  line-height: 1.3em;
+  color: #4e4e4e;
+  text-align: left;
+  margin-bottom: 2em;
 }
 
 /*# sourceMappingURL=home.css.map */
