@@ -12,11 +12,15 @@
     }
 
     h2{
-        margin-bottom: .5em;
+        // margin-bottom: .5em;
     }
 
     a{
-        margin-bottom: 2em;
+        // margin-bottom: 2em;
+        width: fit-content;
+        margin: auto;
+        margin-bottom: 1.15em;
+        padding: 0.85em;
     }
 
     h3{
@@ -32,14 +36,14 @@
 
     #edit-export{
         @include global.flex();
+        // display: none;
         position: absolute;
         right: 2em;
         top: 2em;
-        height: 2em;
-        color: global.$grey1;
+        height: 1.7em;
+        color: global.$green2;
 
         button{
-            width: 100%;
             height: 100%;
             svg{
                 width: 100%;
@@ -73,7 +77,7 @@
                 background-color: none;
             }
         }
-        #copy-button:hover::before{
+        .copied::before{
             animation: copy 1200ms global.$timingFunction 1;
             content: "Copied to Clipboard!";
             position: absolute;
@@ -81,7 +85,7 @@
             // background-color: global.$green1;
             height: 1em;
             color: white;
-            padding: .7em;
+            padding: .6em;
             top: 120%;
             width: max-content;
             transform: global.$translate500;
@@ -164,5 +168,34 @@
 
     #instructions-div{
         width: 60% - 2.5%;
+    }
+}
+
+.printable{
+    display: none;
+}
+
+// stole from https://stackoverflow.com/questions/6500962/how-to-print-only-a-selected-html-element
+@media print {
+    body *:not(.printable, .printable *) {
+      // hide everything but printable elements and their children
+      display: none;
+    }
+    :root{
+        font-size: 11pt;
+    }
+
+    .main {
+        display: block;
+        // z-index: -50;
+        margin: 0;
+        width: 100%;
+        > div {
+            border: none;
+            padding: .5in .125in;
+        }
+        h2{
+            margin-bottom: .5em;
+        }
     }
 }

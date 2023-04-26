@@ -95,6 +95,8 @@ app.on('request', function (req, resp) {
 				writeScaledRecipe(jsonData);
 			} else if("clearRecipe" in jsonData) {
 				clearRecipe(jsonData);
+			} else if("clearModifiedRecipe" in jsonData) {
+				clearModifiedRecipe(jsonData);
 			}
 		}
     });
@@ -112,6 +114,27 @@ function clearRecipe(sentData) {
 		console.log(content);
 		content = JSON.stringify(content);
 		fs.writeFile('src/json/recipe.json', content, err => {
+			if (err) {
+				console.error(err);
+			}
+		});
+	} catch (err) {
+		console.error(err);
+	}
+}
+
+// clear the modified recipe belonging to the given cookie
+function clearModifiedRecipe(sentData) {
+	let cookie = sentData.cookie;
+	// remove recipe in recipe.json 
+	try {
+		const old = fs.readFileSync('src/json/modified_recipe.json', 'utf8');
+		console.log(102 + old);
+		let content = JSON.parse(old);
+		delete content[cookie];
+		console.log(content);
+		content = JSON.stringify(content);
+		fs.writeFile('src/json/modified_recipe.json', content, err => {
 			if (err) {
 				console.error(err);
 			}

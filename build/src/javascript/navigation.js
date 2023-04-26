@@ -9,6 +9,9 @@ const urlInput = document.getElementsByName("url")[0];
 let timedOut = false;
 let urlFocused = false;
 
+let manualInputLink = document.createElement("a");
+manualInputLink.href = "create_recipe.html";
+manualInputLink.innerHTML = "input manually."
 // const urlInputForm = document.getElementById("url-input-form");
 
 // highlight text when clicking into url form
@@ -41,7 +44,13 @@ setClickListener(submitUrlButton, function(event){
             sendUrl(url);
         }
     } else {
-        errorMessage[0].innerHTML = "Invalid URL (URL must begin with http or https). Try another or input manually."
+        if(url == "") {
+            errorMessage[0].innerHTML = "Input a recipe url or "
+        } else {
+            errorMessage[0].innerHTML = "Invalid URL (URL must begin with http or https). Try another or "
+        }
+        errorMessage[0].append(manualInputLink);
+        // errorMessage[0].innerHTML = "Invalid URL (URL must begin with http or https). Try another or input manually."
         errorMessage[0].style.display = "block";
         loading[0].style.display = "none";
     }
@@ -50,7 +59,14 @@ setClickListener(submitUrlButton, function(event){
 // redirect to create recipe on manual input click
 setClickListener(inputManuallyButton, function(event){
     urlFocused = false;
-    clearRecipeData();
+    clearModifiedRecipeData();
+    window.location.href = 'create_recipe.html';
+});
+
+// redirect to create recipe on manual input click
+setClickListener(manualInputLink, function(event){
+    urlFocused = false;
+    clearModifiedRecipeData();
     window.location.href = 'create_recipe.html';
 });
 
@@ -74,12 +90,12 @@ function sendUrl(url) {
     .catch(err => console.error(err));
     function sent() {
         setTimeout(function(){timedOut = true; console.log("timed out getting recipe") },8000);
-        recieveingDeezNutsHeyo();
+        receiveNavRecipe();
     }
 }
 
 // // grab recipe from json/recipe.json and check if url was a valid recipe before redirect
-function recieveingDeezNutsHeyo() {
+function receiveNavRecipe() {
     console.log("what the fuck");
     let jsonData;
     // const data = { "fetchNewRecipe": true};
@@ -97,21 +113,21 @@ function recieveingDeezNutsHeyo() {
             // if there was no recipe
             if(jsonData[cookie] == "Could not find recipe data") {
                 errorMessage[0].classList.remove("loading");
-                errorMessage[0].innerHTML = "We couldn&#8217;t find a recipe at that link. Try another or input manually."
+                errorMessage[0].innerHTML = "We couldn&#8217;t find a recipe at that link. Try another or "
+                errorMessage[0].append(manualInputLink);
                 loading[0].style.display = "none";
                 errorMessage[0].style.display = "block";
             } else {
-                // recipe received; redirect
+                jsonData = jsonData[cookie];
+                sendRecipe(jsonData.name, jsonData.recipeYield, jsonData.prepTime, jsonData.cookTime, jsonData.totalTime, jsonData.url, jsonData.recipeIngredients, jsonData.recipeInstructions);
                 loading[0].style.display = "none";
                 urlFocused = false;
+                // recipe received; redirect
                 window.location.href = 'create_recipe.html';
             }
         } else {
             if(!timedOut) {
-                // recieveRecipe();
-                // setInterval(function () {recieveRecipe();}, 100);
-
-                setTimeout(function(){recieveingDeezNutsHeyo();},100);
+                setTimeout(function(){receiveNavRecipe();},100);
             }
         }
     }

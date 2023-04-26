@@ -15,6 +15,8 @@ let scaledIngredientsArray = [];
 let mouseIsDown = false;
 let upPressing;
 let downPressing;
+let url;
+let title;
 
 // grab recipe from json/modified_recipe.json and input it into the form
 function recieveRecipe() {
@@ -67,6 +69,8 @@ function recieveRecipe() {
 
             servings.value = prettify(originalServings, true);
             resizeServings();
+            title = jsonData.name;
+            url = jsonData.url;
             document.querySelector(".form-subheading h4").innerHTML = "for " + jsonData.name;
             document.getElementsByName("prep time")[0].value = jsonData.prepTime;
             document.getElementsByName("cook time")[0].value = jsonData.cookTime;
@@ -335,7 +339,14 @@ setClickListener(viewRecipeButton, function(event){
         error = true;
     } 
     if(!error) {
-        sendRecipe();
+        let recipeYield = prettify(scaledServings, true);
+        let prepTime = document.getElementsByName("prep time")[0].value;
+        let cookTime = document.getElementsByName("cook time")[0].value;
+        let totalTime = document.getElementsByName("total time")[0].value;
+        let recipeInstructions = grabInstructions();
+        let recipeIngredients = grabIngredients();
+        sendRecipe(title, recipeYield, prepTime, cookTime, totalTime, url, recipeIngredients, recipeInstructions);
+        window.location.href = 'recipe.html';
     }
 });
 
@@ -366,44 +377,6 @@ function unhighlightScaleButton() {
     if(oldScaleButton) {
         oldScaleButton.classList.add("secondary-button");
         oldScaleButton.classList.remove("primary-button");
-    }
-}
-
-// add the ingredients from ingredients input on form into the json data
-function grabIngredients(jsonData) {
-    let lis = ingredientsInput.querySelectorAll("li");
-    let ingredients = [];
-    lis.forEach((li) => {
-        ingredients.push(li.innerHTML);
-    });
-    jsonData.recipeIngredients = ingredients;
-}
-
-// send scaled recipe to server when user clicks "scale servings"
-function sendRecipe() {
-    let jsonData = {
-        writeScaledRecipe: true,
-        recipeIngredients:[],
-        recipeYield: prettify(scaledServings, true),
-        "cookie": cookie
-    };
-    grabIngredients(jsonData);
-    console.log(jsonData);
-    fetch('../json/recipe.json', {
-        method: "POST",
-        body: JSON.stringify(jsonData),
-        headers: { 'content-type': 'application/json', 
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "*"
-        }
-    })
-    .then(response => response.json())
-    .then(data => {console.log(data); jsonData = data; sent();})
-    .catch(err => console.error(err));
-
-    function sent() {
-        window.location.href = 'recipe.html';
     }
 }
 

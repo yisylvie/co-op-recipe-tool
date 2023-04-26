@@ -9,7 +9,7 @@ const scaleServingsButton = document.getElementById("scale-servings-button");
 // grab recipe from json/recipe.json and input it into the form
 function recieveRecipe() {
     let jsonData;
-    fetch('json/recipe.json', {
+    fetch('json/modified_recipe.json', {
         method: "POST",
         credentials:"same-origin",
     })
@@ -22,6 +22,7 @@ function recieveRecipe() {
             if(jsonData[cookie] == "Could not find recipe data") {
                 document.querySelector("header>h2").innerHTML = "Create Recipe";
             } else {
+                document.title = "Review Recipe \u2014 Coopify";
                 document.querySelector("header>h2").innerHTML = "Review Recipe";
                 jsonData = jsonData[cookie];
                 if("name" in jsonData) {
@@ -93,7 +94,6 @@ function appendInstructions(instructions) {
     instructionsInput.appendChild(ol);
 }
 
-
 recipeInputForm.addEventListener("submit", function(e) {
     e.preventDefault();
     // if there is only whitespace in the ingredients give error message
@@ -111,7 +111,15 @@ recipeInputForm.addEventListener("submit", function(e) {
         error = true;
     } 
     if(!error) {
-        sendRecipe();
+        let name = document.getElementsByName("title")[0].value;
+        let recipeYield = document.getElementsByName("servings")[0].value;
+        let prepTime = document.getElementsByName("prep time")[0].value;
+        let cookTime = document.getElementsByName("cook time")[0].value;
+        let totalTime = document.getElementsByName("total time")[0].value;
+        let recipeInstructions = grabInstructions();
+        let recipeIngredients = grabIngredients();
+        sendRecipe(name, recipeYield, prepTime, cookTime, totalTime, url, recipeIngredients, recipeInstructions);
+        window.location.href = 'scale_servings.html';
     }
 });
 
@@ -143,80 +151,6 @@ recipeInputForm.addEventListener("input", function(e) {
         e.target.parentElement.querySelector(".error-message").style.display = "none";
     }
 });
-
-// send edited recipe to server when user clicks "scale servings"
-function sendRecipe() {
-    if(cookie == undefined) {
-        console.log("cookie unset");
-        cookie = sessionStorage.id;
-        console.log(cookie);
-        console.log(sessionStorage.id);
-        // return;
-    }
-    let jsonData = {
-        name:undefined,
-        recipeYield:undefined,
-        prepTime:undefined,
-        cookTime:undefined,
-        totalTime:undefined,
-        recipeIngredients:[],
-        recipeInstructions:[],
-        notes:[],
-        url:undefined
-    };
-    
-    jsonData.name = document.getElementsByName("title")[0].value;
-    jsonData.recipeYield = document.getElementsByName("servings")[0].value;
-    jsonData.prepTime = document.getElementsByName("prep time")[0].value;
-    jsonData.cookTime = document.getElementsByName("cook time")[0].value;
-    jsonData.totalTime = document.getElementsByName("total time")[0].value;
-    jsonData.url = url;
-    grabIngredients(jsonData);
-    grabInstructions(jsonData);
-    grabNotes(jsonData);
-
-    let cookiedData = {
-        writeModifiedRecipe: true,
-        "cookie": cookie
-    };
-    cookiedData.recipe = jsonData;
-    fetch('json/recipe.json', {
-        method: "POST",
-        body: JSON.stringify(cookiedData),
-        headers: { 'content-type': 'application/json', 
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "*"
-        }
-    })
-    .then(response => response.json())
-    .then(data => {console.log(data); jsonData = data; sent();})
-    .catch(err => console.error(err));
-
-    function sent() {
-        window.location.href = 'scale_servings.html';
-    }
-}
-
-// add the ingredients from ingredients input on form into the json data
-function grabIngredients(jsonData) {
-    let lis = ingredientsInput.querySelectorAll("li");
-    let ingredients = [];
-    lis.forEach((li) => {
-        ingredients.push(li.innerHTML);
-    });
-    jsonData.recipeIngredients = ingredients;
-}
-
-// add the instructions from instructions input on form into the json data
-function grabInstructions(jsonData) {
-    let lis = instructionsInput.querySelectorAll("li");
-    let instructions = [];
-    lis.forEach((li) => {
-        instructions.push(li.innerHTML);
-    });
-    jsonData.recipeInstructions = instructions;
-}
 
 // add the notes from notes input on form into the json data
 function grabNotes(jsonData) {

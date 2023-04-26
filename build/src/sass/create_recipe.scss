@@ -203,6 +203,7 @@
             }
 
             #reminderDiv{
+                margin: 0;
                 @keyframes bounceDown {
                     0%   {
                         margin-bottom: 0;
@@ -223,46 +224,37 @@
                     }
                 }
 
-                @keyframes p_pop {
-                    0% {
-                        color: white;
-                    }
-                }
-
                 @keyframes pop_into_view {
                     0% {
-                        // background-color: global.$green4;
-                        color: white;
-                        margin-top: -2rem;
-                        margin-bottom: 2rem;
-                        border-color: white;
-                        padding: .2em;
-                        font-size: .9rem;
-                        // p{
-                        //     // font-size: .4em;
-
-                        // }
+                        right: -1vh;
                     }
-                    // 7% {
-                    //     // background-color: global.$green1;
-                    //     top: 120%;
-                    // }
-                    40%{
-                        padding: .3em 1em .3em 1em;
-                        font-size: 1rem;
-                        color: global.$green3;
+                    3%{
+                        right:3vh;
+                        transform: unset;
+                    }
+                    95%{
+                        right:3vh;
+                        transform: unset;
                     }
                     100%{
-                        // background-color: none;
-                        margin-top: 0;
-                        margin-bottom: 0;
+                        right: -1vh;
                     }
                 }
 
                 display: none;
+                .triggered{
+                    animation: pop_into_view 5.8s global.$timingFunction 1;
+                }
 
                 .reminder{
-                    animation: pop_into_view 100ms global.$timingFunction 1;
+                    position: fixed;
+                    // right: 3vh;
+                    bottom: 3vh;
+                    transform: translate(100%);
+                    // padding: .2em;
+                    right: -1vh;
+                    z-index: 1;
+                    background-color: white;
                     transition: global.$transition;
                     @include global.flex($centered: false);
                     flex-direction: row;
@@ -280,13 +272,16 @@
                         // font-weight: bold;
                         margin-bottom: .3em;
                         font-size: inherit;
+                        width: max-content;
                     }
                     p{
-                        animation: p_pop 100ms global.$timingFunction 1;
-                        font-size: .8em;
+                        font-size: .85em;
                         color: global.$green2;
                         // text-align: center;
                         // line-height: 2.2rem;
+                    }
+                    div{
+                        width: min-content;
                     }
 
                     svg{
@@ -297,7 +292,7 @@
                     // outline: .1rem solid global.$green1;
                     transition: global.$transition;
                     text-decoration: none;
-                    p{
+                    h4{
                         text-decoration: underline;
                     }
                     svg{

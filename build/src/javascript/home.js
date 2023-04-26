@@ -20,13 +20,10 @@ if(cookie == undefined) {
 
 urlInputForm.addEventListener("submit", function(event){
     event.preventDefault();
-}, false);
-
-// send url to server unless it is an invalid url then show error message
-setClickListener(submitUrlButton, function(event){
     clearRecipeData();
     timedOut = false;
     let url = urlInput.value;
+    
     if(isValidHttpUrl(url)) {
         // add fetching recipe/change button styling
         loading[0].innerHTML = "Fetching Recipe Data";
@@ -44,13 +41,17 @@ setClickListener(submitUrlButton, function(event){
             sendUrl(url);
         }
     } else {
-        errorMessage[0].innerHTML = "Invalid URL (URL must begin with http or https). Try another or"
+        if(url == "") {
+            errorMessage[0].innerHTML = "Input a recipe url or"
+        } else {
+            errorMessage[0].innerHTML = "Invalid URL (URL must begin with http or https). Try another or"
+        }
         errorMessage[0].style.display = "block";
         loading[0].style.display = "none";
         inputManuallyButton.classList.add("primary-button");
         inputManuallyButton.classList.remove("secondary-button");
     }
-});
+}, false);
 
 // highlight text when clicking into url form
 setClickListener(document, function(event) {
@@ -88,11 +89,11 @@ setClickListener(inputManuallyButton, function(event){
     urlFocused = false;
     if(cookie == undefined) {
         grabCookie().then(
-            function(value) {clearRecipeData();},
+            function(value) {clearModifiedRecipeData();},
             function(error) {console.log(error);}
         );
     } else {
-        clearRecipeData();
+        clearModifiedRecipeData();
     }
     window.location.href = 'create_recipe.html';
 });
@@ -141,12 +142,14 @@ function recieveRecipe() {
                 inputManuallyButton.classList.add("primary-button");
                 inputManuallyButton.classList.remove("secondary-button");
             } else {
-                // recipe received; redirect
+                jsonData = jsonData[cookie];
+                sendRecipe(jsonData.name, jsonData.recipeYield, jsonData.prepTime, jsonData.cookTime, jsonData.totalTime, jsonData.url, jsonData.recipeIngredients, jsonData.recipeInstructions);
                 loading[0].style.display = "none";
                 document.querySelectorAll('.loading-spin').forEach(function(element) {
                     element.classList.remove("loading-spin");
                 });
                 urlFocused = false;
+                // recipe received; redirect
                 window.location.href = 'create_recipe.html';
             }
         } else {

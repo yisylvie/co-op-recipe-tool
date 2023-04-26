@@ -147,6 +147,8 @@ let always_round = [
     // "brussels sprout",
     // "collard green",
     "garlic",
+    "bay leaf",
+    "bay leaves",
     "garlic cloves",
     "garlic clove",
     "of garlic",
@@ -429,17 +431,33 @@ function alterIngredients() {
         i++;
     });
     ingredientsInput.innerHTML = "";
-    let scaleIngredientsDiv = document.querySelector("#scale-ingredients");
+    // let scaleIngredientsDiv = document.querySelector("#scale-ingredients");
     // if ingredients stuff is not in view make reminder div visible
-    if(scaledServings.quantity != originalServings.quantity && !elementIsVisibleInViewport(document.getElementById("instructions-input"), true) && document.querySelector("#reminderDiv").style.display != "flex") {
-        if(elementIsVisibleInViewport(document.querySelector("#scale-ingredients"))) {
-            scaleIngredientsDiv.scrollIntoView();
-        }
+    if(scaledServings.quantity != originalServings.quantity && document.querySelector("#reminderDiv").style.display != "flex") {
         document.querySelector("#reminderDiv").style.display = "flex";
+
+        // if instructions are > 50% in view, show reminder without scroll stuff
+        if(checkFifty(document.querySelector("#instructions-input"))) {
+            document.querySelector("#reminderDiv svg").remove();
+            document.querySelector("#reminderDiv .reminder").style.cursor = "unset";
+            document.querySelector("#reminderDiv h4").innerHTML = document.querySelector("#reminderDiv .reminder p").innerHTML;
+            document.querySelector("#reminderDiv .reminder p").remove();
+            document.querySelector("#reminderDiv .reminder div h4").style.width = getTrueWidth(document.querySelector("#reminderDiv .reminder h4"))/2 + 4 + "px";
+            
+            // make it not clickable
+            setClickListener(document.querySelector("#reminderDiv"), function (event) {
+                event.preventDefault();
+            });
+        } else {
+            // disappear reminder when scrolled to section
+            setClickListener(document.querySelector("#reminderDiv"), function (event) {
+                this.style.display = "none";
+            });
+        }
+        document.querySelector("#reminderDiv .reminder").classList.add("triggered");
     } 
     ingredientsInput.appendChild(ul);
     resizeServings();
-    // ingredientsInput.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
 }
 
 // format ingredient from ingredient object into viewable string
@@ -488,8 +506,11 @@ function prettify(ingredient, isServing = false) {
                 } else {
                     prettyNumber = wholeNumber;
                 }
+
+                // convert plural
                 if(ParseIngredient.unitsOfMeasure[ingredient.unitOfMeasureID]) {
-                    if(wholeNumber != 1 || decimal > 0) {
+                    if(rounding_values[fraction].frac || wholeNumber != 1) {
+                    // if(wholeNumber != 1 || decimal > 0 || decimal < 1) {
                         ingredient.unitOfMeasure = ParseIngredient.unitsOfMeasure[ingredient.unitOfMeasureID].plural;
                     } else {
                         console.log(ParseIngredient.unitsOfMeasure[ingredient.unitOfMeasureID]);

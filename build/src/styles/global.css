@@ -326,6 +326,9 @@ nav #actual-nav form .url-input-div input[type=text]:focus {
   line-height: 1.7rem;
   margin-left: 0.5em;
 }
+#focused-nav #actual-nav form .error-message a, #focused-nav #actual-nav form .loading a {
+  color: #397d2f;
+}
 
 .main {
   width: 75%;

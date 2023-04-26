@@ -147,27 +147,113 @@ function clearRecipeData() {
 }
 
 // tell the server to clear any modified recipe data for the current user
-// function clearRecipeData() {
-//     const data = { "clearRecipe": true, "cookie": cookie};
-//     fetch('json/recipe.json', {
-//         method: "POST",
-//         body: JSON.stringify(data),
-//         headers: { 'content-type': 'application/json', 
-//         "Access-Control-Allow-Origin": "*",
-//         "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
-//         "Access-Control-Allow-Headers": "*"
-//         }
-//     })
-//     .then(response => response.json())
-//     .then(data => {console.log(data); jsonData = data; sent();})
-//     .catch(err => console.error(err));
-//     function sent() {
-//         // window.location.href = 'create_recipe.html';
-//         console.log("data cleared");
-//     }
-// }
+function clearModifiedRecipeData() {
+    const data = { "clearModifiedRecipe": true, "cookie": cookie};
+    fetch('json/modified_recipe.json', {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { 'content-type': 'application/json', 
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "*"
+        }
+    })
+    .then(response => response.json())
+    .then(data => {console.log(data); jsonData = data; sent();})
+    .catch(err => console.error(err));
+    function sent() {
+        // window.location.href = 'create_recipe.html';
+        console.log("modified data cleared");
+    }
+}
 
-// check if element is either partially in veiwport or the top of it has scrolled above the top of viewport
+// send edited recipe to server
+function sendRecipe(name, recipeYield, prepTime, cookTime, totalTime, url, recipeIngredients, recipeInstructions) {
+    // let sentWell = false;
+    if(cookie == undefined) {
+        console.log("cookie unset");
+        cookie = sessionStorage.id;
+        console.log(cookie);
+        console.log(sessionStorage.id);
+    }
+    let jsonData = {
+        name:undefined,
+        recipeYield:undefined,
+        prepTime:undefined,
+        cookTime:undefined,
+        totalTime:undefined,
+        recipeIngredients:[],
+        recipeInstructions:[],
+        notes:[],
+        url:undefined
+    };
+
+    jsonData.name = name;
+    jsonData.recipeYield = recipeYield;
+    jsonData.prepTime = prepTime;
+    jsonData.cookTime = cookTime;
+    jsonData.totalTime = totalTime;
+    
+    
+    // jsonData.name = document.getElementsByName("title")[0].value;
+    // jsonData.recipeYield = document.getElementsByName("servings")[0].value;
+    // jsonData.prepTime = document.getElementsByName("prep time")[0].value;
+    // jsonData.cookTime = document.getElementsByName("cook time")[0].value;
+    // jsonData.totalTime = document.getElementsByName("total time")[0].value;
+    jsonData.url = url;
+    jsonData.recipeInstructions = recipeInstructions;
+    jsonData.recipeIngredients = recipeIngredients;
+    // grabIngredients(jsonData);
+    // grabInstructions(jsonData);
+    // grabNotes(jsonData);
+
+    let cookiedData = {
+        writeModifiedRecipe: true,
+        "cookie": cookie
+    };
+    cookiedData.recipe = jsonData;
+    fetch('json/recipe.json', {
+        method: "POST",
+        body: JSON.stringify(cookiedData),
+        headers: { 'content-type': 'application/json', 
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "*"
+        }
+    })
+    .then(response => response.json())
+    .then(data => {console.log(data); jsonData = data; sent();})
+    .catch(err => console.error(err));
+
+    function sent() {
+        // window.location.href = 'scale_servings.html';
+        // window.location.href = nextPage;
+        // sentWell = true;
+        // return true;
+    }
+}
+
+// add the ingredients from ingredients input on form into the json data
+function grabIngredients() {
+    let lis = ingredientsInput.querySelectorAll("li");
+    let ingredients = [];
+    lis.forEach((li) => {
+        ingredients.push(li.innerHTML);
+    });
+    return ingredients;
+}
+
+// add the instructions from instructions input on form into the json data
+function grabInstructions() {
+    let lis = instructionsInput.querySelectorAll("li");
+    let instructions = [];
+    lis.forEach((li) => {
+        instructions.push(li.innerHTML);
+    });
+    return instructions;
+}
+
+// check if element is either partially in viewport or the top of it has scrolled above the top of viewport
 const elementIsVisibleInViewport = (el, partiallyVisible = false) => {
     const { top, left, bottom, right } = el.getBoundingClientRect();
     const { innerHeight, innerWidth } = window;
@@ -178,6 +264,16 @@ const elementIsVisibleInViewport = (el, partiallyVisible = false) => {
       : top <= 0;
 };
 
+// https://stackoverflow.com/questions/64016225/how-to-check-if-element-is-half-visible-in-the-viewport-with-javascript
+function checkFifty(el) {
+    var rect = el.getBoundingClientRect();
+    return (
+        rect.top + (rect.height/2) > 0 && // top
+        rect.top + (rect.height/2) < (window.innerHeight || document.documentElement.clientHeight) // bottom
+    );
+}
+
+// changing number words to actual numeral
 var Small = {
     'zero': 0,
     'one': 1,

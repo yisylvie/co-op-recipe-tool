@@ -2,6 +2,10 @@ const upButton = document.getElementById("scale-up-button");
 const downButton = document.getElementById("scale-down-button");
 const ingredientsList = document.getElementById("ingredients-list");
 const copyIcon = document.getElementById("copy-button");
+const editIcon = document.getElementById("edit-button");
+const printIcon = document.getElementById("print-button");
+const instructionsList = document.getElementById("instructions-list");
+const timesDiv = document.getElementById("times-div");
 
 // grab recipe from ../json/modified_recipe.json and input it into the form
 function recieveRecipe() {
@@ -22,7 +26,8 @@ function recieveRecipe() {
         if(cookie in jsonData) {
             jsonData = jsonData[cookie];
             document.getElementById("title").innerHTML = jsonData.name;
-            document.getElementById("servings").innerHTML = jsonData.recipeYield;
+            document.title = jsonData.name;
+            document.getElementById("servings").innerHTML = "Makes: " + jsonData.recipeYield;
             // get servings and unit of servings, setting unit to "servings" if there is none
             originalServings = ParseIngredient.parseIngredient(jsonData.recipeYield, { allowLeadingOf: true })[0];
             scaledServings = ParseIngredient.parseIngredient(jsonData.recipeYield, { allowLeadingOf: true })[0];
@@ -54,7 +59,7 @@ function appendIngredients(ingredients) {
 
 // add the instructions from the json data into instructions div
 function appendInstructions(instructions) {
-    const ol = document.getElementById("instructions-list");
+    const ol = instructionsList;
     ol.innerHTML = "";
     instructions.forEach((instruction) => {
         let li = document.createElement("li");
@@ -64,7 +69,6 @@ function appendInstructions(instructions) {
 }
 
 function appendTimes(jsonData) {
-    const timesDiv = document.getElementById("times-div");
     let hasTime = false;
     // check that times are not just whitespace before appending to doc
     if(!/^\s*$/.test(jsonData.prepTime)) {
@@ -102,12 +106,51 @@ grabCookie().then(
     function(error) {console.log(error);}
 );
 
-// setClickListener(copyIcon, function(event){
-//     event.preventDefault();
-//     console.log("bro");
-//     navigator.clipboard.writeText("and his name is john cenaaa");
-// });
+// copy recipe to clipboard when copy icon clicked
+setClickListener(copyIcon, function(event){
+    event.preventDefault();
+    try {
+        // remove edit and copy buttons from copy field
+        mainCopy = document.getElementsByClassName("main")[0].cloneNode(true);
+        mainCopy.classList = "main-copy";
+        console.log(mainCopy.querySelector(".main-copy #edit-export"));
+        mainCopy.querySelector(".main-copy #edit-export").remove();
+        console.log(mainCopy);
+        const content = mainCopy.innerHTML;
+        const blobInput = new Blob([content], {type: 'text/html'});
+        const clipboardItemInput = new ClipboardItem({'text/html' : blobInput});
+        navigator.clipboard.write([clipboardItemInput]);
+        copyIcon.classList.add("copied");
+        copyIcon.addEventListener('animationend', function(){
+            copyIcon.classList.remove("copied");
+        });
+    } catch(e) {
+        // Handle error with user feedback - "Copy failed!" kind of thing
+        console.log(e);
+    }
+});
 
+// print when print button clicked
+setClickListener(printIcon, function(event){
+    event.preventDefault();
+    // remove edit and copy buttons from copy field and original recipe link
+    mainCopy = document.getElementsByClassName("main")[0].cloneNode(true);
+    mainCopy.classList = "main-copy";
+    console.log(mainCopy.querySelector(".main-copy #edit-export"));
+    mainCopy.querySelector(".main-copy #edit-export").remove();
+    mainCopy.querySelector(".main-copy #original-recipe-link").remove();
+    mainCopy.classList = "main";
+    printElement(mainCopy);
+});
+
+// redirect to review recipe when edit icon clicked
+setClickListener(editIcon, function(event){
+    event.preventDefault();
+    window.location.href = "create_recipe.html";
+});
+
+// var oldURL = document.referrer;
+// console.log(oldURL);
 // var elem = window;
 // function openFullscreen() {
 //   if (elem.requestFullscreen) {
@@ -119,4 +162,11 @@ grabCookie().then(
 //   }
 // }
 
-
+// stole from https://stackoverflow.com/questions/6500962/how-to-print-only-a-selected-html-element
+function printElement(e) {
+    let cloned = e.cloneNode(true);
+    document.body.appendChild(cloned);
+    cloned.classList.add("printable");
+    window.print();
+    document.body.removeChild(cloned);
+}
