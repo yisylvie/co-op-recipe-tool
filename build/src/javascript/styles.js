@@ -137,7 +137,7 @@ try {
 // listener for when window is resized
 addEventListener("resize", function(e) {
     try {
-        ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
+        // ingredients.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
     } catch (error) {
         // console.log(error); 
     }

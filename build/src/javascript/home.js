@@ -65,7 +65,6 @@ setClickListener(document, function(event) {
 
 // go to one of the suggested recipes
 suggestedRecipes.forEach((recipe) => {
-    console.log(recipe.href);
     setClickListener(recipe, function(event){
         event.preventDefault();
         recipe.classList.add("loading-spin");

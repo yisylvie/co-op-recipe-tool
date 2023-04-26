@@ -23,10 +23,10 @@ function recieveRecipe() {
                 document.querySelector("header>h2").innerHTML = "Create Recipe";
             } else {
                 document.querySelector("header>h2").innerHTML = "Review Recipe";
-                // document.querySelector(".reminder").parentElement.style.display = "flex";
                 jsonData = jsonData[cookie];
                 if("name" in jsonData) {
-                    document.getElementsByName("title")[0].value = sterilize(jsonData.name);
+                    document.getElementsByName("title")[0].value = sterilize(jsonData["name"]);
+                    document.getElementsByName("title")[0].value = jsonData["name"];
                 }
                 if("recipeYield" in jsonData) {
                     document.getElementsByName("servings")[0].value = sterilize(jsonData.recipeYield);

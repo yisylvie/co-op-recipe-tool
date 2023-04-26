@@ -20,7 +20,10 @@ $borderRadius: .3rem;
 $borderRadius1: .2rem;
 $borderRadius2: .1rem;
 $thinGreyBorder: .07rem solid $grey4;
-$transition: all 25ms cubic-bezier(0.55, 0.06, 0.68, 0.19);
+$timingFunction: cubic-bezier(0.55, 0.06, 0.68, 0.19);
+$transition: all 25ms $timingFunction;
+$translate500: translate(-50%, 0%);
+$translate5050: translate(-50%, -50%);
 
 @mixin centerFillWidth() {
     width: -webkit-fill-available;
@@ -81,6 +84,7 @@ h2{
 
 a{
     color: $green1;
+    font-size: inherit;
 }
 
 a:hover{
@@ -243,21 +247,6 @@ button:hover, input[type="submit"]:hover{
   
 .tertiary-button:active{
     outline: .1rem solid $green3;
-}
-
-.reminder{
-    width: 100%;
-    border: $thinGreyBorder;
-    border-color: $green2;
-    border-radius: $borderRadius1;
-    color: $green1;
-    font-family: $openSans;
-    // padding: 0 .5em;
-    p{
-        font-size: .9rem;
-        text-align: center;
-        line-height: 2.2rem;
-    }
 }
 
 nav{

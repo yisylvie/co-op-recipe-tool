@@ -50,6 +50,7 @@ setClickListener(submitUrlButton, function(event){
 // redirect to create recipe on manual input click
 setClickListener(inputManuallyButton, function(event){
     urlFocused = false;
+    clearRecipeData();
     window.location.href = 'create_recipe.html';
 });
 

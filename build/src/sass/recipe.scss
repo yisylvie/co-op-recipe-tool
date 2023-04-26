@@ -30,6 +30,65 @@
         // font-size: 1.1rem;
     }
 
+    #edit-export{
+        @include global.flex();
+        position: absolute;
+        right: 2em;
+        top: 2em;
+        height: 2em;
+        color: global.$grey1;
+
+        button{
+            width: 100%;
+            height: 100%;
+            svg{
+                width: 100%;
+                height: 100%;
+                // width: 1;
+                display: block;
+                transition: global.$transition;
+            }
+        }
+        button:hover{
+            svg{
+                color: global.$green1;
+                transition: global.$transition;
+            }
+        } 
+
+        @keyframes copy {
+            0% {
+                background-color: global.$green4;
+                color: white;
+                top: 100%;
+            }
+            7% {
+                background-color: global.$green1;
+                top: 120%;
+            }
+            90%{
+                background-color: global.$green1;
+            }
+            100%{
+                background-color: none;
+            }
+        }
+        #copy-button:hover::before{
+            animation: copy 1200ms global.$timingFunction 1;
+            content: "Copied to Clipboard!";
+            position: absolute;
+            font-size: .85rem;
+            // background-color: global.$green1;
+            height: 1em;
+            color: white;
+            padding: .7em;
+            top: 120%;
+            width: max-content;
+            transform: global.$translate500;
+            border-radius: .5rem;
+        }
+    }
+
     // scale arrow div
     #servings-div{
         display: flex;
@@ -102,7 +161,6 @@
         max-height: calc(100vh - 2em);
         overflow: scroll;
     }
-
 
     #instructions-div{
         width: 60% - 2.5%;

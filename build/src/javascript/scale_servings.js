@@ -8,7 +8,6 @@ const viewRecipeButton = document.getElementById("view-recipe-button");
 const ingredientsInput = document.getElementsByName("ingredients")[0];
 const originalIngredients = document.getElementById("original-ingredients").querySelector("div");
 const instructionsInput = document.getElementsByName("instructions")[0];
-
 let originalServings;
 let scaledServings;
 let originalIngredientsArray = [];
@@ -59,6 +58,13 @@ function recieveRecipe() {
                     scaledServings.description = "Servings";
                 }
             }
+
+            // average servings if in form "2 - 3 servings"
+            if(originalServings.quantity2) {
+                originalServings.quantity = (originalServings.quantity + originalServings.quantity2) / 2;
+                scaledServings.quantity = (scaledServings.quantity + scaledServings.quantity2) / 2;
+            }
+
             servings.value = prettify(originalServings, true);
             resizeServings();
             document.querySelector(".form-subheading h4").innerHTML = "for " + jsonData.name;
@@ -83,34 +89,37 @@ grabCookie().then(
 function appendIngredients(ingredients) {
     document.getElementById("original-ingredients").querySelector("div").innerHTML = "";
     let ul = document.createElement("ul");
+    let i = 0
     ingredients.forEach((ingredient) => {
         // api no like decimals written like .4 so make um 0.4
         if(sterilize(ingredient).match(/^\s*\.\d+/)) {
             ingredient = sterilize(ingredient).replace(/^\s*\./, "0.");
-            console.log(ingredient);
         }
         originalIngredientsArray.push(ParseIngredient.parseIngredient(ingredient, { allowLeadingOf: true })[0]);
         scaledIngredientsArray.push(ParseIngredient.parseIngredient(ingredient, { allowLeadingOf: true })[0]);
+
         let li = document.createElement("li");
         li.innerHTML = ingredient;
+        li.id = i + "_original_li"
         ul.appendChild(li);
+        i++;
     });
     originalIngredients.appendChild(ul);
 
+    i = 0;
     ingredientsInput.innerHTML = "";
     ul = document.createElement("ul");
     ingredients.forEach((ingredient) => {
         if(sterilize(ingredient).match(/^\s*\.\d+/)) {
             ingredient = sterilize(ingredient).replace(/^\s*\./, "0.");
-            console.log(ingredient);
         }
         let li = document.createElement("li");
         li.innerHTML = ingredient;
+        li.id = i + "_input_li"
         ul.appendChild(li);
+        i++;
     });
-    ingredientsInput.appendChild(ul);
-    console.log(originalIngredientsArray);
-    ingredientsInput.querySelector("ul").style.width = getTrueWidth(originalIngredients.querySelector("ul")) + "px";
+    ingredientsInput.appendChild(ul);  
 }
 
 // add the instructions from the json data into instructions input on form
@@ -168,12 +177,10 @@ setClickListener(downButton, function(event){
 // delay for 500ms then fire hold down on mouse press
 downButton.addEventListener("mousedown", function(event) {
     mouseIsDown = true;
-    console.log("decrease pre");
 
     event.preventDefault();
     setTimeout(function() {
         holdDown();
-        console.log("decrease");
     }, 500);
 });
 
@@ -183,7 +190,6 @@ async function holdDown() {
         downPressing = setInterval(function(){
             if(mouseIsDown) {
                 if(scaledServings.quantity > 1) {
-                    console.log("decrease");
                     scaledServings.quantity -= 1;
                     unhighlightScaleButton();
                     document.getElementById("servings").value = prettify(scaledServings, true);
@@ -218,11 +224,9 @@ setClickListener(upButton, function(event){
 // delay for 500ms then fire hold down on mouse press
 upButton.addEventListener("mousedown", function(event) {
     mouseIsDown = true;
-    console.log("increase pre");
     event.preventDefault();
     setTimeout(function() {
         holdUp();
-        console.log("increase");
     }, 500);
 });
 
@@ -231,7 +235,6 @@ async function holdUp() {
     let thisPromise = new Promise(function(resolve) {
         upPressing = setInterval(function(){
             if(mouseIsDown) {
-                console.log("increase");
                 scaledServings.quantity += 1;
                 unhighlightScaleButton();
                 document.getElementById("servings").value = prettify(scaledServings, true);
@@ -251,7 +254,6 @@ window.addEventListener('mouseup', function() {
     mouseIsDown = false;
     clearInterval(upPressing);
     clearInterval(downPressing);
-    console.log("mouseup");
 });
 
 // reset servings to original when reset button is clicked
@@ -323,13 +325,11 @@ setClickListener(viewRecipeButton, function(event){
     // if there is only whitespace in the ingredients give error message
     let error = false;
     if(/^\s*$/.test(ingredientsInput.querySelector("ul").textContent)) {
-        console.log("stuff:" + ingredientsInput.querySelector("ul").textContent + ":end");
         ingredientsInput.classList.add("invalid");
         ingredientsInput.parentElement.querySelector(".error-message").style.display = "block";
         error = true;
     } 
     if(/^\s*$/.test(instructionsInput.querySelector("ol").textContent)) {
-        console.log("stuff:" + instructionsInput.querySelector("ol").textContent + ":end");
         instructionsInput.classList.add("invalid");
         instructionsInput.parentElement.querySelector(".error-message").style.display = "block";
         error = true;
@@ -406,3 +406,27 @@ function sendRecipe() {
         window.location.href = 'recipe.html';
     }
 }
+
+// make da kine highlight when da oda da kine stay highlighted
+originalIngredients.addEventListener("mouseover", function(event) {
+    if(event.target.id.includes("_original_li")) {
+        let index = event.target.id.replace("_original_li", "");
+        let input_id = index + "_input_li";
+        document.getElementById(input_id).classList.add("li_hover");
+        event.target.addEventListener("mouseout", (event) => {
+            document.getElementById(input_id).classList.remove("li_hover");
+        });
+    }
+});
+
+// make da kine highlight when da oda da kine stay highlighted
+ingredientsInput.addEventListener("mouseover", function(event) {
+    if(event.target.id.includes("_input_li")) {
+        let index = event.target.id.replace("_input_li", "");
+        let input_id = index + "_original_li";
+        document.getElementById(input_id).classList.add("li_hover");
+        event.target.addEventListener("mouseout", (event) => {
+            document.getElementById(input_id).classList.remove("li_hover");
+        });
+    }
+});

@@ -76,9 +76,6 @@
                         <h2 class="center-fill-width" id="servings-hidden-stuck">
                             
                         </h2>
-                        <!-- <input class="center-fill-width" id="servings" name="servings" type="text"> -->
-
-                        
                         <button type = "button" id="reset">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 width="26.7px" height="26.7px" viewBox="0 0 26.7 26.7" style="enable-background:new 0 0 26.7 26.7;" xml:space="preserve">
@@ -140,11 +137,30 @@
                         </button>
                     </div>
                 </header>
-                <div class="form-subheading">
+                <div id="scale-ingredients" class="form-subheading">
                     <h3>Scale Ingredients</h3>
                     <h4></h4>
                 </div>
                 <div>
+                    <div id="reminderDiv">
+                        <a href="#times-and-instructions" class="reminder">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                width="31.806px" height="17.917px" viewBox="0 0 31.806 17.917" enable-background="new 0 0 31.806 17.917" xml:space="preserve">
+                            <path fill="currentColor" d="M31.292,3.084l-14.417,14.43c-0.148,0.148-0.301,0.252-0.458,0.312c-0.158,0.061-0.329,0.091-0.514,0.091
+                                s-0.356-0.03-0.514-0.09c-0.157-0.06-0.31-0.164-0.458-0.312L0.5,3.084C0.167,2.75,0,2.329,0,1.82s0.171-0.935,0.514-1.278
+                                C0.875,0.181,1.301,0,1.792,0C2.283,0,2.709,0.181,3.07,0.542l12.833,12.833L28.736,0.542c0.352-0.352,0.775-0.523,1.271-0.514
+                                c0.495,0.009,0.914,0.185,1.257,0.528c0.361,0.361,0.542,0.787,0.542,1.278C31.806,2.324,31.634,2.741,31.292,3.084z"/>
+                            </svg>
+                            <div>
+                                <h4>
+                                    Scaling servings may affect cook times, equipment sizes, and other instructions.
+                                </h4>
+                                <p>
+                                    Scroll to alter Times and Instructions
+                                </p>
+                            </div>
+                        </div>
+                    </a>
                     <div>
                         <div id="original-ingredients">
                             <label for="ingredients">Original Ingredients</label>
@@ -171,19 +187,13 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-subheading">
-                    <h3>Times and Instructions</h3>
+                    <div id="times-and-instructions"></div>
+                    <h3>Times and Instructions
+                    </h3>
                     <h4>review accuracy for scaled recipe</h4>
                 </div>
                 <div>
-                    <div id="reminderDiv">
-                        <div class="reminder">
-                            <p>
-                                Cook times, equipment sizes, and other instructions often change with altered serving sizes.
-                            </p>
-                        </div>
-                    </div>
                     <div>
                         <div id = "times-div">
                             <div class>
@@ -219,7 +229,6 @@
         <script src="https://unpkg.com/numeric-quantity"></script>
         <script src="https://unpkg.com/parse-ingredient"></script>
         <script src="https://unpkg.com/format-quantity"></script>
-        <script src="pluralize.js"></script>
         <script type="module">
             import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
             if(!("id" in sessionStorage)) {

@@ -32,6 +32,7 @@ h2 {
 
 a {
   color: #397d2f;
+  font-size: inherit;
 }
 
 a:hover {
@@ -190,20 +191,6 @@ button:hover .left-arrow, input[type=submit]:hover .left-arrow {
 
 .tertiary-button:active {
   outline: 0.1rem solid #b6d1b2;
-}
-
-.reminder {
-  width: 100%;
-  border: 0.07rem solid #e5e5e5;
-  border-color: #78a671;
-  border-radius: 0.2rem;
-  color: #397d2f;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-.reminder p {
-  font-size: 0.9rem;
-  text-align: center;
-  line-height: 2.2rem;
 }
 
 nav #actual-nav {
