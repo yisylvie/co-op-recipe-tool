@@ -444,9 +444,9 @@ select:-webkit-autofill:focus {
     color: white;
     top: 100%;
   }
-  7% {
+  5% {
     background-color: #397d2f;
-    top: 120%;
+    top: 130%;
   }
   90% {
     background-color: #397d2f;
@@ -456,74 +456,25 @@ select:-webkit-autofill:focus {
   }
 }
 .main > div #edit-export .copied::before {
-  animation: copy 1200ms cubic-bezier(0.55, 0.06, 0.68, 0.19) 1;
-  content: "Copied to Clipboard!";
+  animation: copy 1500ms cubic-bezier(0.55, 0.06, 0.68, 0.19) 1;
+  content: "Recipe Copied to Clipboard!";
   position: absolute;
   font-size: 0.85rem;
   height: 1em;
   color: white;
   padding: 0.6em;
-  top: 120%;
+  top: 130%;
   width: max-content;
   transform: translate(-50%, 0%);
   border-radius: 0.5rem;
 }
-.main > div #servings-div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6em;
-}
-.main > div #servings-div > div {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3em;
-}
-.main > div #servings-div > div .scale-arrow {
-  border-radius: 0.2rem;
-  padding: 0.3em 0.5em;
-}
-.main > div #servings-div > div .scale-arrow svg {
-  height: 0.7em;
-  width: fit-content;
-}
-.main > div #servings-div > #reset {
-  height: 1em;
-  color: #4e4e4e;
-  transition: none;
-}
-.main > div #servings-div > #reset svg {
-  display: block;
-  width: fit-content;
-  height: 100%;
-}
-@keyframes bounceTwist {
-  0% {
-    rotate: 0;
-  }
-  30% {
-    rotate: -30deg;
-  }
-  60% {
-    rotate: 0deg;
-  }
-  80% {
-    rotate: -15deg;
-  }
-  100% {
-    rotate: 0;
-  }
-}
-.main > div #servings-div #reset:hover {
-  animation: bounceTwist 300ms 1;
-}
-.main > div #servings-div #reset.twist {
-  transform: rotate(-360deg);
-  transition: 250ms;
+.main > div #servings {
+  margin-bottom: 3em;
 }
 .main > div #times-div {
   padding: 1.5em 0;
-  margin: 3em 0;
+  margin: 0;
+  margin-bottom: 3em;
   border-top: 0.07rem solid #e5e5e5;
   border-bottom: 0.07rem solid #e5e5e5;
   display: flex;

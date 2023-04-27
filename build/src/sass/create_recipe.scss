@@ -232,7 +232,7 @@
                         right:3vh;
                         transform: unset;
                     }
-                    95%{
+                    96%{
                         right:3vh;
                         transform: unset;
                     }
@@ -243,7 +243,7 @@
 
                 display: none;
                 .triggered{
-                    animation: pop_into_view 5.8s global.$timingFunction 1;
+                    animation: pop_into_view 8s global.$timingFunction 1;
                 }
 
                 .reminder{

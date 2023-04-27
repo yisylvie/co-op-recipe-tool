@@ -66,9 +66,9 @@
                 color: white;
                 top: 100%;
             }
-            7% {
+            5% {
                 background-color: global.$green1;
-                top: 120%;
+                top: 130%;
             }
             90%{
                 background-color: global.$green1;
@@ -78,72 +78,29 @@
             }
         }
         .copied::before{
-            animation: copy 1200ms global.$timingFunction 1;
-            content: "Copied to Clipboard!";
+            animation: copy 1500ms global.$timingFunction 1;
+            content: "Recipe Copied to Clipboard!";
             position: absolute;
             font-size: .85rem;
             // background-color: global.$green1;
             height: 1em;
             color: white;
             padding: .6em;
-            top: 120%;
+            top: 130%;
             width: max-content;
             transform: global.$translate500;
             border-radius: .5rem;
         }
     }
 
-    // scale arrow div
-    #servings-div{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: .6em;
-        > div{
-            display: flex;
-            flex-direction: column;
-            gap: .3em;
-            .scale-arrow{
-                border-radius: global.$borderRadius1;
-                padding: .3em .5em;
-                svg{
-                    height: .7em;
-                    width: fit-content;
-                }
-            }
-        }
-        > #reset{
-            height: 1em;
-            color: global.$grey1;
-            svg{
-                display: block;
-                width: fit-content;
-                height: 100%;
-            }
-            transition: none;
-        }
-
-        @keyframes bounceTwist {
-            0%   {rotate: 0;}
-            30%  {rotate: -30deg;}
-            60%  {rotate: -0deg;}
-            80% {rotate: -15deg;}
-            100% {rotate: 0;}
-        }
-
-        #reset:hover{
-            animation: bounceTwist 300ms 1;
-        }
-
-        #reset.twist{
-            transform: rotate(-360deg);
-            transition: 250ms;
-        }
+    #servings{
+        margin-bottom: 3em;
     }
     
     #times-div{
         padding: 1.5em 0;
-        margin: 3em 0;
+        margin: 0;
+        margin-bottom: 3em;
         border-top: global.$thinGreyBorder;
         border-bottom: global.$thinGreyBorder;
         @include global.flex($gap: 7em);

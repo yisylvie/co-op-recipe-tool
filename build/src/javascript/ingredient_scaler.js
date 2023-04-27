@@ -1,11 +1,11 @@
-// ParseIngredient.parseIngredient("3 eggs", {
-//     additionalUOMs: {
-//         egg: {
-//             alternates: ["large eggs", "small eggs"],
-//             short: "egg",
-//             plural: "eggs"
-//         }
-// }});
+ParseIngredient.parseIngredient("3 bulbs of garlic", {
+    additionalUOMs: {
+        bulb: {
+            alternates: [],
+            short: "bulb",
+            plural: "bulbs"
+        }
+}});
 
 let rounding_values_thirds = {
     0: {
@@ -110,10 +110,6 @@ let convert_values = {
         round: true
     },
     cup: {
-        max_convert: {
-            max: 13,
-            quart: 1/4
-        },
         min_convert: {
             min: 1/4, 
             tablespoon: 16
@@ -122,7 +118,7 @@ let convert_values = {
     },
     quart: {
         max_convert: {
-            max: 18,
+            max: 16,
             gallon: 1/4
         },
         min_convert: {
@@ -133,7 +129,7 @@ let convert_values = {
     },    
     gallon: {
         min_convert: {
-            min: 4.5,
+            min: 4,
             quart: 4
         },
         round: "rounding_values_thirds"
@@ -151,7 +147,6 @@ let always_round = [
     "bay leaves",
     "garlic cloves",
     "garlic clove",
-    "of garlic",
     // "green bean",
     // "green beans",
     // "bilberry",
@@ -387,7 +382,6 @@ let vegetables_and_fruit = [
 
 // increase number of servings by amount and scale ingredients accordingly
 function alterIngredients() {
-    console.log(originalIngredientsArray);
     let prevServings = JSON.parse(JSON.stringify(originalServings.quantity));
     let copy = JSON.parse(JSON.stringify(scaledServings.quantity));
     let scaleFactor = copy / prevServings;
@@ -431,7 +425,7 @@ function alterIngredients() {
         i++;
     });
     ingredientsInput.innerHTML = "";
-    // let scaleIngredientsDiv = document.querySelector("#scale-ingredients");
+
     // if ingredients stuff is not in view make reminder div visible
     if(scaledServings.quantity != originalServings.quantity && document.querySelector("#reminderDiv").style.display != "flex") {
         document.querySelector("#reminderDiv").style.display = "flex";
@@ -456,15 +450,17 @@ function alterIngredients() {
         }
         document.querySelector("#reminderDiv .reminder").classList.add("triggered");
     } 
+    let scrollPos = document.getElementById("original-ingredients").querySelector("div").scrollTop;
+
     ingredientsInput.appendChild(ul);
+    ingredientsInput.scrollTop = scrollPos;
     resizeServings();
+    console.log(scaledIngredientsArray);
 }
 
 // format ingredient from ingredient object into viewable string
 function prettify(ingredient, isServing = false) {
     if(isServing) {
-        console.log(scaledServings.description);
-
         scaledServings.description = scaledServings.description.replace(/^\.*\d+/, "");
         // scaled servings to 3 decimal points
         return parseFloat(Number(scaledServings.quantity).toFixed(3)) + " " + scaledServings.description;
@@ -499,21 +495,25 @@ function prettify(ingredient, isServing = false) {
                     wholeNumber ++;
                 }
                 decimal = parseFloat(fraction);
+                // whole number + frac 1 1/2
                 if(rounding_values[fraction].frac && wholeNumber != 0) {
                     prettyNumber = wholeNumber + " " + rounding_values[fraction].frac;
+                // frac 1/2
                 } else if(rounding_values[fraction].frac) {
                     prettyNumber = rounding_values[fraction].frac;
+                // whole num 3
                 } else {
                     prettyNumber = wholeNumber;
+                    // if(wholeNumber == 0) {
+                    //     prettyNumber = rounding_values[.25].frac;
+                    // }
                 }
 
                 // convert plural
                 if(ParseIngredient.unitsOfMeasure[ingredient.unitOfMeasureID]) {
-                    if(rounding_values[fraction].frac || wholeNumber != 1) {
-                    // if(wholeNumber != 1 || decimal > 0 || decimal < 1) {
+                    if((wholeNumber >= 1 && decimal > 0) || (wholeNumber > 1)) {
                         ingredient.unitOfMeasure = ParseIngredient.unitsOfMeasure[ingredient.unitOfMeasureID].plural;
                     } else {
-                        console.log(ParseIngredient.unitsOfMeasure[ingredient.unitOfMeasureID]);
                         ingredient.unitOfMeasure = ingredient.unitOfMeasureID;
                     }  
                 }     
@@ -540,7 +540,6 @@ function convert(ingredient) {
             if(ingredient.quantity >= convert_values[unit].max_convert.max) {
                 for(conversion in convert_values[unit].max_convert) {
                     if(conversion != "max") {
-                        console.log (convert_values[unit].max_convert[conversion]);
                         ingredient.quantity = ingredient.quantity * convert_values[unit].max_convert[conversion];
                         ingredient.unitOfMeasure = conversion;
                         ingredient.unitOfMeasureID = conversion;
@@ -557,7 +556,6 @@ function convert(ingredient) {
             if(ingredient.quantity < convert_values[backwardsUnit].min_convert.min) {
                 for(conversion in convert_values[backwardsUnit].min_convert) {
                     if(conversion != "min") {
-                        console.log (convert_values[backwardsUnit].min_convert[conversion]);
                         ingredient.quantity = ingredient.quantity * convert_values[backwardsUnit].min_convert[conversion];
                         ingredient.unitOfMeasure = conversion;
                         ingredient.unitOfMeasureID = conversion;
@@ -571,15 +569,27 @@ function convert(ingredient) {
     if(convert_values[ingredient.unitOfMeasureID]) {
         if(convert_values[ingredient.unitOfMeasureID].round == true) {
             ingredient.quantity = parseFloat(Number(ingredient.quantity).toFixed());
-            console.log(ingredient.quantity);
         }
     }
 
     // round to nearest whole value if this ingredient is in always_round list
-    let firstWord = ingredient.description.replace(/ .*/,'').toLowerCase();
-    console.log(firstWord);
-    if(always_round.includes(firstWord) && (ingredient.unitOfMeasureID == null) || (ingredient.unitOfMeasureID == "medium" || (ingredient.unitOfMeasureID == "large") || (ingredient.unitOfMeasureID == "small") || ingredient.unitOfMeasureID == "clove")) {
+    
+    // remove leading of
+    let firstWord = ingredient.description.replace(/^of\s*/,'');
+
+    // replace non-word non-space characters
+    firstWord = firstWord.replace(/[^(\w\s)]/,'').toLowerCase();
+
+    // check if rounded_ingredient is at the beginning of description string 
+    let in_always_round = false;
+    always_round.forEach(rounded_ingredient => {
+        const regex = new RegExp(`^${rounded_ingredient}`);
+        if(regex.test(firstWord)) {
+            in_always_round = true;
+        }
+    });
+
+    if((in_always_round && (ingredient.unitOfMeasureID == null)) || ( always_round.includes(firstWord) && ((ingredient.unitOfMeasureID == "medium") || (ingredient.unitOfMeasureID == "large") || (ingredient.unitOfMeasureID == "small") || ingredient.unitOfMeasureID == "clove"))) {
         ingredient.quantity = parseFloat(Number(ingredient.quantity).toFixed());
-        console.log(ingredient);
     }
 }

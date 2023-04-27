@@ -608,7 +608,7 @@ select:-webkit-autofill:focus {
     right: 3vh;
     transform: unset;
   }
-  95% {
+  96% {
     right: 3vh;
     transform: unset;
   }
@@ -617,7 +617,7 @@ select:-webkit-autofill:focus {
   }
 }
 #everything form > div #reminderDiv .triggered {
-  animation: pop_into_view 5.8s cubic-bezier(0.55, 0.06, 0.68, 0.19) 1;
+  animation: pop_into_view 8s cubic-bezier(0.55, 0.06, 0.68, 0.19) 1;
 }
 #everything form > div #reminderDiv .reminder {
   position: fixed;
