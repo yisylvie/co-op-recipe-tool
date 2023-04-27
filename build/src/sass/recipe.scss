@@ -142,17 +142,53 @@
         font-size: 11pt;
     }
 
-    .main {
+    .main.printable {
         display: block;
         // z-index: -50;
         margin: 0;
         width: 100%;
+
         > div {
             border: none;
             padding: .5in .125in;
         }
         h2{
             margin-bottom: .5em;
+        }
+        break-inside: auto;
+        break-after: auto;
+        break-before: auto;
+        * {
+            break-inside: auto;
+            break-after: auto;
+            break-before: auto;
+        }
+
+        li {
+            break-inside: avoid;
+        }
+
+        #recipe-body-div {
+            // break-inside: auto;
+            // display: block;
+            height: 4in;
+        }
+
+        #servings{
+            margin-bottom: 2em;
+        }
+
+        #times-div{
+            padding: 1em 0;
+            margin-bottom: 2em;
+        }
+
+        #notes-instructions-div{
+            width: 37.5%;
+            position:unset;
+            top: 1em;
+            max-height: unset;
+            overflow: unset;
         }
     }
 }

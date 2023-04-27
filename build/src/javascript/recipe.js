@@ -7,6 +7,10 @@ const printIcon = document.getElementById("print-button");
 const instructionsList = document.getElementById("instructions-list");
 const timesDiv = document.getElementById("times-div");
 
+if (location.protocol !== 'https:') {
+    location.replace(`https:${location.href.substring(location.protocol.length)}`);
+}
+
 // grab recipe from ../json/modified_recipe.json and input it into the form
 function recieveRecipe() {
     let jsonData;
@@ -109,24 +113,40 @@ grabCookie().then(
 // copy recipe to clipboard when copy icon clicked
 setClickListener(copyIcon, function(event){
     event.preventDefault();
-    try {
-        // remove edit and copy buttons from copy field
-        mainCopy = document.getElementsByClassName("main")[0].cloneNode(true);
-        mainCopy.classList = "main-copy";
-        console.log(mainCopy.querySelector(".main-copy #edit-export"));
-        mainCopy.querySelector(".main-copy #edit-export").remove();
-        console.log(mainCopy);
-        const content = mainCopy.innerHTML;
-        const blobInput = new Blob([content], {type: 'text/html'});
-        const clipboardItemInput = new ClipboardItem({'text/html' : blobInput});
-        navigator.clipboard.write([clipboardItemInput]);
-        copyIcon.classList.add("copied");
-        copyIcon.addEventListener('animationend', function(){
-            copyIcon.classList.remove("copied");
-        });
-    } catch(e) {
-        // Handle error with user feedback - "Copy failed!" kind of thing
-        console.log(e);
+    if(window.isSecureContext) {
+        try {
+            // remove edit and copy buttons from copy field
+            mainCopy = document.getElementsByClassName("main")[0].cloneNode(true);
+            mainCopy.classList = "main-copy";
+            console.log(mainCopy.querySelector(".main-copy #edit-export"));
+            mainCopy.querySelector(".main-copy #edit-export").remove();
+            console.log(mainCopy);
+            const content = mainCopy.innerHTML;
+            const blobInput = new Blob([content], {type: 'text/html'});
+            const clipboardItemInput = new ClipboardItem({'text/html' : blobInput});
+            navigator.clipboard.write([clipboardItemInput]);
+            copyIcon.classList.add("copied");
+    
+            copyIcon.addEventListener('animationend', function(){
+                copyIcon.classList.remove("copied");
+            });
+        } catch(e) {
+            // Handle error with user feedback - "Copy failed!" kind of thing
+            console.log(e);
+        }
+    } else {
+        console.log("not secure");
+        // const textArea = document.createElement("textarea");
+        // textArea.value = text;
+        // document.body.appendChild(textArea);
+        // textArea.focus();
+        // textArea.select();
+        // try {
+        //     document.execCommand('copy');
+        // } catch (err) {
+        //     console.error('Unable to copy to clipboard', err);
+        // }
+        // document.body.removeChild(textArea);
     }
 });
 

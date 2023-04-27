@@ -382,6 +382,7 @@ let vegetables_and_fruit = [
 
 // increase number of servings by amount and scale ingredients accordingly
 function alterIngredients() {
+    console.log(originalIngredientsArray);
     let prevServings = JSON.parse(JSON.stringify(originalServings.quantity));
     let copy = JSON.parse(JSON.stringify(scaledServings.quantity));
     let scaleFactor = copy / prevServings;

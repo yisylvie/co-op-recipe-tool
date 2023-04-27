@@ -522,17 +522,45 @@ select:-webkit-autofill:focus {
   :root {
     font-size: 11pt;
   }
-  .main {
+  .main.printable {
     display: block;
     margin: 0;
     width: 100%;
+    break-inside: auto;
+    break-after: auto;
+    break-before: auto;
   }
-  .main > div {
+  .main.printable > div {
     border: none;
     padding: 0.5in 0.125in;
   }
-  .main h2 {
+  .main.printable h2 {
     margin-bottom: 0.5em;
+  }
+  .main.printable * {
+    break-inside: auto;
+    break-after: auto;
+    break-before: auto;
+  }
+  .main.printable li {
+    break-inside: avoid;
+  }
+  .main.printable #recipe-body-div {
+    height: 4in;
+  }
+  .main.printable #servings {
+    margin-bottom: 2em;
+  }
+  .main.printable #times-div {
+    padding: 1em 0;
+    margin-bottom: 2em;
+  }
+  .main.printable #notes-instructions-div {
+    width: 37.5%;
+    position: unset;
+    top: 1em;
+    max-height: unset;
+    overflow: unset;
   }
 }
 

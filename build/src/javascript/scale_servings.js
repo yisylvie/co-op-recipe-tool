@@ -329,6 +329,31 @@ resetButton.addEventListener('transitionend', function(){
 servings.addEventListener("input", function(event) {
     event.preventDefault();
     resizeServings();
+
+    // if ingredients stuff is not in view make reminder div visible
+    if(document.querySelector("#reminderDiv").style.display != "flex") {
+        document.querySelector("#reminderDiv").style.display = "flex";
+
+        // if instructions are > 50% in view, show reminder without scroll stuff
+        if(checkFifty(document.querySelector("#instructions-input"))) {
+            document.querySelector("#reminderDiv svg").remove();
+            document.querySelector("#reminderDiv .reminder").style.cursor = "unset";
+            document.querySelector("#reminderDiv h4").innerHTML = document.querySelector("#reminderDiv .reminder p").innerHTML;
+            document.querySelector("#reminderDiv .reminder p").remove();
+            document.querySelector("#reminderDiv .reminder div h4").style.width = getTrueWidth(document.querySelector("#reminderDiv .reminder h4"))/2 + 4 + "px";
+            
+            // make it not clickable
+            setClickListener(document.querySelector("#reminderDiv"), function (event) {
+                event.preventDefault();
+            });
+        } else {
+            // disappear reminder when scrolled to section
+            setClickListener(document.querySelector("#reminderDiv"), function (event) {
+                this.style.display = "none";
+            });
+        }
+        document.querySelector("#reminderDiv .reminder").classList.add("triggered");
+    } 
 });
 
 // if servings is entered leave focus and fire change event
@@ -351,13 +376,18 @@ servings.addEventListener("change", function(event) {
     if(scaledServings != undefined) {
         unhighlightScaleButton();
         // fix bug where # of servings can't be in the form .4 (no 0 before decimal point)
-        if(scaledServings.quantity == null && scaledServings.description[0] == ".") {
-            scaledServings = ParseIngredient.parseIngredient("0" + scaledServings.description, { allowLeadingOf: true })[0];
+        if(scaledServings.quantity == null) {
+            if(scaledServings.description[0] == ".") {
+                scaledServings = ParseIngredient.parseIngredient("0" + scaledServings.description, { allowLeadingOf: true })[0];
+            } else {
+                scaledServings = oldServings;
+            }
         }
         if(scaledServings.description == "") {
             scaledServings.description = oldServings.description;
         }
         if(scaledServings.quantity < (originalServings.quantity / 4)) {
+            console.log(scaledServings.quantity);
             scaledServings.quantity = originalServings.quantity / 4;
         }
         if(scaledServings.quantity > 1000) {
