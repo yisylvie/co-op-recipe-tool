@@ -400,7 +400,6 @@ function alterIngredients() {
             // average ingredient if in form "2 - 3 unit"
             if(originalIngredientsArray[i].quantity2) {
                 originalIngredientsArray[i].quantity = (originalIngredientsArray[i].quantity + originalIngredientsArray[i].quantity2) / 2;
-                console.log(originalIngredientsArray[i].quantity);
             }
             scaledIngredientsArray[i].quantity = originalIngredientsArray[i].quantity * scaleFactor;
             scaledIngredientsArray[i].unitOfMeasure = originalIngredientsArray[i].unitOfMeasure;
@@ -455,7 +454,6 @@ function alterIngredients() {
     ingredientsInput.appendChild(ul);
     ingredientsInput.scrollTop = scrollPos;
     resizeServings();
-    console.log(scaledIngredientsArray);
 }
 
 // format ingredient from ingredient object into viewable string

@@ -253,6 +253,17 @@ function grabInstructions() {
     return instructions;
 }
 
+// https://stackoverflow.com/questions/3944122/detect-left-mouse-button-press
+// detect if left click
+function detectLeftButton(evt) {
+    evt = evt || window.event;
+    if ("buttons" in evt) {
+        return evt.buttons == 1;
+    }
+    var button = evt.which || evt.button;
+    return button == 1;
+}
+
 // check if element is either partially in viewport or the top of it has scrolled above the top of viewport
 const elementIsVisibleInViewport = (el, partiallyVisible = false) => {
     const { top, left, bottom, right } = el.getBoundingClientRect();

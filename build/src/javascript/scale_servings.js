@@ -15,6 +15,8 @@ let scaledIngredientsArray = [];
 let mouseIsDown = false;
 let upPressing;
 let downPressing;
+let downDelay;
+let upDelay;
 let url;
 let title;
 
@@ -165,99 +167,145 @@ setClickListener(backButton, function(event){
 // scale down by 1 serving when down button is clicked
 setClickListener(downButton, function(event){
     event.preventDefault();
-    mouseIsDown = false;
-    clearInterval(upPressing);
-    clearInterval(downPressing);
-    // make sure that we don't decrease below one serving
-    if(scaledServings.quantity > 1) {
+
+    if(scaledServings.quantity > (originalServings.quantity / 4)) {
+        downButton.style.cursor = "pointer";   
+    } else {
+        downButton.style.cursor = "not-allowed";
+    }
+
+    // make sure that we don't decrease below 1/4 of the size of the original recipe
+    if(scaledServings.quantity - 1 >= (originalServings.quantity / 4)) {
+        // downButton.style.cursor = "pointer";   
         scaledServings.quantity -= 1;
         unhighlightScaleButton();
         document.getElementById("servings").value = prettify(scaledServings, true);
         resizeServings();
         alterIngredients();
+    } else {
+        // downButton.style.cursor = "not-allowed";
     }
 });
 
-// delay for 500ms then fire hold down on mouse press
+// delay for 400ms then fire hold down on mouse press
 downButton.addEventListener("mousedown", function(event) {
-    mouseIsDown = true;
-
     event.preventDefault();
-    setTimeout(function() {
-        holdDown();
-    }, 500);
+    if(detectLeftButton(event)) {
+        console.log("holding down");
+        downDelay = setTimeout(function() {
+            mouseIsDown = true;
+            console.log("start decrease");
+            holdDown();
+        }, 400);
+    } else {
+        console.log("right click?");
+    }
 });
 
-// repeatedly decrease servings every 100ms when button is held
-async function holdDown() {
-    let myPromise = new Promise(function(resolve) {
-        downPressing = setInterval(function(){
-            if(mouseIsDown) {
-                if(scaledServings.quantity > 1) {
-                    scaledServings.quantity -= 1;
-                    unhighlightScaleButton();
-                    document.getElementById("servings").value = prettify(scaledServings, true);
-                    resizeServings();
-                    alterIngredients();
-                } else {
-                    clearInterval(downPressing);
-                    resolve("trying for go under 1");
-                }
+// repeatedly decrease servings every 180ms when button is held
+function holdDown() {
+    downPressing = setInterval(function(){
+        if(mouseIsDown) {
+            if(scaledServings.quantity > (originalServings.quantity / 4)) {
+                downButton.style.cursor = "pointer";   
             } else {
-                clearInterval(downPressing);
-                resolve("pau");
+                downButton.style.cursor = "not-allowed";
             }
-        }, 130);
-    });
-    console.log(await myPromise);
+
+            // make sure that we don't decrease below 1/4 of the size of the original recipe
+            if(scaledServings.quantity - 1 >= (originalServings.quantity / 4)) { 
+                // downButton.style.cursor = "pointer";   
+                scaledServings.quantity -= 1;
+                unhighlightScaleButton();
+                document.getElementById("servings").value = prettify(scaledServings, true);
+                resizeServings();
+                alterIngredients();
+            } else {
+                // clearInterval(downPressing);
+                // resolve("trying for go under 1");
+                // downButton.style.cursor = "not-allowed";
+            }
+        } else {
+            // clearInterval(downPressing);
+            // resolve("pau hold down");
+        }
+    }, 180);
 }
 
 // scale up by 1 serving when up button is clicked
 setClickListener(upButton, function(event){
     event.preventDefault();
     mouseIsDown = false;
-    clearInterval(upPressing);
-    clearInterval(downPressing);
-    scaledServings.quantity += 1;
-    document.getElementById("servings").value = prettify(scaledServings, true);
-    unhighlightScaleButton();
-    resizeServings();
-    alterIngredients();
+    if(scaledServings.quantity < 1000) {
+        downButton.style.cursor = "pointer";   
+        scaledServings.quantity += 1;
+        document.getElementById("servings").value = prettify(scaledServings, true);
+        unhighlightScaleButton();
+        resizeServings();
+        alterIngredients();
+    } else {
+        upButton.style.cursor = "not-allowed";
+    }
 });
 
-// delay for 500ms then fire hold down on mouse press
+// delay for 400ms then fire hold down on mouse press
 upButton.addEventListener("mousedown", function(event) {
     mouseIsDown = true;
+    console.log("holding up");
     event.preventDefault();
-    setTimeout(function() {
+    upDelay = setTimeout(function() {
         holdUp();
-    }, 500);
+    }, 400);
 });
 
-// repeatedly increase servings every 100ms when button is held
-async function holdUp() {
-    let thisPromise = new Promise(function(resolve) {
-        upPressing = setInterval(function(){
-            if(mouseIsDown) {
+// repeatedly increase servings every 180ms when button is held
+function holdUp() {
+    upPressing = setInterval(function(){
+        if(mouseIsDown) {
+            if(scaledServings.quantity < 1000) {
                 scaledServings.quantity += 1;
-                unhighlightScaleButton();
                 document.getElementById("servings").value = prettify(scaledServings, true);
+                unhighlightScaleButton();
                 resizeServings();
                 alterIngredients();
             } else {
-                clearInterval(upPressing);
-                resolve("pau");
+                upButton.style.cursor = "not-allowed";
             }
-        }, 130);
-    });
-    console.log(await thisPromise);
+        } else {
+            // clearInterval(upPressing);
+        }
+    }, 180);
 }
 
 // check if mouse is unclicked to turn off up/down scaling
 window.addEventListener('mouseup', function() {
+    console.log("mouseup");
     mouseIsDown = false;
     clearInterval(upPressing);
     clearInterval(downPressing);
+    clearTimeout(downDelay);
+    clearTimeout(upDelay);
+});
+
+// show no can cursor if over 1000 servings
+upButton.addEventListener("mouseover", function(event) {
+    if(scaledServings.quantity < 1000) {
+        this.style.cursor = "pointer";
+    } else {
+        this.style.cursor = "not-allowed";
+    }
+    downButton.style.cursor = "pointer";
+});
+
+// show no can cursor if less than 1/4 of the size of the original recipe
+downButton.addEventListener("mouseover", function(event) {
+    if(scaledServings.quantity > (originalServings.quantity / 4)) {
+        console.log("over 1/4 recipe");
+        this.style.cursor = "pointer";
+    } else {
+        this.style.cursor = "not-allowed";
+    }
+    upButton.style.cursor = "pointer";
 });
 
 // reset servings to original when reset button is clicked
@@ -309,8 +357,11 @@ servings.addEventListener("change", function(event) {
         if(scaledServings.description == "") {
             scaledServings.description = oldServings.description;
         }
-        if(scaledServings.quantity <= 0) {
-            scaledServings.quantity = oldServings.quantity;
+        if(scaledServings.quantity < (originalServings.quantity / 4)) {
+            scaledServings.quantity = originalServings.quantity / 4;
+        }
+        if(scaledServings.quantity > 1000) {
+            scaledServings.quantity = 1000;
         }
         document.getElementById("servings").value = prettify(scaledServings, true);
         resizeServings();

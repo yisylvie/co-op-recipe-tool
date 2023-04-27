@@ -572,6 +572,10 @@ form div input[type=text]:focus {
   text-align: left;
   margin-bottom: 2em;
 }
+#about p span {
+  font-weight: 300;
+  color: #262626;
+}
 
 footer {
   margin-bottom: 5vh;

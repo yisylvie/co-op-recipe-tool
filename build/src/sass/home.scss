@@ -210,6 +210,10 @@ form{
         text-align: left;
         // width: 30em;
         margin-bottom: 2em;
+        span{
+            font-weight: 300;
+            color: global.$grey0;
+        }
     }
 }
 
