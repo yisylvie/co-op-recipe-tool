@@ -1,3 +1,7 @@
+// cd to this directory then type
+// node index.js
+// to run locally
+
 // Require the functionality we need to use:
 const { json } = require('express');
 var http = require('http'),

@@ -389,7 +389,7 @@ function alterIngredients() {
 
     for (let i = 0; i < originalIngredientsArray.length; i++) {
         if(originalIngredientsArray[i].quantity == null) {
-            let firstWord = originalIngredientsArray[i].description.replace(/ .*/,'').toLowerCase();
+            let firstWord = originalIngredientsArray[i].description.replace(/ .*/,'');
             let number = text2num(firstWord);
             if(number != 0) {
                 originalIngredientsArray[i].quantity = number;
@@ -588,7 +588,7 @@ function convert(ingredient) {
         }
     });
 
-    if((in_always_round && (ingredient.unitOfMeasureID == null)) || ( always_round.includes(firstWord) && ((ingredient.unitOfMeasureID == "medium") || (ingredient.unitOfMeasureID == "large") || (ingredient.unitOfMeasureID == "small") || ingredient.unitOfMeasureID == "clove"))) {
+    if((in_always_round && (ingredient.unitOfMeasureID == null)) || ( in_always_round && ((ingredient.unitOfMeasureID == "medium") || (ingredient.unitOfMeasureID == "large") || (ingredient.unitOfMeasureID == "small") || ingredient.unitOfMeasureID == "clove"))) {
         ingredient.quantity = parseFloat(Number(ingredient.quantity).toFixed());
     }
 }

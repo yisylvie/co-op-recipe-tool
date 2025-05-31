@@ -101,8 +101,8 @@ function appendIngredients(ingredients) {
         if(sterilize(ingredient).match(/^\s*\.\d+/)) {
             ingredient = sterilize(ingredient).replace(/^\s*\./, "0.");
         }
-        originalIngredientsArray.push(ParseIngredient.parseIngredient(ingredient, { allowLeadingOf: true })[0]);
-        scaledIngredientsArray.push(ParseIngredient.parseIngredient(ingredient, { allowLeadingOf: true })[0]);
+        originalIngredientsArray.push(ParseIngredient.parseIngredient(ingredient.toLowerCase(), { allowLeadingOf: true })[0]);
+        scaledIngredientsArray.push(ParseIngredient.parseIngredient(ingredient.toLowerCase(), { allowLeadingOf: true })[0]);
 
         let li = document.createElement("li");
         li.innerHTML = ingredient;

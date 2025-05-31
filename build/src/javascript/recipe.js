@@ -7,9 +7,13 @@ const printIcon = document.getElementById("print-button");
 const instructionsList = document.getElementById("instructions-list");
 const timesDiv = document.getElementById("times-div");
 
-if (location.protocol !== 'https:') {
-    location.replace(`https:${location.href.substring(location.protocol.length)}`);
+// if (str.indexOf('https') === -1) {
+//     str = str.replace('http', 'https')
+//   }
+if(!window.isSecureContext) {
+    copyIcon.style.display = "none";
 }
+
 
 // grab recipe from ../json/modified_recipe.json and input it into the form
 function recieveRecipe() {

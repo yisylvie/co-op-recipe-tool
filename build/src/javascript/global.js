@@ -133,7 +133,7 @@ function clearRecipeData() {
         body: JSON.stringify(data),
         headers: { 'content-type': 'application/json', 
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
+        "Access-Control-Allow-Methods": "POST",
         "Access-Control-Allow-Headers": "*"
         }
     })
