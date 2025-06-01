@@ -57,18 +57,19 @@ var app = http.createServer(function(req, resp){
 });
 app.listen(3456);
 
+const jsonPath = 'json/'
 // app.onload = function() {
 // }
 clearFiles();
 function clearFiles() {
-	fs.writeFile('src/json/recipe.json', "{}", err => {
+	fs.writeFile(jsonPath + 'recipe.json', "{}", err => {
 		if (err) {
 			console.error(err);
 		}
 		console.log("file cleared");
 		// file written successfully
 	});
-	fs.writeFile('src/json/modified_recipe.json', "{}", err => {
+	fs.writeFile(jsonPath + 'modified_recipe.json', "{}", err => {
 		if (err) {
 			console.error(err);
 		}
@@ -111,13 +112,13 @@ function clearRecipe(sentData) {
 	let cookie = sentData.cookie;
 	// remove recipe in recipe.json 
 	try {
-		const old = fs.readFileSync('src/json/recipe.json', 'utf8');
+		const old = fs.readFileSync(jsonPath + 'recipe.json', 'utf8');
 		console.log(102 + old);
 		let content = JSON.parse(old);
 		delete content[cookie];
 		console.log(content);
 		content = JSON.stringify(content);
-		fs.writeFile('src/json/recipe.json', content, err => {
+		fs.writeFile(jsonPath + 'recipe.json', content, err => {
 			if (err) {
 				console.error(err);
 			}
@@ -132,13 +133,13 @@ function clearModifiedRecipe(sentData) {
 	let cookie = sentData.cookie;
 	// remove recipe in recipe.json 
 	try {
-		const old = fs.readFileSync('src/json/modified_recipe.json', 'utf8');
+		const old = fs.readFileSync(jsonPath + 'modified_recipe.json', 'utf8');
 		console.log(102 + old);
 		let content = JSON.parse(old);
 		delete content[cookie];
 		console.log(content);
 		content = JSON.stringify(content);
-		fs.writeFile('src/json/modified_recipe.json', content, err => {
+		fs.writeFile(jsonPath + 'modified_recipe.json', content, err => {
 			if (err) {
 				console.error(err);
 			}
@@ -163,13 +164,13 @@ function fetchRecipeFromUrl(urlData) {
 	// add this recipe to recipe.json with its key set to the recipe's cookie
 	function sent(recipeJson){
 		try {
-			const old = fs.readFileSync('src/json/recipe.json', 'utf8');
+			const old = fs.readFileSync(jsonPath + 'recipe.json', 'utf8');
 			console.log(121 + old);
 			let content = JSON.parse(old);
 			content[cookie] = recipeJson;
 			console.log(content);
 			content = JSON.stringify(content);
-			fs.writeFile('src/json/recipe.json', content, err => {
+			fs.writeFile(jsonPath + 'recipe.json', content, err => {
 				if (err) {
 					console.error(err);
 				}
@@ -182,12 +183,12 @@ function fetchRecipeFromUrl(urlData) {
 	// add error to recipe.json with its key set to the recipe's cookie
 	function sendError(error){
 		try {
-			const old = fs.readFileSync('src/json/recipe.json', 'utf8');
+			const old = fs.readFileSync(jsonPath + 'recipe.json', 'utf8');
 			console.log(121 + old);
 			let content = JSON.parse(old);
 			content[cookie] = "Could not find recipe data";
 			content = JSON.stringify(content);
-			fs.writeFile('src/json/recipe.json', content, err => {
+			fs.writeFile(jsonPath + 'recipe.json', content, err => {
 				if (err) {
 					console.error(err + "159");
 				}
@@ -203,13 +204,13 @@ function writeModifiedRecipe(sentData) {
 	// add this recipe to modified_recipe.json with its key set to the recipe's cookie
 	try {
 		let cookie = sentData.cookie;
-		const old = fs.readFileSync('src/json/modified_recipe.json', 'utf8');
+		const old = fs.readFileSync(jsonPath + 'modified_recipe.json', 'utf8');
 		console.log(177 + old);
 		let content = JSON.parse(old);
 		content[cookie] = sentData.recipe;
 		console.log(content);
 		content = JSON.stringify(content);
-		fs.writeFile('src/json/modified_recipe.json', content, err => {
+		fs.writeFile(jsonPath + 'modified_recipe.json', content, err => {
 			if (err) {
 				console.error(err);
 			}
@@ -224,7 +225,7 @@ function writeScaledRecipe(sentData) {
 	// add changed ingredients to modified_recipe.json with its key set to the recipe's cookie
 	try {
 		let cookie = sentData.cookie;
-		const old = fs.readFileSync('src/json/modified_recipe.json', 'utf8');
+		const old = fs.readFileSync(jsonPath + 'modified_recipe.json', 'utf8');
 		// console.log(121 + old);
 		console.log(177 + old);
 		let content = JSON.parse(old);
@@ -233,7 +234,7 @@ function writeScaledRecipe(sentData) {
 		content[cookie].recipeYield = sentData.recipeYield;
 		console.log(content);
 		content = JSON.stringify(content);
-		fs.writeFile('src/json/modified_recipe.json', content, err => {
+		fs.writeFile(jsonPath + 'modified_recipe.json', content, err => {
 			if (err) {
 				console.error(err);
 			}
@@ -242,7 +243,7 @@ function writeScaledRecipe(sentData) {
 		console.error(err);
 	}
 
-	// fs.readFileSync('src/json/modified_recipe.json', 'utf8', (err, whore) => {
+	// fs.readFileSync(jsonPath + 'modified_recipe.json', 'utf8', (err, whore) => {
 	// 	if (err) {
 	// 		console.error(err);
 	// 		return;
