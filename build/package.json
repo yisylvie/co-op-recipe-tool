@@ -8,6 +8,7 @@
     "n": "^9.0.1",
     "node-fetch": "^2.6.9",
     "recipe-data-scraper": "^1.4.1",
-    "recipe-slicer": "^1.0.2"
+    "recipe-slicer": "^1.0.2",
+    "vercel": "^42.3.0"
   }
 }
