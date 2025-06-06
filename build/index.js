@@ -57,7 +57,7 @@ var app = http.createServer(function(req, resp){
 });
 app.listen(3456);
 
-const jsonPath = 'https://co-op-recipe-tool.vercel.app/json/'
+const jsonPath = 'src/json/'
 // app.onload = function() {
 // }
 clearFiles();
